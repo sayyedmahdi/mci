@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full tw-h-screen tw-p-20">
+  <div class="tw-flex tw-flex-col-reverse tw-items-center tw-justify-between tw-w-full tw-h-screen tw-p-20">
     <div class="tw-h-full tw-mt-[12%] tw-ml-[12%]">
       <img class="tw-object-cover" src="~assets/login.png">
     </div>
