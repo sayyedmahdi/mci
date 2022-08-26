@@ -1,7 +1,7 @@
 <template>
   <div class="tw-my-32">
     <div class="tw-flex tw-text-6xl tw-ml-[100px] tw-mb-12">
-      <span class="text_dark_blue ">Paket<span class="text_dark_pink tw-ml-3">liste</span></span>
+      <span class="text_dark_blue ">Liste der <span class="text_dark_pink tw-ml-3">Geschäfte</span></span>
     </div>
 
     <div class="tw-flex flex-col md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:space-y-0 md:tw-flex-row tw-px-36 xl:tw-px-56 tw-justify-between text_dark_blue">

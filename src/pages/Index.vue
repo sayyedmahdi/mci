@@ -77,7 +77,7 @@
     </div>
     <belt title="ssss" text="" image=""></belt>
     <paket-list />
-    <gesch-fte-list />
+    <gutscheineList />
     <testimonial />
     <footerPage />
 </template>
@@ -87,12 +87,12 @@ import { defineComponent } from "vue";
 import belt from '../components/belt'
 import paketList from "components/paketList";
 import testimonial from "components/testimonial";
-import geschFteList from "components/geschäfteList";
 import footerPage from "components/footerPage";
+import gutscheineList from "components/gutscheineList";
 
 export default defineComponent({
   name: "PageIndex",
-  components: {belt , paketList , testimonial , geschFteList , footerPage}
+  components: {belt , paketList , testimonial , gutscheineList , footerPage}
 
 });
 </script>
