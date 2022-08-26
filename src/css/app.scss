@@ -1,0 +1,41 @@
+// app global css in SCSS form
+@font-face {
+  font-family: 'Murecho';
+  src: url("/fonts/Murecho-VariableFont_wght.ttf") format('ttf');
+}
+
+body {
+  font-family: 'Murecho', serif;
+}
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.bg__dark_pink {
+  background-color: #D25A73;
+}
+
+.bg__dark_blue {
+  background-color: #1D607F;
+}
+
+.text_dark_blue {
+  color: #1D607F;
+}
+
+.text_dark_pink {
+  color: #D25A73;
+}
+
+.text_md {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: 0.001em;
+}
+
+.mobile_menu_tabs .q-tabs__content  {
+  flex-direction: column !important;
+}
