@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="login">
+  <form v-on:submit.prevent="() => {}">
   <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-items-center md:tw-justify-between tw-items-center tw-justify-center tw-w-full tw-h-full tw-p-14 ">
     <div class="bg__dark_blue tw-w-[400px] tw-text-white tw-flex tw-flex-col tw-justify-start tw-text-center tw-p-8 md:tw-h-[570px]  md:tw-w-[650px]">
       <div class="tw-text-4xl tw-pb-[30%]">Log In</div>
