@@ -135,7 +135,6 @@ export default {
         RowsPerPage: '10'
       }).then((res) => {
         this.stores = res.data.Data
-        console.log(res.data , 'PPPPPPPPPPPPPPPPPPPPPPPPPPPP')
       })
     }
   },

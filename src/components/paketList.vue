@@ -13,7 +13,7 @@
         <div class=" tw-text-4xl ">{{packet.Title}}</div>
         <div class="text_dark_pink  tw-text-3xl">{{ packet.Price }} $</div>
         <div class=" tw-text-lg">Duration: {{ packet.Duration }} month</div>
-        <div class=" tw-text-lg">Per Month Payment: 200 $</div>
+        <div class=" tw-text-lg">Per Month Payment: {{ parseInt(packet.Price /packet.Duration ) }} $</div>
         <button class="flex items-center tw-mx-auto tw-py-3 tw-px-9 text_md tw-mt-4 bg__dark_pink tw-text-white justify-center ">
           <span>Buy Now</span>
         </button>
@@ -24,6 +24,7 @@
     </div>
 
   </div>
+
 </template>
 
 <script>
