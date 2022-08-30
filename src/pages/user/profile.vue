@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-space-x-10 tw-p-8 md:tw-flex-row md:tw-justify-between md:tw-items-center text_dark_blue">
     <div class="tw-pl-[5%] md:tw-min-w-[35%]">
-      <div class="tw-text-3xl tw-text-center md:tw-text-left">Hello Jesse</div>
+      <div class="tw-text-3xl tw-text-center md:tw-text-left">Hello {{ StateUser.Username }}</div>
       <div class="tw-text-base">This is your profile page. You can Edit and make changes to it.</div>
       <div class="tw-mt-[20%]">
         <img src="~assets/user-profile.png">
@@ -69,13 +69,15 @@
           <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
 
         </div>
-        <q-btn class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">Save Changes</q-btn>
+        <q-btn @click="update()" class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">Save Changes</q-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
   name: "profile",
   data() {
@@ -89,6 +91,53 @@ export default {
       city: '',
       postalCode: '',
     }
+  },
+  computed: {
+    ...mapGetters(['StateUser'])
+  },
+  methods: {
+    update(){
+      let data = {
+        ID: this.StateUser.ID,
+        Email: this.email,
+        Username: this.name
+      }
+
+      this.$api.post('user/update.php', data)
+        .then((res) => {
+          this.$q.cookies.set('mcisitetoken', res.data.Token, {
+            path: '/'
+          })
+          // set user data to cookie storage
+          this.$q.localStorage.set('user', JSON.stringify(res.data))
+          // set auth to true
+          this.$store.dispatch('SetUser', res.data)
+          this.$api.defaults.headers.common['Token'] = res.data.Token
+          this.$q.notify({
+            type: 'positive',
+            timeout: 3000,
+            message: 'Update profile successfully',
+            position: 'bottom-right'
+          })
+        })
+        .catch((err) => {
+          this.$helper.logError(err)
+          this.$q.notify({
+            type: 'negative',
+            timeout: 3000,
+            message: 'Update profile not possible',
+            position: 'bottom-right'
+          })
+        })
+    },
+    changePassword(){
+
+    }
+  },
+  mounted() {
+    this.name = this.StateUser.Username
+    this.email = this.StateUser.Email
+
   }
 }
 </script>

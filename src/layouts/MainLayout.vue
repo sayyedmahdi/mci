@@ -5,15 +5,17 @@
       class="tw-fixed tw-inset-0  tw-hidden tw-z-20  tw-flex-col tw-items-center tw-self-end tw-w-full tw-h-full tw-m-h-screen tw-px-6 tw-py-1 tw-pt-24 tw-pb-4 tw-tracking-widest text_dark_blue tw-uppercase tw-divide-y tw-divide-gray-500 tw-opacity-90 tw-bg-white"
     >
       <button type="button" @click="hideMenu" class="tw-ml-[95%] hover:tw-bg-slate-300 hover:tw-rounded tw-p-2" data-bs-dismiss="offcanvas" aria-label="Close">
-        <img src="https://diagnozi.ge/assets/images/close.svg" alt="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path d="M6.48775 5.00008L9.854 1.63383C10.0487 1.43914 10.0487 1.1232 9.854 0.928203L9.07182 0.146016C8.87713 -0.0486719 8.56119 -0.0486719 8.36619 0.146016L5.00025 3.51258L1.634 0.146328C1.43932 -0.0483593 1.12338 -0.0483593 0.928379 0.146328L0.146504 0.928203C-0.0481836 1.12289 -0.0481836 1.43883 0.146504 1.63383L3.51275 5.00008L0.146504 8.36633C-0.0481836 8.56102 -0.0481836 8.87695 0.146504 9.07195L0.928692 9.85414C1.12338 10.0488 1.43932 10.0488 1.63432 9.85414L5.00025 6.48758L8.3665 9.85383C8.56119 10.0485 8.87713 10.0485 9.07213 9.85383L9.85432 9.07164C10.049 8.87695 10.049 8.56101 9.85432 8.36601L6.48775 5.00008Z" fill="#92929D"/>
+        </svg>
       </button>
       <q-tabs class="tw-flex tw-flex-col mobile_menu_tabs" >
 
-        <q-route-tab class="text_dark_pink" to="/" label="Home" />
-        <q-route-tab to="/Stores" label="Stores" />
-        <q-route-tab to="/packets" label="Packets" />
-        <q-route-tab to="/contact" label="Contact" />
-        <q-route-tab to="/support" label="Support" />
+        <q-route-tab @click="hideMenu" class="text_dark_pink" to="/" label="Home" />
+        <q-route-tab @click="hideMenu" to="/Stores" label="Stores" />
+        <q-route-tab @click="hideMenu" to="/packets" label="Packets" />
+        <q-route-tab @click="hideMenu" to="/contact" label="Contact" />
+        <q-route-tab @click="hideMenu" to="/support" label="Support" />
       </q-tabs>
     </div>
     <q-header reveal elevated class="tw-bg-white text_dark_blue tw-text-sm tw-justify-between" >
