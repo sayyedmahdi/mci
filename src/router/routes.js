@@ -12,7 +12,8 @@ const routes = [
       {
         path: "user", component: () => import("pages/user/index"),
         children: [
-          {path: 'profile' , component: () => import('pages/user/profile')}
+          {path: 'profile' , component: () => import('pages/user/profile')},
+          {path: 'dashboard' , component: () => import('pages/user/dashboard')},
         ]
       },
     ],
