@@ -3,10 +3,13 @@
     <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-items-center md:tw-justify-between tw-items-center tw-justify-center tw-w-full tw-h-full tw-p-14 ">
       <div class="bg__dark_blue tw-w-[400px] tw-text-white tw-flex tw-flex-col tw-justify-start tw-text-center tw-p-8 md:tw-h-[570px]  md:tw-w-[650px]">
         <div class="tw-text-4xl tw-pb-[5%]">Create Account</div>
-        <input v-model="fullName" class="tw-text-sm tw-border-b tw-my-6 tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" placeholder="Full Name"/>
-        <input v-model="email" class="tw-text-sm tw-border-b tw-my-6 tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" placeholder="Email"/>
+        <input v-model="fullName" :class="['tw-text-sm', 'tw-border-b',  'tw-my-6' ,'tw-text-white' ,'tw-color-white' ,'bg__dark_blue' ,'focus:tw-outline-none' ,  errorExists('fullName') ? 'tw-border-red-700' : '']" placeholder="Full Name"/>
+        <ul class="" id="parsley-id-11" v-if="errorExists('fullName')"><li class="parsley-required">full name is required</li></ul>
+        <input v-model="email" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('email') ? 'tw-border-red-700' : '']" placeholder="Email"/>
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('email')"><li class="parsley-required">email is required</li></ul>
         <input v-model="address" class="tw-text-sm tw-border-b tw-my-6 tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" placeholder="Address"/>
-        <input v-model="password" class="tw-text-sm tw-border-b tw-my-6  tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" type="password" placeholder="Password" />
+        <input v-model="password" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('password') ? 'tw-border-red-700' : '']" type="password" placeholder="Password" />
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('password')"><li class="parsley-required">password is required</li></ul>
         <button class="bg__dark_pink tw-mt-8 tw-object-fit tw-p-2 " @click="register" >Create Account</button>
         <div class="tw-flex tw-flex-row tw-space-x-4 tw-p-2 tw-mt-[4%]">
           <input v-model="termsOfUse" class="form-check-input h-4 w-4 bg-white tw-transition tw-duration-200 cursor-pointer" type="checkbox" >
@@ -51,30 +54,32 @@ export default {
           position: 'bottom-right'
         })
 
-        return
+        return false;
       }
-      return;
+      this.errors = [];
+      this.validate();
       let _this = this
-      const isFormCorrect = true;
-      if (isFormCorrect) {
-        this.$api.post('user/create.php', {
-          Username: this.email,
-          Email: this.email,
-          Password: this.password,
-          Status: '2',
-          Type: '2',
-        }).then((res) => {
-          this.login()
-        }).catch(function (error) {
-          _this.$helper.logError(error)
-          _this.$q.notify({
-            type: 'negative',
-            timeout: 3000,
-            message: 'Update not possible',
-            position: 'bottom-right'
-          })
-        })
+      this.errors.length;
+      if (this.errors.length > 0){
+        return false;
       }
+      this.$api.post('user/create.php', {
+        Username: this.email,
+        Email: this.email,
+        Password: this.password,
+        Status: '2',
+        Type: '2',
+      }).then((res) => {
+        this.login()
+      }).catch(function (error) {
+        _this.$helper.logError(error)
+        _this.$q.notify({
+          type: 'negative',
+          timeout: 3000,
+          message: 'Update not possible',
+          position: 'bottom-right'
+        })
+      })
     },
     async login () {
       const isFormCorrect = true; //await this.v$.$validate()
@@ -92,7 +97,6 @@ export default {
           Password: this.password
         }).then(function (response) {
           // check for valid User Type
-          console.log(response.data.Type)
           if (!response.data.Type == 1) {
             _q.notify({
               type: 'negative',
@@ -121,6 +125,13 @@ export default {
             position: 'bottom-right'
           })
         })
+      }
+    },
+    errorExists(part){
+      if (this.errors.includes(part)) {
+        return true
+      } else {
+        return false
       }
     },
     validate(){

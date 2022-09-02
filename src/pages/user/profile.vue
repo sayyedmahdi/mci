@@ -16,15 +16,15 @@
           <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="name">
             Name
           </label>
-          <input v-model="name" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="name" type="text" placeholder="Name">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
+          <input v-model="name" :class="['appearance-none', 'bg__dark_blue' , 'tw-block' ,'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('name') ? 'tw-border-red-700' : '' ]" id="name" type="text" placeholder="Name">
+          <p v-if="errorExists('name')" class="text-red-500 text-xs italic">Please fill out this field.</p>
         </div>
         <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
           <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="email">
             Email
           </label>
-          <input v-model="email" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="email" type="text" placeholder="Email">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
+          <input v-model="email" :class="['appearance-none', 'bg__dark_blue' , 'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('email') ? 'tw-border-red-700' : '' ]" id="email" type="text" placeholder="Email">
+          <p v-if="errorExists('email')" class="text-red-500 text-xs italic">Please fill out this field.</p>
         </div>
         <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
           <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="password">
@@ -90,6 +90,7 @@ export default {
       country: '',
       city: '',
       postalCode: '',
+      errors: [],
     }
   },
   computed: {
@@ -101,6 +102,11 @@ export default {
         ID: this.StateUser.ID,
         Email: this.email,
         Username: this.name
+      }
+      this.errors = [];
+      this.validate();
+      if (this.errors.length > 0){
+        return false;
       }
 
       this.$api.post('user/update.php', data)
@@ -132,6 +138,27 @@ export default {
     },
     changePassword(){
 
+    },
+    errorExists(part){
+      if (this.errors.includes(part)) {
+        return true
+      } else {
+        return false
+      }
+    },
+    validate(){
+      if (this.name === '' || this.name === null){
+        this.errors.push('name')
+      }
+      if (this.email === '' || this.email === null){
+        this.errors.push('email')
+      }
+      // if (this.password === '' || this.password === null){
+      //   this.errors.push('password')
+      // }
+      // if (this.address === '' || this.address === null){
+      //   this.errors.push('address')
+      // }
     }
   },
   mounted() {
