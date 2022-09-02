@@ -44,7 +44,7 @@
                 </router-link>
               </div>
               <div class="tw-flex tw-flex-col tw-py-2 tw-px-4 tw-bg-white tw-space-y-6 tw-w-[200px]" v-else>
-                <div class="tw-flex tw-justify-between tw-space-x-4 tw-border-b tw-border-b-2 tw-border-b-[#1D607F] tw-pb-1.5 " @click="profile()">
+                <div class="tw-flex tw-justify-between tw-space-x-4 tw-border-b tw-border-b-2 tw-border-b-[#1D607F] tw-pb-1.5 tw-cursor-pointer" @click="profile()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                     <path d="M9.41699 1.33301C11.558 1.33301 13.292 3.06696 13.292 5.20801C13.292 7.34905 11.558 9.08301 9.41699 9.08301C7.27595 9.08301 5.54199 7.34905 5.54199 5.20801C5.54199 3.06696 7.27595 1.33301 9.41699 1.33301ZM17.667 17.833H1.16699V16.1455C1.16699 15.6018 1.43538 15.0886 1.96262 14.6019C2.49326 14.1122 3.25209 13.6839 4.13281 13.3311C5.89505 12.6252 8.01934 12.2705 9.41699 12.2705C10.8146 12.2705 12.9389 12.6252 14.7012 13.3311C15.5819 13.6839 16.3407 14.1122 16.8714 14.6019C17.3986 15.0886 17.667 15.6018 17.667 16.1455V17.833Z" stroke="#1D607F"/>
                     </svg>
@@ -53,7 +53,7 @@
                     <path d="M0.165039 1.91866L5.74671 7.50033L0.165039 13.082L1.66671 14.5837L8.75004 7.50033L1.66671 0.416992L0.165039 1.91866Z" fill="#1D607F"/>
                     </svg>
                 </div>
-                <div class="tw-flex tw-justify-between tw-space-x-4 tw-border-b tw-border-b-2 tw-border-b-[#1D607F] tw-pb-1.5" @click="dashboard()">
+                <div class="tw-flex tw-justify-between tw-space-x-4 tw-border-b tw-border-b-2 tw-border-b-[#1D607F] tw-pb-1.5 tw-cursor-pointer" @click="dashboard()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M3.16634 0.833008V3.16634H0.833008V0.833008H3.16634ZM8.16634 10.833V13.1663H5.83301V10.833H8.16634ZM3.16634 10.833V13.1663H0.833008V10.833H3.16634ZM3.16634 5.83301V8.16634H0.833008V5.83301H3.16634ZM8.16634 5.83301V8.16634H5.83301V5.83301H8.16634ZM13.1663 3.16634H10.833V0.833008H13.1663V3.16634ZM8.16634 0.833008V3.16634H5.83301V0.833008H8.16634ZM13.1663 5.83301V8.16634H10.833V5.83301H13.1663ZM13.1663 10.833V13.1663H10.833V10.833H13.1663Z" stroke="#D25A73"/>
                     </svg>
@@ -62,7 +62,7 @@
                     <path d="M0.165039 1.91866L5.74671 7.50033L0.165039 13.082L1.66671 14.5837L8.75004 7.50033L1.66671 0.416992L0.165039 1.91866Z" fill="#1D607F"/>
                     </svg>
                 </div>
-                <div class="tw-flex tw-justify-between tw-space-x-4 tw-border-b tw-border-b-2 tw-border-b-[#1D607F] tw-pb-1.5" @click="logout()">
+                <div class="tw-flex tw-justify-between tw-space-x-4 tw-border-b tw-border-b-2 tw-border-b-[#1D607F] tw-pb-1.5 tw-cursor-pointer" @click="logout()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" viewBox="0 0 18 16" fill="none">
                     <path d="M14.142 8.33333H6.16699V7.66667H14.142H15.3458L14.4962 6.8138L12.6984 5.00902L13.167 4.54044L16.6266 8L13.1682 11.4583L12.6979 10.9846L14.4955 9.18689L15.3491 8.33333H14.142ZM2.33366 1.66667H1.83366V2.16667V13.8333V14.3333H2.33366H8.50033V15H2.33366C1.69313 15 1.16699 14.4739 1.16699 13.8333V2.16667C1.16699 1.52614 1.69313 1 2.33366 1H8.50033V1.66667H2.33366Z" stroke="#1D607F"/>
                     </svg>
@@ -140,7 +140,7 @@ export default defineComponent({
       this.$router.push('/user/profile')
     },
     dashboard(){
-      this.$router.push('/dashboard')
+      this.$router.push('/user/dashboard')
     }
   }
 });
