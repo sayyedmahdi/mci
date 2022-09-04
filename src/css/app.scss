@@ -57,6 +57,25 @@ input {
   color: white;
 }
 
+.title-class {
+  color: #d25a73;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: .0015em;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.q-table > thead > tr > th {
+  border-bottom: 1px solid #EEA2AD !important;
+  color: #1D607F;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.q-table > tbody > tr > td {
+  border-bottom: 1px solid #FFD7EC !important;
+}
 
 input[type=text]:focus {
   //border: 1px solid white !important;

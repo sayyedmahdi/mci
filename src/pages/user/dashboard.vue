@@ -8,9 +8,9 @@
   <div class="tw-flex tw-flex-col-reverse md:tw-flex-row md:tw-space-x-10 md:tw-justify-between tw-p-6 lg:tw-px-40 tw-mt-24">
     <div class="box_shadow md:tw-w-[60%] tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
       <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
-        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Packet</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Packet 1/1000 $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "><div class="">Bought: 800 $</div>      <div>Remain: 1600 $</div></div>
+        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks - info.SumBuys)}} $</div>
+        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>
+        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>
       </div>
       <div><img src="~assets/rectangle1391.png"></div>
     </div>
@@ -18,99 +18,72 @@
       <img src="~assets/user-avatar.png" class="tw-mt-[-80px]">
       <div class="text_dark_pink xs:tw-text-2xl">{{StateUser.Username}}</div>
       <div class="md:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6">
-          <div>New Orders</div>
-          <div>Current Packet</div>
+          <div>Orders</div>
+          <div>Active Packets</div>
           <div>All Packets</div>
       </div>
       <div class="xs:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6 tw-font-bold">
-        <div class="tw-pl-6">18</div>
-        <div>Packet1</div>
-        <div class="tw-pr-6">{{ packetsHistory.length }}</div>
+        <div class="tw-pl-6">{{ info.NumBuys }}</div>
+        <div>{{ info.NumActivePackets }}</div>
+        <div class="tw-pr-6">{{ info.NumPackets }}</div>
       </div>
       <div class="tw-pb-2 tw-px-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
     </div>
   </div>
   <div class="lg:tw-px-40 md:tw-px-10 lg:tw-mt-16">
-    <div class="box_shadow tw-py-6">
-      <div class=" tw-px-16 tw-flex tw-flex-col text_dark_blue ">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-3xl lg:tw-pb-10 text_dark_pink">Packets Buying History</div>
-          <div class="box_shadow all_counter tw-flex tw-items-center tw-px-4"><span>All Buys: {{packetsHistory.length}}</span></div>
-        </div>
-
-        <table class="tw-w-full">
-          <thead class="text_dark_blue tw-text-xl  table_head_border tw-w-full tw-whitespace-no-wrap">
-          <tr class="tw-pb-4">
-            <th>Title</th>
-            <th>Packet</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Payment type</th>
-            <th>Paypal number</th>
-          </tr>
-          </thead>
-          <tbody class="text_dark_blue tw-text-lg font_medium">
-          <tr v-for="(history , i) in packetsHistory" :key="`IDID__${i}`" :class="[ stripedRow(i) ? 'striped_table_row' : '' ]">
-            <th class="font_medium tw-py-4 table_row">{{history.Title}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.Packet}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.Date}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.Price}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.PaymentType}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.PaypalNumber}}</th>
-          </tr>
-          </tbody>
-
-
-        </table>
-        <div class="tw-text-right tw-mt-6 tw-mb-2">
-          Records per page:
-          <select v-model="selectedPerPage">
-            <template v-for="t in perPageOptions" :key="t">
-              <option>{{t}}</option>
-            </template>
-          </select>
-        </div>
-      </div>
+    <div class=" tw-flex tw-flex-col text_dark_blue ">
+      <q-table
+        title="Packets Buying History"
+        :rows="packetsHistory"
+        :columns="packetColumns"
+        row-key="ID"
+        color="red"
+        title-class="title-class"
+      >
+        <template v-slot:top-right>
+          <div class="row box_shadow tw-px-2 tw-py-2" data-html2canvas-ignore>
+            All Records: {{packetsHistory.length}}
+          </div>
+        </template>
+      </q-table>
     </div>
   </div>
+  <div class="lg:tw-px-40 md:tw-px-10 lg:tw-mt-16">
+      <div class=" tw-flex tw-flex-col text_dark_blue ">
+        <q-table
+          title="Order Buying History"
+          :rows="buyHistory"
+          :columns="orderColumns"
+          row-key="ID"
+          color="red"
+          title-class="title-class"
+        >
+          <template v-slot:top-right>
+            <div class="row box_shadow tw-px-2 tw-py-2" data-html2canvas-ignore>
+              All Records: {{buyHistory.length}}
+            </div>
+          </template>
+        </q-table>
+      </div>
+  </div>
   <div class="lg:tw-px-40 md:tw-px-10 lg:tw-mt-16 tw-mb-[15%]">
-    <div class="box_shadow tw-py-6">
-      <div class=" tw-px-16 tw-flex tw-flex-col text_dark_blue ">
-        <div class="tw-flex tw-justify-between">
-          <div class="tw-text-3xl lg:tw-pb-10 text_dark_pink">Orders History</div>
-          <div class="box_shadow all_counter tw-flex tw-items-center tw-px-4"><span>All Buys: {{buyHistory.length}}</span></div>
-        </div>
-
-        <table class="tw-w-full">
-          <thead class="text_dark_blue tw-text-xl  table_head_border tw-w-full tw-whitespace-no-wrap">
-          <tr class="tw-pb-4">
-            <th>Object Code</th>
-            <th>Store</th>
-            <th>Through Packet</th>
-            <th>Original Price</th>
-            <th>Paid Price</th>
-            <th>Date</th>
-          </tr>
-          </thead>
-          <tbody class="text_dark_blue tw-text-lg font_medium">
-          <tr v-for="(history , i) in packetsHistory" :key="`IDID__${i}`" :class="[ stripedRow(i) ? 'striped_table_row' : '' ]">
-            <th class="font_medium tw-py-4 table_row">{{history.Title}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.Packet}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.Date}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.Price}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.PaymentType}}</th>
-            <th class="font_medium tw-py-4 table_row">{{history.PaypalNumber}}</th>
-          </tr>
-          </tbody>
-        </table>
-        <div class="tw-text-right tw-mt-6 tw-mb-2">
-          Records per page:
-          <select v-model="selectedPerPage">
-            <template v-for="t in perPageOptions" :key="t">
-              <option>{{t}}</option>
-            </template>
-          </select>
-        </div>
+    <div class=" tw-py-6">
+      <div class=" tw-flex tw-flex-col text_dark_blue ">
+        <q-table
+          title="Cash backs History"
+          :rows="cashBacks"
+          :columns="cashBackColumns"
+          row-key="ID"
+          color="red"
+          title-class="title-class"
+          table-header-class="table-header"
+        >
+          <template v-slot:top-right>
+            <div class="row box_shadow tw-px-2 tw-py-2" data-html2canvas-ignore>
+              All Records: {{cashBacks.length}}
+            </div>
+          </template>
+        </q-table>
       </div>
     </div>
   </div>
@@ -123,6 +96,30 @@ export default {
   name: "dashboard",
   data(){
     return {
+      packetColumns: [
+        { name: 'PacketName', align: 'center', label: 'Packet', field: 'PacketName', sortable: true },
+        { name: 'StartDate', align: 'center', label: 'StartDate', field: 'StartDate', sortable: true },
+        { name: 'Price', align: 'center', label: 'Price', field: 'Price', sortable: true },
+        { name: 'BuyMethod', align: 'center', label: 'BuyMethod', field: 'BuyMethod', sortable: true },
+        { name: 'BuyDate', align: 'center', label: 'BuyDate', field: 'BuyDate', sortable: true },
+      ],
+      orderColumns: [
+        { name: 'Object Code', align: 'center', label: 'Object Code', field: 'Guid', sortable: true },
+        { name: 'Object Code', align: 'center', label: 'Packet', field: 'Guid', sortable: true },
+        { name: 'StoreName', align: 'center', label: 'Store', field: 'StoreName', sortable: true },
+        { name: 'Price', align: 'center', label: 'Original Price', field: 'RequestedPrice', sortable: true },
+        { name: 'BuyMethod', align: 'center', label: 'Paid Price', field: 'FinalPrice', sortable: true },
+        { name: 'StartDate', align: 'center', label: 'Date', field: 'StartDate', sortable: true },
+      ],
+      cashBackColumns: [
+        { name: 'PacketName', align: 'center', label: 'Packet Name', field: 'PacketName', sortable: true },
+        { name: 'PacketCashback', align: 'center', label: 'Packet Cashback', field: 'PacketCashback', sortable: true },
+        { name: 'PaybackDate', align: 'center', label: 'Payback Date', field: 'PaybackDate', sortable: true },
+        // { name: 'Price', align: 'center', label: 'Original Price', field: 'RequestedPrice', sortable: true },
+        // { name: 'BuyMethod', align: 'center', label: 'Paid Price', field: 'FinalPrice', sortable: true },
+        // { name: 'StartDate', align: 'center', label: 'Date', field: 'StartDate', sortable: true },
+      ],
+      info: {},
       stripedIndex: 2,
       selectedPerPage: 5,
       perPageOptions: [
@@ -193,6 +190,16 @@ export default {
         return (i - 2) % 3 === 0;
       }
     },
+    userInfo(){
+      this.$api.post('user/info.php' , )
+        .then((res) => {
+          this.info = res.data
+          console.log(res)
+        })
+        .catch((err) => {
+
+        })
+    },
     getUserPackets(){
       this.$api.post('userpacket/search.php', {
         Title: this.filter,
@@ -232,16 +239,10 @@ export default {
     }
   },
   mounted() {
-    this.$api.post('userpacket/search.php', {
-      Title: this.filter,
-      OrderBy: 'id',
-      OrderDir: 'desc',
-      Page: '1',
-      RowsPerPage: '5'
-    })
-      .then((res) => {
-        console.log(res)
-      })
+    this.getUserPackets();
+    this.getUserBuys();
+    this.getCashBacks();
+    this.userInfo();
   }
 }
 </script>

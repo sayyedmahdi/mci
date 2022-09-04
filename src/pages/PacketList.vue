@@ -11,7 +11,7 @@
           <span class="tw-mr-12">Duration: <span class="tw-font-bold">{{ packet.Duration }} month</span ></span >
           <span>Per Month Payment: <span class="tw-font-bold">{{ parseInt(packet.Price / packet.Duration ) }} $</span ></span>
         </div>
-        <button class="flex items-center tw-mx-auto md:tw-mx-0 tw-py-2 tw-px-9 text_md bg__dark_pink tw-text-white justify-center ">
+        <button class="flex items-center tw-mx-auto md:tw-mx-0 tw-py-2 tw-px-9 text_md bg__dark_pink tw-text-white justify-center " @click="buy(packet)">
           <span>Buy Now</span>
         </button>
       </div>
@@ -21,6 +21,19 @@
 
     </div>
   </div>
+  <q-dialog
+    v-model="show"
+  >
+    <div class="tw-flex tw-flex-col tw-space-y-4 tw-justify-center tw-items-center text_dark_blue tw-py-10 tw-bg-white tw-px-8">
+      Buy Packet
+      <div class="bg__dark_blue tw-text-white tw-px-16 tw-text-center" v-if="typeof selectedPacket !== 'undefined'">
+        <div>{{selectedPacket.Title}}</div>
+        <div>{{selectedPacket.Price}}$</div>
+        <div>Duration: {{selectedPacket.Duration}} month</div>
+        <div>Per Month Payment: {{ parseInt(selectedPacket.Price / selectedPacket.Duration ) }} $</div>
+      </div>
+    </div>
+  </q-dialog>
   <footer-page />
 </template>
 
@@ -32,7 +45,13 @@ export default {
   components: {belt , footerPage},
   data() {
     return {
-      packets: []
+      packets: [],
+      show: false,
+      selectedPacket: {
+        Price: 0,
+        Title: '',
+        Duration: 0,
+      },
     }
   },
   methods: {
@@ -56,6 +75,15 @@ export default {
           position: 'bottom-right'
         })
       })
+    },
+    buy(packet){
+      console.log(packet , 'PPPPPPPPPPPP')
+      //this.selectedPacket = packet;
+      this.selectedPacket.Price = packet.Price;
+      this.selectedPacket.Duration = packet.Duration;
+      this.selectedPacket.Title = packet.Title;
+      console.log(this.selectedPacket.Price , 'PPPPPPPPPPPP')
+      this.show = true;
     }
   },
   mounted() {
