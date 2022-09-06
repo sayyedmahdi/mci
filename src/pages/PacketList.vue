@@ -24,14 +24,27 @@
   <q-dialog
     v-model="show"
   >
-    <div class="tw-flex tw-flex-col tw-space-y-4 tw-justify-center tw-items-center text_dark_blue tw-py-10 tw-bg-white tw-px-8">
+    <div class="tw-flex tw-flex-col tw-space-y-4 tw-justify-center tw-items-center text_dark_blue tw-py-4 tw-bg-white tw-px-8 tw-text-xl tw-font-bold">
       Buy Packet
-      <div class="bg__dark_blue tw-text-white tw-px-16 tw-text-center" v-if="typeof selectedPacket !== 'undefined'">
+      <div class="bg__dark_blue tw-mt-2 tw-text-white tw-px-16 tw-text-center tw-py-4 tw-space-y-2 tw-font-medium" v-if="typeof selectedPacket !== 'undefined'">
         <div>{{selectedPacket.Title}}</div>
         <div>{{selectedPacket.Price}}$</div>
-        <div>Duration: {{selectedPacket.Duration}} month</div>
-        <div>Per Month Payment: {{ parseInt(selectedPacket.Price / selectedPacket.Duration ) }} $</div>
+        <div class="tw-flex tw-text-sm tw-justify-between tw-space-x-10 ">
+          <div>Duration: <span class="tw-font-bold">{{selectedPacket.Duration}} month</span></div>
+            <div>Per Month Payment: <span class="tw-font-bold">{{ parseInt(selectedPacket.Price / selectedPacket.Duration ) }}$</span></div>
+        </div>
       </div>
+      <div class="tw-mr-auto tw-flex tw-justify-between tw-space-x-2 tw-mr-0 tw-w-full">
+        <div class="tw-cursor-pointer">
+          <span class="tw-font-medium tw-text-base ">Checkout by:</span>
+          <img src="~assets/paypal.png" >
+        </div>
+        <div class="tw-mt-auto">
+          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.75rem] tw-pb-[0.7rem] tw-px-2 tw-text-base tw-font-medium">Gutsheine</label>
+          <input class="tw-border tw-border-red-700 tw-h-10 tw-w-[150px]" v-model="code">
+        </div>
+      </div>
+
     </div>
   </q-dialog>
   <footer-page />
@@ -47,6 +60,7 @@ export default {
     return {
       packets: [],
       show: false,
+      code: '',
       selectedPacket: {
         Price: 0,
         Title: '',
@@ -77,12 +91,10 @@ export default {
       })
     },
     buy(packet){
-      console.log(packet , 'PPPPPPPPPPPP')
-      //this.selectedPacket = packet;
       this.selectedPacket.Price = packet.Price;
       this.selectedPacket.Duration = packet.Duration;
       this.selectedPacket.Title = packet.Title;
-      console.log(this.selectedPacket.Price , 'PPPPPPPPPPPP')
+      this.code = '';
       this.show = true;
     }
   },
@@ -95,5 +107,9 @@ export default {
 <style scoped>
 .box_shadow {
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+}
+
+input {
+  color: #EEA2AD !important;
 }
 </style>
