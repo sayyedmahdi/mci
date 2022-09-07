@@ -10,7 +10,7 @@
         <div class="tw-text-4xl">{{store.Title}}</div>
         <div class="tw-text-base tw-px-16 md:tw-pr-[17%] md:tw-px-0">{{ store.Comments }}</div>
 
-        <button class="flex items-center tw-mx-auto tw-mt-4 md:tw-mx-0 tw-py-2 tw-px-9 text_md bg__dark_pink tw-text-white justify-center ">
+        <button class="flex items-center tw-mx-auto tw-mt-4 md:tw-mx-0 tw-py-2 tw-px-9 text_md bg__dark_pink tw-text-white justify-center " @click="gotoShop(store)">
           <span>Buy Now</span>
         </button>
       </div>
@@ -45,6 +45,9 @@ export default {
       }).then((res) => {
         this.stores = res.data.Data
       })
+    },
+    gotoShop(store){
+      window.open(store.Url , '_blank');
     }
   },
   mounted() {

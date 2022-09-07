@@ -13,8 +13,8 @@
         <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>
       </div>
 
-      <img src="~assets/circle-top.png" class="tw-absolute md:tw-right-[44%] tw-top-[14%]">
-      <img src="~assets/circle-bottom.png" class="tw-absolute md:tw-right-[44%] tw-top-[14%]">
+      <img src="~assets/circle-top.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">
+      <img src="~assets/circle-bottom.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">
 
       <div class="tw-relative tw-top-[50%]">
         <div class="tw-absolute balance__value text_dark_blue tw-h-[243px] tw-w-[243px]">{{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
@@ -258,7 +258,7 @@ export default {
 .box_shadow {
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
-.aaa {
+.balance__value {
   position: relative;
   left: 30%;
   /* bring your own prefixes */
@@ -295,4 +295,29 @@ export default {
     left: 56%;
   }
 }
+
+@media screen and (min-width: 1200px){
+  .balance__value{
+    left: 40%;
+  }
+}
+
+@media screen and (min-width: 900px){
+  .balance__value{
+    left: 41%;
+  }
+}
+
+@media screen and (min-width: 800px){
+  .balance__value{
+    left: 50%;
+  }
+}
+
+@media screen and (max-width: 800px){
+  .balance__value{
+    left: 43%;
+  }
+}
+
 </style>

@@ -35,12 +35,12 @@
         </div>
       </div>
       <div class="tw-mr-auto tw-flex tw-justify-between tw-space-x-2 tw-mr-0 tw-w-full">
-        <div class="tw-cursor-pointer">
+        <div class="">
           <span class="tw-font-medium tw-text-base ">Checkout by:</span>
-          <img src="~assets/paypal.png" >
+          <img src="~assets/paypal.png" class="tw-cursor-pointer" @click="sendBuy('2')">
         </div>
         <div class="tw-mt-auto">
-          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.75rem] tw-pb-[0.7rem] tw-px-2 tw-text-base tw-font-medium">Gutsheine</label>
+          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.75rem] tw-pb-[0.7rem] tw-px-2 tw-text-base tw-font-medium" @click="sendBuy('1')">Gutsheine</label>
           <input class="tw-border tw-border-red-700 tw-h-10 tw-w-[150px]" v-model="code">
         </div>
       </div>
@@ -53,6 +53,8 @@
 <script>
 import belt from "components/belt";
 import footerPage from "components/footerPage";
+import {mapGetters} from "vuex";
+
 export default {
   name: "PacketList",
   components: {belt , footerPage},
@@ -67,6 +69,9 @@ export default {
         Duration: 0,
       },
     }
+  },
+  computed: {
+    ...mapGetters(['StateUser'])
   },
   methods: {
     loadData(){
@@ -90,11 +95,47 @@ export default {
         })
       })
     },
+    sendBuy(buyMethod){
+      let data = {
+        UserID: this.StateUser.ID,
+        PacketID: this.selectedPacket.ID,
+        BuyMethod: buyMethod,
+        GutscheinCode: this.code
+      };
+
+      if (buyMethod === '2'){
+        data.GutscheinCode = this.code;
+
+        if (this.code === ''){
+          this.$q.notify({
+            type: 'negative',
+            timeout: 3000,
+            message: 'please insert your Gutschein Code first',
+            position: 'bottom-right'
+          });
+
+          return false;
+        }
+      }
+
+
+      this.$api.post('userpacket/create.php' , data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+
+      console.log(data , 'BUY BUY BHUY')
+    },
     buy(packet){
       this.selectedPacket.Price = packet.Price;
       this.selectedPacket.Duration = packet.Duration;
       this.selectedPacket.Title = packet.Title;
+      this.selectedPacket.ID = packet.ID;
       this.code = '';
+      console.log(this.selectedPacket , 'LLLLLLLLLLLLLLLL')
       this.show = true;
     }
   },
