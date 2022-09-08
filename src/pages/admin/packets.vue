@@ -76,19 +76,19 @@
                   </div>
                 </q-card-section>
                 <q-card-section  align="center">
-                    <q-btn flat class="save-btn q-mr-md" label="Save" @click="updateRow(props.row);" />
-                    <q-btn flat class="cancel-btn" label="Cancel" @click="props.row.editPopup = false" />
+                    <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="updateRow(props.row);" />
+                    <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="props.row.editPopup = false" />
                 </q-card-section>
               </q-card>
             </q-dialog>
             <q-dialog v-model="props.row.deletePopup" persistent>
-              <q-card class="detail-dialog">
-                <q-card-section class="detail-title">
-                  Do you really want to delete the row?
+              <q-card class="delete-dialog">
+                <q-card-section class="delete-title">
+                  {{$t('deleteWarning')}}
                 </q-card-section>
                 <q-card-section  align="center">
-                    <q-btn flat class="delete-btn q-mr-md" label="Yes, Delete" @click="deleteRow(props.row.ID); props.row.deletePopup = false" />
-                    <q-btn flat class="cancel-btn" label="No, Cancel" @click="props.row.deletePopup = false" />
+                    <q-btn flat class="delete-btn q-mr-md" :label="$t('deleteYes')" @click="deleteRow(props.row.ID); props.row.deletePopup = false" />
+                    <q-btn flat class="cancel-btn" :label="$t('deleteNo')" @click="props.row.deletePopup = false" />
                 </q-card-section>
               </q-card>
             </q-dialog>
@@ -106,24 +106,24 @@
             <q-input outlined autofocus v-model="edit.Title" label="Title" :error="v$.edit.Title.$error"></q-input>
           </div>
           <div>
-             <q-input outlined autofocus v-model="edit.Price" type="number" label="Price" :error="v$.edit.Price.$error"></q-input>
+             <q-input outlined v-model="edit.Price" type="number" label="Price" :error="v$.edit.Price.$error"></q-input>
           </div>
           <div>
-            <q-input outlined autofocus v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
+            <q-input outlined v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
           </div>
           <div>
-            <q-input outlined autofocus v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
+            <q-input outlined v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
           </div>
           <div>
             <q-select outlined v-model="edit.Status" :options="statusOptions" label="Status" emit-value map-options></q-select>
           </div>
           <div>
-            <q-input outlined autofocus type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
+            <q-input outlined type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
           </div>
         </q-card-section>
         <q-card-section  align="center">
-            <q-btn flat class="save-btn q-mr-md" label="Save" @click="addRow();" />
-            <q-btn flat class="cancel-btn" label="Cancel" @click="newPopup = false" />
+            <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="addRow();" />
+            <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="newPopup = false" />
         </q-card-section>
         </q-card>
     </q-dialog>
@@ -159,7 +159,7 @@ export default {
         { name: 'Duration', label: 'Duration', field: 'Duration', align: 'left' },
         { name: 'Cashback', label: 'Cashback', field: 'Cashback', align: 'left' },
         { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
-        { name: 'Action', label: 'Action', field: '' }
+        { name: 'Action', label: this.$i18n.t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
       data: [],

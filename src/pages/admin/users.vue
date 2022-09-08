@@ -2,7 +2,7 @@
   <div class="row wrap-layout">
     <div class="col-12">
       <q-table
-        title="Users"
+        :title="$t('user.Users')"
         :rows="data"
         :columns="columns"
         row-key="ID"
@@ -20,7 +20,7 @@
                 dense
                 v-model="searchParams.Status"
                 :options="searchOptions.Status"
-                label="Status" class="Search" style="min-width:150px"
+                :label="$t('user.Status')" class="Search" style="min-width:150px"
                 @popup-hide="onSelect()"
               />
               <q-select
@@ -28,7 +28,7 @@
                 dense
                 v-model="searchParams.Type"
                 :options="searchOptions.Type"
-                label="Type" class="Search" style="min-width:150px"
+                :label="$t('user.Type')" class="Search" style="min-width:150px"
                 @popup-hide="onSelect()"
               />
               <q-input outlined dense debounce="300" v-model="filter" placeholder="Search" class="Search">
@@ -37,7 +37,7 @@
                 </template>
               </q-input>
               <q-btn class="float-right on-right new-button" label="" @click="newRow()">
-                  <q-icon name="add_circle_outline" /> New
+                  <q-icon name="add_circle_outline" /> {{$t('user.New')}}
               </q-btn>
           </div>
         </template>
@@ -65,13 +65,13 @@
                       <q-item-section avatar>
                         <q-icon class="icon" name="edit" />
                       </q-item-section>
-                      <q-item-section>Edit</q-item-section>
+                      <q-item-section>{{$t('user.Edit')}}</q-item-section>
                     </q-item>
                     <q-item clickable @click="props.row.deletePopup = true">
                       <q-item-section avatar>
                         <q-icon class="icon" name="delete" />
                       </q-item-section>
-                      <q-item-section>Delete</q-item-section>
+                      <q-item-section>{{$t('user.Delete')}}</q-item-section>
                     </q-item>
                   </q-list>
                 </q-menu>
@@ -87,7 +87,7 @@
                               outlined
                               v-model="edit.Username"
                               readonly
-                              label="Username"
+                              :label="$t('user.Username')"
                               :error="v$.edit.Username.$error">
                           </q-input>
                       </div>
@@ -96,7 +96,7 @@
                               outlined
                               autofocus
                               v-model="edit.Email"
-                              label="Email"
+                              :label="$t('user.Email')"
                               :error="v$.edit.Email.$error">
                           </q-input>
                       </div>
@@ -105,24 +105,24 @@
                               outlined
                               v-model="edit.Status"
                               :options="StatusOptions"
-                              label="Status">
+                              :label="$t('user.Status')">
                           </q-select>
                       </div>
                   </q-card-section>
                   <q-card-section  align="center">
-                      <q-btn flat class="save-btn q-mr-md" label="Save" @click="updateRow(props.row);" />
-                      <q-btn flat class="cancel-btn" label="Cancel" @click="props.row.editPopup = false" />
+                      <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="updateRow(props.row);" />
+                      <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="props.row.editPopup = false" />
                   </q-card-section>
                 </q-card>
               </q-dialog>
               <q-dialog v-model="props.row.deletePopup" persistent>
-                <q-card class="detail-dialog">
-                  <q-card-section class="detail-title">
-                    Do you really want to delete the row?
+                <q-card class="delete-dialog">
+                  <q-card-section class="delete-title">
+                    {{$t('deleteWarning')}}
                   </q-card-section>
                   <q-card-section  align="center">
-                      <q-btn flat class="delete-btn q-mr-md" label="Yes, Delete" @click="deleteRow(props.row.ID); props.row.deletePopup = false" />
-                      <q-btn flat class="cancel-btn" label="No, Cancel" @click="props.row.deletePopup = false" />
+                      <q-btn flat class="delete-btn q-mr-md" :label="$t('deleteYes')" @click="deleteRow(props.row.ID); props.row.deletePopup = false" />
+                      <q-btn flat class="cancel-btn" :label="$t('deleteNo')" @click="props.row.deletePopup = false" />
                   </q-card-section>
                 </q-card>
               </q-dialog>
@@ -133,14 +133,15 @@
       <q-dialog v-model="newPopup" persistent>
         <q-card class="detail-dialog">
           <q-card-section class="detail-title">
-            New User
+            {{$t('user.NewUser')}}
           </q-card-section>
           <q-card-section>
               <div>
                   <q-input
                       outlined
+                      autofocus
                       v-model="edit.Username"
-                      label="Username"
+                      :label="$t('user.Username')"
                       :error="v$.edit.Username.$error">
                   </q-input>
               </div>
@@ -148,37 +149,36 @@
                   <q-input
                       outlined
                       v-model="edit.Password"
-                      label="Password"
+                      :label="$t('user.Password')"
                       :error="v$.edit.Password.$error">
                   </q-input>
               </div>
               <div>
                   <q-input
                       outlined
-                      autofocus
                       v-model="edit.Email"
                       :error="v$.edit.Email.$error"
-                      label="Email">
+                      :label="$t('user.Email')">
                   </q-input>
               </div>
               <div class="q-mb-md">
                   <q-select outlined
                       v-model="edit.Status"
                       :options="StatusOptions"
-                      label="Status">
+                      :label="$t('user.Status')">
                   </q-select>
               </div>
               <div>
                   <q-select outlined
                       v-model="edit.Type"
                       :options="TypeOptions"
-                      label="Type">
+                      :label="$t('user.Type')">
                   </q-select>
               </div>
           </q-card-section>
           <q-card-section align='center'>
-              <q-btn flat class="save-btn q-mr-md" label="Save" @click="addRow();" />
-              <q-btn flat class="cancel-btn" label="Cancel" @click="newPopup = false" />
+              <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="addRow();" />
+              <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="newPopup = false" />
           </q-card-section>
         </q-card>
       </q-dialog>
@@ -224,7 +224,7 @@ export default {
         { name: 'Email', label: 'Email', field: 'Email', align: 'left' },
         { name: 'Type', label: 'Type', field: 'Type', align: 'left', sortable: true },
         { name: 'Status', label: 'Status', field: 'Status', align: 'left', sortable: true },
-        { name: 'Action', label: 'Action', field: '' }
+        { name: 'Action', label: this.$i18n.t('action'), field: '' }
       ],
       data: [],
       edit: {

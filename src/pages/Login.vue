@@ -64,7 +64,7 @@ export default {
           // set auth to true
           _this.$store.dispatch('SetUser', response.data)
           _this.$api.defaults.headers.common['Token'] = response.data.Token
-          _router.push('/admin')
+          _router.push('/user/dashboard')
         }).catch(function (error) {
           _this.$helper.logError(error)
           _q.notify({

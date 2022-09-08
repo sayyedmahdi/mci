@@ -58,6 +58,17 @@ const helper = {
       if (parseInt(val) == 5)
         return 'Cancel Buy'
       return 'unknown'
+    },
+    initLang (dest) {
+      if (!dest.$i18n) {
+        return
+      }
+      dest.$q.lang.table.allRows = dest.$i18n.t('allRows')
+      dest.$q.lang.table.recordsPerPage = dest.$i18n.t('recordsPerPage')
+      return
+      dest.$q.lang.table.pagination = function (start, end, total) {
+        return start + '-' + end + ' ' + dest.$i18n.t('of') + ' ' + total
+      }
     }
 };
 

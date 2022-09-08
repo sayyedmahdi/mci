@@ -103,7 +103,7 @@ export default {
         GutscheinCode: this.code
       };
 
-      if (buyMethod === '2'){
+      if (buyMethod === '1'){
         data.GutscheinCode = this.code;
 
         if (this.code === ''){
@@ -122,12 +122,23 @@ export default {
       this.$api.post('userpacket/create.php' , data)
         .then((res) => {
           console.log(res);
+          this.$q.notify({
+            type: 'positive',
+            timeout: 3000,
+            message: 'purchase was made successfully',
+            position: 'bottom-right'
+          });
         })
         .catch((err) => {
           console.log(err);
+          this.$q.notify({
+            type: 'negative',
+            timeout: 3000,
+            message: err.response.message,
+            position: 'bottom-right'
+          });
         })
 
-      console.log(data , 'BUY BUY BHUY')
     },
     buy(packet){
       this.selectedPacket.Price = packet.Price;
@@ -135,7 +146,6 @@ export default {
       this.selectedPacket.Title = packet.Title;
       this.selectedPacket.ID = packet.ID;
       this.code = '';
-      console.log(this.selectedPacket , 'LLLLLLLLLLLLLLLL')
       this.show = true;
     }
   },

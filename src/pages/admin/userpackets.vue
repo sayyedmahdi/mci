@@ -1,7 +1,7 @@
 <template>
-  <div class="row shadow-2 ">
+  <div class="row">
     <q-table
-      :title="$t('store.Stores')"
+      title="User Packets"
       :rows="data"
       :columns="columns"
       row-key="ID"
@@ -10,8 +10,7 @@
       :filter="filter"
       @request="loadData"
       binary-state-sort
-      title-class="title-class" table-header-class="table-header" table-class="table"
-      style="width: 100%" flat separator="none"
+      style="width: 100%" flat separator="none" table-header-class="table-header" title-class="title-class"
     >
       <template v-slot:top-right>
         <div class="row" data-html2canvas-ignore>
@@ -20,16 +19,17 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn class="float-right on-right new-button" @click="newRow()">
-              <q-icon name="add_circle_outline" /> {{$t('store.New')}}
-          </q-btn>
         </div>
       </template>
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="Title" :props="props">{{ props.row.Title }}</q-td>
+          <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>
+          <q-td key="Username" :props="props">{{ props.row.Username }}</q-td>
+          <q-td key="BuyDate" :props="props">{{ props.row.BuyDate }}</q-td>
+          <q-td key="BuyMethod" :props="props">{{ displayBuyMethod(props.row.BuyMethod) }}</q-td>
+          <q-td key="GutscheinCode" :props="props">{{ props.row.GutscheinName }}</q-td>
+          <q-td key="StartDate" :props="props">{{ props.row.StartDate }}</q-td>
           <q-td key="Status" :props="props">{{ displayStatus(props.row.Status) }}</q-td>
-          <q-td key="Url" :props="props">{{ props.row.Url }}</q-td>
           <q-td key="Action" :props="props" >
             <q-btn flat icon="more_horiz">
               <q-menu auto-close>
@@ -38,13 +38,13 @@
                     <q-item-section avatar>
                       <q-icon class="icon" name="edit" />
                     </q-item-section>
-                    <q-item-section>{{$t('store.Edit')}}</q-item-section>
+                    <q-item-section>Edit</q-item-section>
                   </q-item>
                   <q-item clickable @click="props.row.deletePopup = true">
                     <q-item-section avatar>
                       <q-icon class="icon" name="delete" />
                     </q-item-section>
-                    <q-item-section>{{$t('store.Delete')}}</q-item-section>
+                    <q-item-section>Delete</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -52,23 +52,26 @@
             <q-dialog v-model="props.row.editPopup" persistent>
               <q-card class="detail-dialog">
                 <q-card-section class="detail-title">
-                  {{$t('store.EditStore')}}
+                  Packet
                 </q-card-section>
                 <q-card-section>
                   <div>
-                      <q-input outlined v-model="edit.Title" :label="$t('store.Title')" :error="v$.edit.Title.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Title" label="Title" :error="v$.edit.Title.$error"></q-input>
                   </div>
                   <div>
-                      <q-input outlined v-model="edit.Url" :label="$t('store.Url')" :error="v$.edit.Url.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Price" label="Price" :error="v$.edit.Price.$error"></q-input>
                   </div>
                   <div>
-                      <q-input outlined v-model="edit.Token" :label="$t('store.Token')" :error="v$.edit.Token.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
                   </div>
                   <div>
-                      <q-select outlined v-model="edit.Status" :options="statusOptions" :label="$t('store.Status')" emit-value map-options></q-select>
+                      <q-input outlined autofocus v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
                   </div>
-                  <div class="q-mt-md">
-                      <q-input outlined type="textarea" v-model="edit.Comments" :label="$t('store.Comments')"> </q-input>
+                  <div>
+                      <q-select outlined v-model="edit.Status" :options="statusOptions" label="Status" emit-value map-options></q-select>
+                  </div>
+                  <div>
+                      <q-input outlined autofocus type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
                   </div>
                 </q-card-section>
                 <q-card-section  align="center">
@@ -92,34 +95,6 @@
         </q-tr>
       </template>
     </q-table>
-    <q-dialog v-model="newPopup" persistent>
-      <q-card class="detail-dialog">
-        <q-card-section class="detail-title">
-          {{$t('store.NewStore')}}
-        </q-card-section>
-        <q-card-section>
-          <div>
-              <q-input outlined autofocus v-model="edit.Title" :label="$t('store.Title')" :error="v$.edit.Title.$error"></q-input>
-          </div>
-          <div>
-              <q-input outlined v-model="edit.Url" :label="$t('store.Url')" :error="v$.edit.Url.$error"></q-input>
-          </div>
-          <div>
-              <q-input outlined v-model="edit.Token" :label="$t('store.Token')" :error="v$.edit.Token.$error"></q-input>
-          </div>
-          <div>
-              <q-select outlined v-model="edit.Status" :options="statusOptions" :label="$t('store.Status')" emit-value map-options></q-select>
-          </div>
-          <div class="q-mt-md">
-              <q-input outlined type="textarea" v-model="edit.Comments" :label="$t('store.Comments')"> </q-input>
-          </div>
-        </q-card-section>
-        <q-card-section  align="center">
-            <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="addRow();" />
-            <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="newPopup = false" />
-        </q-card-section>
-        </q-card>
-    </q-dialog>
   </div>
 </template>
 
@@ -128,7 +103,7 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
 export default {
-  name: 'Stores',
+  name: 'Packets',
   meta: {
     title: 'Login – MCI 0.1'
   },
@@ -147,18 +122,23 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Title', label: this.$i18n.t('store.Title'), field: 'Title', align: 'left' },
-        { name: 'Status', label: this.$i18n.t('store.Status'), field: 'Status', align: 'left' },
-        { name: 'Url', label: this.$i18n.t('store.Url'), field: 'Url', align: 'left' },
+        { name: 'PacketName', label: 'Packet', field: 'PacketName', align: 'left' },
+        { name: 'Username', label: 'Buyer', field: 'Username', align: 'left' },
+        { name: 'BuyDate', label: 'Buy Date', field: 'BuyDate', align: 'left' },
+        { name: 'BuyMethod', label: 'Buy Method', field: 'BuyMethod', align: 'left' },
+        { name: 'GutscheinCode', label: 'Paypal/Gutschein Code', field: 'GutscheinName', align: 'left' },
+        { name: 'StartDate', label: 'Start Date', field: 'StartDate', align: 'left' },
+        { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
         { name: 'Action', label: this.$i18n.t('action'), field: '' }
       ],
-      statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
+      statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
       data: [],
       edit: {
           ID: '',
           Title: '',
-          Url: '',
-          Token: '',
+          Price: '',
+          Duration: '',
+          Cashback: '',
           Status: 1,
           Comments: ''
       },
@@ -169,17 +149,17 @@ export default {
       return {
         edit: {
             Title: { required },
-            Url: { required },
-            Token: { required }
+            Price: { required },
+            Duration: { required },
+            Cashback: { required }
         }
       }
   },
   mounted () {
-    this.$helper.initLang(this)
-    this.loadData({
-      pagination: this.pagination,
-      filter: undefined
-    })
+      this.loadData({
+        pagination: this.pagination,
+        filter: undefined
+      })
   },
   methods: {
     loadData (props) {
@@ -187,7 +167,7 @@ export default {
         const filter = props.filter
         let _this = this
         // get list
-        this.$api.post('store/search.php', {
+        this.$api.post('userpacket/search.php', {
             Title: this.filter,
             OrderBy: sortBy,
             OrderDir: descending ? 'desc' : 'asc',
@@ -205,26 +185,19 @@ export default {
             })
         })
     },
-    newRow () {
-        this.edit.Title = ''
-        this.edit.Url = ''
-        this.edit.Token = ''
-        this.edit.Comments = ''
-        this.edit.Status = '1'
-        this.newPopup = true
-    },
     editRow (row) {
         this.edit.ID = row.ID
         this.edit.Title = row.Title
-        this.edit.Token = row.Token
-        this.edit.Url = row.Url
+        this.edit.Price = row.Price
+        this.edit.Duration = row.Duration
+        this.edit.Cashback = row.Cashback
         this.edit.Status = row.Status
         this.edit.Comments = row.Comments
         row.editPopup = true
     },
     deleteRow (id) {
         let _this = this
-        this.$api.post('store/delete.php', {
+        this.$api.post('userpacket/delete.php', {
             ID: id
         }).then(function (response) {
             _this.loadData({pagination: _this.pagination, filter: _this.filter})
@@ -242,7 +215,7 @@ export default {
         let _this = this
         const isFormCorrect = await this.v$.$validate()
         if (isFormCorrect) {
-            this.$api.post('store/update.php', this.edit).then(function (response) {
+            this.$api.post('packet/update.php', this.edit).then(function (response) {
                 _this.loadData({pagination: _this.pagination, filter: _this.filter})
             }).catch(function (error) {
                 _this.$helper.logError(error)
@@ -255,33 +228,24 @@ export default {
             })
         }
     },
-    async addRow () {
-        let _this = this
-        const isFormCorrect = await this.v$.$validate()
-        if (isFormCorrect) {
-            this.$api.post('store/create.php', this.edit).then(function (response) {
-              console.log(response)
-              _this.loadData({pagination: _this.pagination, filter: _this.filter})
-              _this.newPopup = false
-            }).catch(function (error) {
-              _this.$helper.logError(error)
-              _this.$q.notify({
-                  type: 'negative',
-                  timeout: 3000,
-                  message: 'Update not possible',
-                  position: 'bottom-right'
-              })
-            })
-        }
-    },
     displayStatus (status) {
       if (!status) {
         return 'X'
       }
       if (status == '1')
-        return 'Enabled'
+        return 'Active'
       if (status == '2')
-        return 'Disabled'
+        return 'Finished'
+      return status
+    },
+    displayBuyMethod (status) {
+      if (!status) {
+        return 'X'
+      }
+      if (status == '1')
+        return 'Gutschein'
+      if (status == '2')
+        return 'Paypal'
       return status
     }
   }

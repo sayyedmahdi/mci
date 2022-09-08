@@ -28,6 +28,9 @@ const routes = [
       { path: "/admin/stores", component: () => import("pages/admin/stores.vue") },
       { path: "/admin/packets", component: () => import("pages/admin/packets.vue") },
       { path: "/admin/gutscheine", component: () => import("pages/admin/gutscheine.vue") },
+      { path: "/admin/userpackets", component: () => import("pages/admin/userpackets.vue") },
+      { path: "/admin/cashbacks", component: () => import("pages/admin/cashbacks.vue") },
+      { path: "/admin/buys", component: () => import("pages/admin/buys.vue") },
       { path: "/admin/users", component: () => import("pages/admin/users.vue") }
     ],
   },

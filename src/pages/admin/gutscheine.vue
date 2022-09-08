@@ -71,19 +71,19 @@
                   </div>
                 </q-card-section>
                 <q-card-section  align="center">
-                    <q-btn flat class="save-btn q-mr-md" label="Save" @click="updateRow(props.row);" />
-                    <q-btn flat class="cancel-btn" label="Cancel" @click="props.row.editPopup = false" />
+                    <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="updateRow(props.row);" />
+                    <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="props.row.editPopup = false" />
                 </q-card-section>
               </q-card>
             </q-dialog>
             <q-dialog v-model="props.row.deletePopup" persistent>
-              <q-card class="detail-dialog">
-                <q-card-section class="detail-title">
-                  Do you really want to delete the row?
+              <q-card class="delete-dialog">
+                <q-card-section class="delete-title">
+                  {{$t('deleteWarning')}}
                 </q-card-section>
                 <q-card-section  align="center">
-                    <q-btn flat class="delete-btn q-mr-md" label="Yes, Delete" @click="deleteRow(props.row.ID); props.row.deletePopup = false" />
-                    <q-btn flat class="cancel-btn" label="No, Cancel" @click="props.row.deletePopup = false" />
+                    <q-btn flat class="delete-btn q-mr-md" :label="$t('deleteYes')" @click="deleteRow(props.row.ID); props.row.deletePopup = false" />
+                    <q-btn flat class="cancel-btn" :label="$t('deleteNo')" @click="props.row.deletePopup = false" />
                 </q-card-section>
               </q-card>
             </q-dialog>
@@ -113,8 +113,8 @@
           </div>
         </q-card-section>
         <q-card-section  align="center">
-            <q-btn flat class="save-btn q-mr-md" label="Save" @click="addRow();" />
-            <q-btn flat class="cancel-btn" label="Cancel" @click="newPopup = false" />
+            <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="addRow();" />
+            <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="newPopup = false" />
         </q-card-section>
         </q-card>
     </q-dialog>
@@ -149,7 +149,7 @@ export default {
         { name: 'Packet', label: 'Packet', field: 'PacketName', align: 'left' },
         { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
         { name: 'User', label: 'User', field: 'Username', align: 'left' },
-        { name: 'Action', label: 'Action', field: '' }
+        { name: 'Action', label: this.$i18n.t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
       data: [],

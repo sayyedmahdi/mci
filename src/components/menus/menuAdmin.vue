@@ -22,9 +22,19 @@
           <q-item-section>Gutscheine</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
-        <q-item clickable v-ripple class="grey-10" to="/admin/config">
-          <q-item-section><span class="material-icons" style="font-size:30px">settings</span></q-item-section>
-          <q-item-section>Config</q-item-section>
+        <q-item clickable v-ripple class="grey-10" to="/admin/userpackets">
+          <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
+          <q-item-section>User Packets</q-item-section>
+          <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
+        </q-item>
+        <q-item clickable v-ripple class="grey-10" to="/admin/cashbacks">
+          <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
+          <q-item-section>Cash Backs</q-item-section>
+          <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
+        </q-item>
+        <q-item clickable v-ripple class="grey-10" to="/admin/buys">
+          <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
+          <q-item-section>Buy History</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" @click="logout">
@@ -61,8 +71,7 @@ export default {
 <style>
 .menu-admin
 {
-  background-color: #B6B6B6;
-  color: #000;
+  color: #fff;
   padding: 10px;
   height: 100%;
 }

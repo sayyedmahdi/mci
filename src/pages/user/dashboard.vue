@@ -6,21 +6,38 @@
     <div class="bg__dark_blue tw-flex-1"></div>
   </div>
   <div class="tw-flex tw-flex-col-reverse md:tw-flex-row md:tw-space-x-10 md:tw-justify-between tw-p-6 lg:tw-px-40 tw-mt-24">
-    <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
-      <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
-        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>
+
+      <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
+        <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
+          <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
+          <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>
+          <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>
+        </div>
+        <div style="position: absolute">
+
+        </div>
+        <div class="tw-relative">
+          <img src="~assets/circle-full.png">
+          <div class="balance__value_2 text_dark_blue">{{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
+        </div>
+
       </div>
 
-      <img src="~assets/circle-top.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">
-      <img src="~assets/circle-bottom.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">
+<!--    <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">-->
+<!--      <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">-->
+<!--        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>-->
+<!--        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>-->
+<!--        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>-->
+<!--      </div>-->
 
-      <div class="tw-relative tw-top-[50%]">
-        <div class="tw-absolute balance__value text_dark_blue tw-h-[243px] tw-w-[243px]">{{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
-      </div>
+<!--      <img src="~assets/circle-top.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">-->
+<!--      <img src="~assets/circle-bottom.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">-->
 
-    </div>
+<!--      <div class="tw-relative tw-top-[50%]">-->
+<!--        <div class="tw-absolute balance__value text_dark_blue tw-h-[243px] tw-w-[243px]">{{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>-->
+<!--      </div>-->
+
+<!--    </div>-->
     <div class="box_shadow tw-flex tw-mb-16 md:tw-mb-0 tw-flex-col tw-space-y-5 tw-justify-center tw-items-center text_dark_blue md:tw-w-[350px]">
       <img src="~assets/user-avatar.png" class="tw-mt-[-80px]">
       <div class="text_dark_pink xs:tw-text-2xl">{{StateUser.Username}}</div>
@@ -283,7 +300,17 @@ export default {
 .table_row {
   border-bottom: 1px solid #FFD7EC;
 }
-
+.balance__value_2
+{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
 @media screen and (min-width: 1900px) {
   .balance__value{
     left: 16%;
