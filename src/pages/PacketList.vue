@@ -35,9 +35,9 @@
         </div>
       </div>
       <div class="tw-mr-auto tw-flex tw-justify-between tw-space-x-2 tw-mr-0 tw-w-full">
-        <div class="">
-          <span class="tw-font-medium tw-text-base ">Checkout by:</span>
-          <img src="~assets/paypal.png" class="tw-cursor-pointer" @click="sendBuy('2')">
+        <div class="" id="paypal">
+<!--          <span class="tw-font-medium tw-text-base ">Checkout by:</span>-->
+<!--          <img src="~assets/paypal.png" class="tw-cursor-pointer" @click="sendBuy('2')">-->
         </div>
         <div class="tw-mt-auto">
           <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.75rem] tw-pb-[0.7rem] tw-px-2 tw-text-base tw-font-medium" @click="sendBuy('1')">Gutsheine</label>
@@ -68,6 +68,7 @@ export default {
         Title: '',
         Duration: 0,
       },
+      paypalLoaded: false,
     }
   },
   computed: {
@@ -96,6 +97,16 @@ export default {
       })
     },
     sendBuy(buyMethod){
+      if (this.StateUser === null){
+        this.$q.notify({
+          type: 'negative',
+          timeout: 3000,
+          message: 'please login first',
+          position: 'bottom-right'
+        });
+
+        return false;
+      }
       let data = {
         UserID: this.StateUser.ID,
         PacketID: this.selectedPacket.ID,
@@ -121,36 +132,115 @@ export default {
 
       this.$api.post('userpacket/create.php' , data)
         .then((res) => {
-          console.log(res);
           this.$q.notify({
             type: 'positive',
             timeout: 3000,
             message: 'purchase was made successfully',
             position: 'bottom-right'
           });
+          this.show = false;
         })
         .catch((err) => {
-          console.log(err);
           this.$q.notify({
             type: 'negative',
             timeout: 3000,
-            message: err.response.message,
+            message: err.response.data.ErrorMsg,
             position: 'bottom-right'
           });
+          this.show = false;
         })
+      this.code = '';
 
     },
     buy(packet){
+      if (this.StateUser === null || this.StateUser === undefined){
+        this.$q.notify({
+          type: 'negative',
+          timeout: 3000,
+          message: 'please login first',
+          position: 'bottom-right'
+        });
+
+        return false;
+      }
       this.selectedPacket.Price = packet.Price;
       this.selectedPacket.Duration = packet.Duration;
       this.selectedPacket.Title = packet.Title;
       this.selectedPacket.ID = packet.ID;
       this.code = '';
       this.show = true;
+      localStorage.setItem('selectedPacket' , JSON.stringify(this.selectedPacket))
+    },
+    clearInterval(id){
+      clearInterval(id);
     }
   },
   mounted() {
-    this.loadData()
+    this.loadData();
+
+    let intervalId = setInterval(() => {
+      const elementExists = !!document.getElementById('paypal')
+      if (elementExists && !this.paypalLoaded) {
+        window.vue = this;
+        var FUNDING_SOURCES = [
+          paypal.FUNDING.PAYPAL,
+          // paypal.FUNDING.VENMO,
+          // paypal.FUNDING.PAYLATER,
+          // paypal.FUNDING.CREDIT,
+          // paypal.FUNDING.CARD,
+        ]
+        FUNDING_SOURCES.forEach(function (fundingSource){
+
+          var button = paypal.Buttons({
+            style: {
+              layout: 'vertical',
+              color:  'silver',
+              shape:  'rect',
+              label:  'paypal'
+            },
+            fundingSource: fundingSource,
+            createOrder(data, actions) {
+              if (window.vue.StateUser === null){
+                window.vue.$q.notify({
+                  type: 'negative',
+                  timeout: 3000,
+                  message: 'please login first',
+                  position: 'bottom-right'
+                });
+
+                return false;
+              }
+              let packet = JSON.parse(localStorage.getItem('selectedPacket'));
+                  return actions.order.create({
+                    purchase_units: [{
+                      amount: {
+                        value: packet.Price
+                      },
+                      title: {
+                        value: packet.Title
+                      }
+                    }],
+                  });
+                },
+                // Finalize the transaction
+              onApprove(data, actions) {
+                return actions.order.capture().then(details => {
+                  window.vue.code = data.orderID
+                  window.vue.sendBuy('2')
+                });
+              },
+          })
+          if (button.isEligible()) {
+            button.render('#paypal')
+          }
+        })
+        this.paypalLoaded = true;
+        this.clearInterval(intervalId)
+      }
+    }, 1000)
+
+  },
+  created() {
   }
 }
 </script>
@@ -162,5 +252,13 @@ export default {
 
 input {
   color: #EEA2AD !important;
+}
+
+.paypal-button-number-1 {
+  display: none !important;
+}
+
+.paypal-button-number-2 {
+  display: none !important;
 }
 </style>

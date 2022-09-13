@@ -22,22 +22,6 @@
         </div>
 
       </div>
-
-<!--    <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">-->
-<!--      <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">-->
-<!--        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>-->
-<!--        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>-->
-<!--        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>-->
-<!--      </div>-->
-
-<!--      <img src="~assets/circle-top.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">-->
-<!--      <img src="~assets/circle-bottom.png" class="tw-absolute md:tw-right-[44%] md:tw-top-[14%] tw-top-[25%]">-->
-
-<!--      <div class="tw-relative tw-top-[50%]">-->
-<!--        <div class="tw-absolute balance__value text_dark_blue tw-h-[243px] tw-w-[243px]">{{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>-->
-<!--      </div>-->
-
-<!--    </div>-->
     <div class="box_shadow tw-flex tw-mb-16 md:tw-mb-0 tw-flex-col tw-space-y-5 tw-justify-center tw-items-center text_dark_blue md:tw-w-[350px]">
       <img src="~assets/user-avatar.png" class="tw-mt-[-80px]">
       <div class="text_dark_pink xs:tw-text-2xl">{{StateUser.Username}}</div>
@@ -63,9 +47,11 @@
         row-key="ID"
         color="red"
         title-class="title-class"
+        :pagination="packetPagination"
+        :rows-per-page-options="perPageOptions"
       >
-        <template v-slot:top-right>
-          <div class="row box_shadow tw-px-2 tw-py-2" data-html2canvas-ignore>
+        <template v-slot:top-right @click="getAllPaginate(packetsHistory.length , 'packet')">
+          <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(packetsHistory.length , 'packet')">
             All Records: {{packetsHistory.length}}
           </div>
         </template>
@@ -81,9 +67,11 @@
           row-key="ID"
           color="red"
           title-class="title-class"
+          :pagination="orderPagination"
+          :rows-per-page-options="perPageOptions"
         >
           <template v-slot:top-right>
-            <div class="row box_shadow tw-px-2 tw-py-2" data-html2canvas-ignore>
+            <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore  @click="getAllPaginate(buyHistory.length , 'order')">
               All Records: {{buyHistory.length}}
             </div>
           </template>
@@ -101,9 +89,11 @@
           color="red"
           title-class="title-class"
           table-header-class="table-header"
+          :pagination="cashBackPagination"
+          :rows-per-page-options="perPageOptions"
         >
           <template v-slot:top-right>
-            <div class="row box_shadow tw-px-2 tw-py-2" data-html2canvas-ignore>
+            <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(cashBacks.length , 'cashBacks')">
               All Records: {{cashBacks.length}}
             </div>
           </template>
@@ -151,56 +141,10 @@ export default {
       ],
       buyHistory: [],
       cashBacks: [],
-      packetsHistory: [
-        {
-          Title: 'aa',
-          Packet: 'some',
-          Price: 500,
-          Date: '25/2/2022',
-          PaymentType: 'Paypal',
-          PaypalNumber: '128526'
-        },
-        {
-          Title: 'aa',
-          Packet: 'some',
-          Price: 500,
-          Date: '25/2/2022',
-          PaymentType: 'Paypal',
-          PaypalNumber: '128526'
-        },
-        {
-          Title: 'aa',
-          Packet: 'some',
-          Price: 500,
-          Date: '25/2/2022',
-          PaymentType: 'Paypal',
-          PaypalNumber: '128526'
-        },
-        {
-          Title: 'aa',
-          Packet: 'some',
-          Price: 500,
-          Date: '25/2/2022',
-          PaymentType: 'Paypal',
-          PaypalNumber: '128526'
-        },
-        {
-          Title: 'aa',
-          Packet: 'some',
-          Price: 500,
-          Date: '25/2/2022',
-          PaymentType: 'Paypal',
-          PaypalNumber: '128526'
-        },
-        {
-          Title: 'aa',
-          Packet: 'some',
-          Price: 500,
-          Date: '25/2/2022',
-          PaymentType: 'Paypal',
-          PaypalNumber: '128526'
-        }
-      ],
+      packetsHistory: [],
+      packetPagination: {rowsPerPage:10},
+      orderPagination: {rowsPerPage:10},
+      cashBackPagination: {rowsPerPage:10},
     }
   },
   computed: {
@@ -218,7 +162,6 @@ export default {
       this.$api.post('user/info.php' , )
         .then((res) => {
           this.info = res.data
-          console.log(res)
         })
         .catch((err) => {
 
@@ -229,11 +172,8 @@ export default {
         Title: this.filter,
         OrderBy: 'id',
         OrderDir: 'desc',
-        Page: '1',
-        RowsPerPage: '5'
       })
         .then((res) => {
-          console.log(res)
           this.packetsHistory = res.data.Data
         })
     },
@@ -242,8 +182,6 @@ export default {
         Title: this.filter,
         OrderBy: 'id',
         OrderDir: 'desc' ,
-        Page: '1',
-        RowsPerPage: '5'
       })
         .then((res) => {
           this.buyHistory = res.data.Data
@@ -254,12 +192,34 @@ export default {
         Title: this.filter,
         OrderBy: 'id',
         OrderDir: 'desc' ,
-        Page: '1',
-        RowsPerPage: '5'
       })
         .then((res) => {
           this.cashBacks = res.data.Data;
         })
+    },
+    getAllPaginate(count , type){
+      let finalCount = 10;
+      if (count > 10 && count < 20){
+        finalCount = 20;
+      }
+      if (count > 20 && count < 50){
+        finalCount = 50;
+      }
+      if (count > 50 && count < 100){
+        finalCount = 100;
+      }
+      switch (type){
+        case 'order':
+          this.orderPagination.rowsPerPage = finalCount;
+          break;
+        case 'packet':
+          this.packetPagination.rowsPerPage = 0;
+          break;
+        case 'cashBack':
+          this.cashBackPagination.rowsPerPage = finalCount;
+          break;
+      }
+      console.log(this.packetPagination)
     }
   },
   mounted() {
