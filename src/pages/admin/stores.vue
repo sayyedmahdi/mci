@@ -147,10 +147,10 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Title', label: this.$i18n.t('store.Title'), field: 'Title', align: 'left' },
-        { name: 'Status', label: this.$i18n.t('store.Status'), field: 'Status', align: 'left' },
-        { name: 'Url', label: this.$i18n.t('store.Url'), field: 'Url', align: 'left' },
-        { name: 'Action', label: this.$i18n.t('action'), field: '' }
+        { name: 'Title', label: this.$t('store.Title'), field: 'Title', align: 'left' },
+        { name: 'Status', label: this.$t('store.Status'), field: 'Status', align: 'left' },
+        { name: 'Url', label: this.$t('store.Url'), field: 'Url', align: 'left' },
+        { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
       data: [],

@@ -14,7 +14,7 @@
       <div class="tw-flex tw-flex-wrap  tw-mb-6 tw-box-shadow tw-mt-8">
         <div class="w-full mb-6 tw-px-3 md:tw-mb-0">
           <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="name">
-            Name
+            User Name
           </label>
           <input v-model="name" :class="['appearance-none', 'bg__dark_blue' , 'tw-block' ,'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('name') ? 'tw-border-red-700' : '' ]" id="name" type="text" placeholder="Name">
           <p v-if="errorExists('name')" class="text-red-500 text-xs italic">Please fill out this field.</p>
@@ -26,52 +26,36 @@
           <input v-model="email" :class="['appearance-none', 'bg__dark_blue' , 'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('email') ? 'tw-border-red-700' : '' ]" id="email" type="text" placeholder="Email">
           <p v-if="errorExists('email')" class="text-red-500 text-xs italic">Please fill out this field.</p>
         </div>
-        <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
-          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="password">
-            Current Password
-          </label>
-          <input v-model="password" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="password" type="password" placeholder="Current Password">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
-        </div>
-        <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
-          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="new-password">
-            New Password
-          </label>
-          <input v-model="newPassword" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="new-password" type="password" placeholder="New Password">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
-        </div>
-        <div class="w-full md:w-1/3 tw-px-3 tw-mb-6 md:tw-mb-0">
-          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="country">
-            Country
-          </label>
-          <input v-model="country" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="country" type="text" placeholder="Country">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
-        </div>
-        <div class="w-full md:w-1/3 tw-px-3 tw-mb-6 md:tw-mb-0">
-          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="country">
-            City
-          </label>
-          <input v-model="city" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="city" type="text" placeholder="City">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
-        </div>
-        <div class="w-full md:w-1/3 tw-px-3 tw-mb-6 md:tw-mb-0">
-          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="postal-code">
-            Postal code
-          </label>
-          <input v-model="postalCode" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="postal-code" type="text" placeholder="Postal code">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
-        </div>
-        <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
-          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="address">
-            Address
-          </label>
-          <input v-model="address" class="appearance-none bg__dark_blue  tw-block tw-w-full tw-py-3 tw-px-4 tw-mb-3 focus:tw-border-white" id="address" type="text" placeholder="Address">
-          <p v-if="false" class="text-red-500 text-xs italic">Please fill out this field.</p>
-
-        </div>
         <q-btn @click="update()" class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">Save Changes</q-btn>
+        <q-btn @click="showChangePassword()" class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">Change Password</q-btn>
       </div>
     </div>
+    <q-dialog
+      v-model="show"
+    >
+      <div class="tw-flex tw-flex-col tw-space-y-4 tw-justify-center tw-items-center text_dark_blue tw-py-4 tw-bg-white tw-px-8 tw-text-xl tw-font-bold">
+        Change password
+        <div class="tw-mr-auto tw-flex tw-justify-between tw-space-x-2 tw-mr-0 tw-w-full">
+          <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
+            <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="password">
+              Current Password
+            </label>
+            <input v-model="password" :class="['appearance-none', 'bg__dark_blue',  'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('password') ? 'tw-border-red-700' : '' ]" id="password" type="password" placeholder="Current Password">
+            <p v-if="errorExists('password')" class="text-red-500 text-xs italic">Please fill out this field.</p>
+          </div>
+          <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
+            <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="new-password">
+              New Password
+            </label>
+            <input v-model="newPassword" :class="['appearance-none', 'bg__dark_blue',  'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('newPassword') ? 'tw-border-red-700' : '' ]" id="new-password" type="password" placeholder="New Password">
+            <p v-if="errorExists('newPassword')" class="text-red-500 text-xs italic">Please fill out this field.</p>
+          </div>
+
+        </div>
+        <q-btn @click="changePassword()" class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">Save Changes</q-btn>
+
+      </div>
+    </q-dialog>
   </div>
 </template>
 
@@ -91,6 +75,7 @@ export default {
       city: '',
       postalCode: '',
       errors: [],
+      show: false
     }
   },
   computed: {
@@ -137,7 +122,61 @@ export default {
         })
     },
     changePassword(){
+      this.errors = [];
 
+      if (this.password === '' || this.password == null){
+        this.errors.push('password')
+      }
+      if (this.newPassword === '' || this.newPassword == null){
+        this.errors.push('newPassword')
+      }
+
+      if (this.errors.length > 0){
+        return false;
+      }
+
+
+      let data = {
+        ID: this.StateUser.ID,
+        OldPassword: this.password,
+        Password: this.newPassword
+      }
+      this.$api.post('user/changepassword.php' , data)
+        .then((res) => {
+          if (res.data.Code === "200"){
+            this.$q.notify({
+              type: 'positive',
+              timeout: 3000,
+              message: 'password changed successfully!',
+              position: 'bottom-right'
+            })
+
+            this.show = false;
+          }
+        })
+        .catch((err) => {
+          let errorMessage = '';
+          switch (err.response.data.ErrorCode){
+            case 401:
+              errorMessage = 'invalid old password';
+              break;
+            case 402:
+              errorMessage = 'invalid new password';
+              break;
+            case 300:
+              errorMessage = 'some unknown error occurred';
+              break;
+          }
+
+          this.$q.notify({
+            type: 'negative',
+            timeout: 3000,
+            message: errorMessage,
+            position: 'bottom-right'
+          })
+
+          console.log(err.response)
+        })
     },
     errorExists(part){
       if (this.errors.includes(part)) {
@@ -145,6 +184,9 @@ export default {
       } else {
         return false
       }
+    },
+    showChangePassword(){
+      this.show = true;
     },
     validate(){
       if (this.name === '' || this.name === null){

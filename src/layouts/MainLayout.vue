@@ -11,34 +11,44 @@
       </button>
       <q-tabs class="tw-flex tw-flex-col mobile_menu_tabs" >
 
-        <q-route-tab @click="hideMenu" class="text_dark_pink" to="/" label="Home" />
-        <q-route-tab @click="hideMenu" to="/Stores" label="Stores" />
-        <q-route-tab @click="hideMenu" to="/packets" label="Packets" />
-        <q-route-tab @click="hideMenu" to="/contact" label="Contact" />
-        <q-route-tab @click="hideMenu" to="/support" label="Support" />
+        <q-route-tab @click="hideMenu" class="text_dark_pink" to="/" :label="$t('header.home')" />
+        <q-route-tab @click="hideMenu" to="/Stores" :label="$t('header.stores')" />
+        <q-route-tab @click="hideMenu" to="/packets" :label="$t('header.packets')" />
+        <q-route-tab @click="hideMenu" to="/contact" :label="$t('header.contact')" />
+        <q-route-tab @click="hideMenu" to="/support" :label="$t('header.support')" />
       </q-tabs>
     </div>
     <q-header reveal elevated class="tw-bg-white text_dark_blue tw-text-sm tw-justify-between" >
       <div class="tw-flex tw-py-4 md:tw-px-24 tw-px-8 tw-justify-between" >
         <div><img src="~assets/rectangle1380.png"></div>
         <q-tabs align="left" id="desktop_menu">
-          <q-route-tab class="text_dark_pink" to="/" label="Home" />
-          <q-route-tab to="/Stores" label="Stores" />
-          <q-route-tab to="/packets" label="Packets" />
-          <q-route-tab to="/contact" label="Contact" />
-          <q-route-tab to="/support" label="Support" />
+          <q-route-tab class="text_dark_pink" to="/" :label="$t('header.home')" />
+          <q-route-tab to="/Stores" :label="$t('header.stores')" />
+          <q-route-tab to="/packets" :label="$t('header.packets')" />
+          <q-route-tab to="/contact" :label="$t('header.contact')" />
+          <q-route-tab to="/support" :label="$t('header.support')" />
         </q-tabs>
         <div class="tw-flex tw-justify-center tw-items-center ">
+          <q-select
+            v-model="locale"
+            :options="localeOptions"
+            dense
+            borderless
+            emit-value
+            map-options
+            options-dense
+            style="min-width: 100px"
+          />
           <span class="material-icons tw-px-4" style="font-size:30px">account_circle
             <q-popup-proxy>
               <div class="tw-bg-white tw-py-2 tw-px-6 tw-text-center tw-flex tw-flex-col" v-if="!isAuthenticated">
                 <router-link to="/login">
-                  <button class="tw-mt-4 tw-py-2 tw-max-h-8 tw-w-40 text_md bg__dark_blue tw-text-white  ">
+                  <button class="tw-mt-4 tw-py-1 tw-max-h-8 tw-w-40 text_md bg__dark_blue tw-text-white  ">
                     <span>Log in</span>
                   </button>
                 </router-link>
                 <router-link to="/join-us">
-                  <button class="tw-mt-4 tw-mb-2 tw-py-2 tw-max-h-8 tw-w-40 text_md bg__dark_pink tw-text-white  ">
+                  <button class="tw-mt-4 tw-mb-2 tw-py-1 tw-max-h-8 tw-w-40 text_md bg__dark_pink tw-text-white  ">
                     <span>Join Us!</span>
                   </button>
                 </router-link>
@@ -95,8 +105,9 @@
   </q-layout>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import {mapGetters} from 'vuex';
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: "MainLayout",
@@ -107,13 +118,22 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const { locale } = useI18n({ useScope: 'global' })
 
     return {
+      locale,
+      localeOptions: [
+        { value: 'en-US', label: 'English' },
+        { value: 'de', label: 'German' }
+      ],
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
+  },
+  watch: {
+
   },
   computed: {
     ...mapGetters(['isAuthenticated'])

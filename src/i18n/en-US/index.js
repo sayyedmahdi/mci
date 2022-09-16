@@ -2,6 +2,14 @@
 // so you can safely delete all default props below
 
 export default {
+  list: "list",
+  header: {
+    home: "HOME",
+    stores: "STORES",
+    packets: "PACKETS",
+    contact: "CONTACT",
+    support: "SUPPORT"
+  },
   failed: "Action failed",
   success: "Action was successful",
   action: "Action1",

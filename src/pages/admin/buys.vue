@@ -121,13 +121,13 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Username', label: this.$i18n.t('buy.Buyer'), field: 'Username', align: 'left' },
-        { name: 'StoreName', label: this.$i18n.t('buy.Store'), field: 'StoreName', align: 'left' },
-        { name: 'RequestedPrice', label: this.$i18n.t('buy.RequestedPrice'), field: 'RequestedPrice', align: 'left' },
-        { name: 'FinalPrice', label: this.$i18n.t('buy.FinalPrice'), field: 'FinalPrice', align: 'left' },
-        { name: 'StartDate', label: this.$i18n.t('buy.StartDate'), field: 'StartDate', align: 'left' },
-        { name: 'Status', label: this.$i18n.t('buy.Status'), field: 'Status', align: 'left' },
-        { name: 'Action', label: this.$i18n.t('action'), field: '' }
+        { name: 'Username', label: this.$t('buy.Buyer'), field: 'Username', align: 'left' },
+        { name: 'StoreName', label: this.$t('buy.Store'), field: 'StoreName', align: 'left' },
+        { name: 'RequestedPrice', label: this.$t('buy.RequestedPrice'), field: 'RequestedPrice', align: 'left' },
+        { name: 'FinalPrice', label: this.$t('buy.FinalPrice'), field: 'FinalPrice', align: 'left' },
+        { name: 'StartDate', label: this.$t('buy.StartDate'), field: 'StartDate', align: 'left' },
+        { name: 'Status', label: this.$t('buy.Status'), field: 'Status', align: 'left' },
+        { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
       data: [],

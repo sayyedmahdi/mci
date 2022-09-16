@@ -224,7 +224,7 @@ export default {
         { name: 'Email', label: 'Email', field: 'Email', align: 'left' },
         { name: 'Type', label: 'Type', field: 'Type', align: 'left', sortable: true },
         { name: 'Status', label: 'Status', field: 'Status', align: 'left', sortable: true },
-        { name: 'Action', label: this.$i18n.t('action'), field: '' }
+        { name: 'Action', label: this.$t('action'), field: '' }
       ],
       data: [],
       edit: {

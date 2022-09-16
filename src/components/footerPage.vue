@@ -29,15 +29,47 @@
   </div>
     <div class="tw-flex tw-text-sm tw-justify-between bg__dark_blue md:tw-px-24 tw-px-16 tw-pb-4">
       <div class=" tw-mt-10 "><span>Copyright @house of glam 2021</span></div>
-      <div class=" tw-mt-10"><span > Datenschutzerklärung<span class="ml-4">Impressum</span></span></div>
+      <div class=" tw-mt-10"><span class="tw-cursor-pointer" @click="dataProtectiondialog()"> Datenschutzerklärung</span><span class="ml-4 tw-cursor-pointer" @click="impressumdialog()">Impressum</span></div>
     </div>
 
+    <q-dialog v-model="showImpressum">
+      <div class="bg-white tw-p-16">
+        <h3>Impressum</h3>
+        <p>
+          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+        </p>
+      </div>
+
+    </q-dialog>
+    <q-dialog v-model="showDataProtection">
+      <div class="bg-white tw-p-16">
+        <h3>Datenschutzerklärung</h3>
+        <p>
+          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+        </p>
+      </div>
+
+    </q-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  name: "footerPage"
+  name: "footerPage",
+  data(){
+    return {
+      showImpressum: false,
+      showDataProtection: false
+    }
+  },
+  methods: {
+    impressumdialog(){
+      this.showImpressum = true;
+    },
+    dataProtectiondialog(){
+      this.showDataProtection = true;
+    }
+  }
 }
 </script>
 

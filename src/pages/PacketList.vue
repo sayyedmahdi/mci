@@ -35,12 +35,12 @@
         </div>
       </div>
       <div class="tw-mr-auto tw-flex tw-justify-between tw-space-x-2 tw-mr-0 tw-w-full">
-        <div class="" id="paypal">
+        <div class="" :id="'paypal' + selectedPacket.ID">
 <!--          <span class="tw-font-medium tw-text-base ">Checkout by:</span>-->
 <!--          <img src="~assets/paypal.png" class="tw-cursor-pointer" @click="sendBuy('2')">-->
         </div>
         <div class="tw-mt-auto">
-          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.75rem] tw-pb-[0.7rem] tw-px-2 tw-text-base tw-font-medium" @click="sendBuy('1')">Gutsheine</label>
+          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.6rem] tw-pb-[0.4rem] tw-px-2 tw-text-base tw-font-medium" @click="sendBuy('1')">Gutsheine</label>
           <input class="tw-border tw-border-red-700 tw-h-10 tw-w-[150px]" v-model="code">
         </div>
       </div>
@@ -69,6 +69,70 @@ export default {
         Duration: 0,
       },
       paypalLoaded: false,
+    }
+  },
+  watch: {
+    show() {
+      this.paypalLoaded = false;
+      var intervalId = setInterval(() => {
+        let id = this.selectedPacket.ID;
+        const elementExists = !!document.getElementById('paypal' + id)
+        if (elementExists && !this.paypalLoaded){
+          this.paypalLoaded = true;
+          window.vue = this;
+          var FUNDING_SOURCES = [
+            paypal.FUNDING.PAYPAL,
+          ]
+          FUNDING_SOURCES.forEach(function (fundingSource) {
+
+            var button = paypal.Buttons({
+              style: {
+                layout: 'vertical',
+                color: 'silver',
+                shape: 'rect',
+                label: 'paypal'
+              },
+              fundingSource: fundingSource,
+              createOrder(data, actions) {
+                if (window.vue.StateUser === null || window.vue.StateUser === undefined) {
+                  window.vue.$q.notify({
+                    type: 'negative',
+                    timeout: 3000,
+                    message: 'please login first',
+                    position: 'bottom-right'
+                  });
+
+                  return false;
+                }
+                let packet = JSON.parse(localStorage.getItem('selectedPacket'));
+                return actions.order.create({
+                  purchase_units: [{
+                    amount: {
+                      value: packet.Price
+                    },
+                    title: {
+                      value: packet.Title
+                    }
+                  }],
+                });
+              },
+              // Finalize the transaction
+              onApprove(data, actions) {
+                return actions.order.capture().then(details => {
+                  window.vue.code = data.orderID
+                  window.vue.sendBuy('2')
+                });
+              },
+            })
+            if (button.isEligible()) {
+              button.render('#paypal' + window.vue.selectedPacket.ID)
+            }
+          })
+        }
+
+        clearInterval(intervalId)
+      } , 1000)
+
     }
   },
   computed: {
@@ -169,6 +233,7 @@ export default {
       this.selectedPacket.ID = packet.ID;
       this.code = '';
       this.show = true;
+      this.paypalLoaded = false;
       localStorage.setItem('selectedPacket' , JSON.stringify(this.selectedPacket))
     },
     clearInterval(id){
@@ -177,68 +242,6 @@ export default {
   },
   mounted() {
     this.loadData();
-
-    let intervalId = setInterval(() => {
-      const elementExists = !!document.getElementById('paypal')
-      if (elementExists && !this.paypalLoaded) {
-        window.vue = this;
-        var FUNDING_SOURCES = [
-          paypal.FUNDING.PAYPAL,
-          // paypal.FUNDING.VENMO,
-          // paypal.FUNDING.PAYLATER,
-          // paypal.FUNDING.CREDIT,
-          // paypal.FUNDING.CARD,
-        ]
-        FUNDING_SOURCES.forEach(function (fundingSource){
-
-          var button = paypal.Buttons({
-            style: {
-              layout: 'vertical',
-              color:  'silver',
-              shape:  'rect',
-              label:  'paypal'
-            },
-            fundingSource: fundingSource,
-            createOrder(data, actions) {
-              if (window.vue.StateUser === null){
-                window.vue.$q.notify({
-                  type: 'negative',
-                  timeout: 3000,
-                  message: 'please login first',
-                  position: 'bottom-right'
-                });
-
-                return false;
-              }
-              let packet = JSON.parse(localStorage.getItem('selectedPacket'));
-                  return actions.order.create({
-                    purchase_units: [{
-                      amount: {
-                        value: packet.Price
-                      },
-                      title: {
-                        value: packet.Title
-                      }
-                    }],
-                  });
-                },
-                // Finalize the transaction
-              onApprove(data, actions) {
-                return actions.order.capture().then(details => {
-                  window.vue.code = data.orderID
-                  window.vue.sendBuy('2')
-                });
-              },
-          })
-          if (button.isEligible()) {
-            button.render('#paypal')
-          }
-        })
-        this.paypalLoaded = true;
-        this.clearInterval(intervalId)
-      }
-    }, 1000)
-
   },
   created() {
   }

@@ -129,7 +129,7 @@ export default {
         { name: 'GutscheinCode', label: 'Paypal/Gutschein Code', field: 'GutscheinName', align: 'left' },
         { name: 'StartDate', label: 'Start Date', field: 'StartDate', align: 'left' },
         { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
-        { name: 'Action', label: this.$i18n.t('action'), field: '' }
+        { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
       data: [],

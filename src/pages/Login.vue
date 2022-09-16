@@ -45,7 +45,6 @@ export default {
           Password: this.password
         }).then(function (response) {
           // check for valid User Type
-          console.log(response.data.Type)
           if (!response.data.Type == 1) {
             _q.notify({
               type: 'negative',

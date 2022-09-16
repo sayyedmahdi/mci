@@ -149,7 +149,7 @@ export default {
         { name: 'Packet', label: 'Packet', field: 'PacketName', align: 'left' },
         { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
         { name: 'User', label: 'User', field: 'Username', align: 'left' },
-        { name: 'Action', label: this.$i18n.t('action'), field: '' }
+        { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
       data: [],

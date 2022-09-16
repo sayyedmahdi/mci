@@ -16,7 +16,7 @@
           <label class="form-check-label text-white" for="flexCheckDefault">
             I agree with
           </label>
-          <div class="text_dark_pink tw-text-left ">Terms of use</div>
+          <div class="text_dark_pink tw-text-left tw-cursor-pointer" @click="showTermsOfUse()">Terms of use</div>
         </div>
 
 
@@ -28,6 +28,15 @@
 
     </div>
   </form>
+  <q-dialog v-model="show">
+    <div class="bg-white tw-p-16">
+      <h3>Terms of use</h3>
+      <p>
+        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+      </p>
+    </div>
+
+  </q-dialog>
 </template>
 
 <script>
@@ -42,6 +51,7 @@ export default {
       password: '',
       termsOfUse: 0,
       errors: [],
+      show: false
     }
   },
   methods: {
@@ -147,6 +157,9 @@ export default {
       if (this.address === '' || this.address === null){
         this.errors.push('address')
       }
+    },
+    showTermsOfUse(){
+      this.show = true;
     }
   }
 }

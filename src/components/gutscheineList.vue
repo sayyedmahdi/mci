@@ -1,7 +1,7 @@
 <template>
   <div class="tw-my-32">
     <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px]  tw-mb-12">
-      <span class="text_dark_blue ">Liste der <span class="text_dark_pink tw-ml-3">Geschäfte</span></span>
+      <span class="text_dark_blue ">{{ $t('list') }} der <span class="text_dark_pink tw-ml-3">Geschäfte</span></span>
     </div>
 
     <div class="tw-flex flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
@@ -14,7 +14,7 @@
             <div class="tw-text-3xl md:tw-text-2xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 md:tw-py-1 md:tw-pd-x-3 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md  tw-mt-4 bg__dark_pink tw-text-white tw-text-xs">
-              <span>Lorem Ipsum</span>
+              <span>Buy Now</span>
             </button>
           </div>
           <div class="xxs:tw-my-6 tw-pt-4 md:tw-w-[40%] 2xl:tw-mr-[-35px] xl:tw-mr-[-23px] tw-max-h-[30%]">
@@ -30,7 +30,7 @@
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md tw-mt-4 bg__dark_pink tw-text-white tw-text-xs" >
-              <span>Lorem Ipsum</span>
+              <span>Buy Now</span>
             </button>
           </div>
           <div class="tw-justify-end tw-min-w-[50%]">
@@ -54,7 +54,7 @@
             <div class="tw-text-3xl md:tw-text-2xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 md:tw-py-1 md:tw-pd-x-3 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md  tw-mt-4 bg__dark_pink tw-text-white tw-text-xs">
-              <span>Lorem Ipsum</span>
+              <span>Buy Now</span>
             </button>
           </div>
           <div class="xxs:tw-my-6 tw-pt-4 md:tw-w-[40%] 2xl:tw-mr-[-35px] xl:tw-mr-[-23px] tw-max-h-[30%]">
@@ -70,7 +70,7 @@
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md tw-mt-4 bg__dark_pink tw-text-white tw-text-xs" >
-              <span>Lorem Ipsum</span>
+              <span>Buy Now</span>
             </button>
           </div>
           <div class="tw-justify-end tw-min-w-[50%]">

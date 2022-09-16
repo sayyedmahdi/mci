@@ -123,7 +123,7 @@ export default {
         { name: 'PacketName', label: 'Packet', field: 'PacketName', align: 'left' },
         { name: 'PacketCashback', label: 'Cashback Amount', field: 'PacketCashback', align: 'left' },
         { name: 'PaybackDate', label: 'Date', field: 'PaybackDate', align: 'left' },
-        { name: 'Action', label: this.$i18n.t('action'), field: '' }
+        { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
       data: [],

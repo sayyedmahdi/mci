@@ -11,7 +11,7 @@
         <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
           <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
           <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>
-          <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ SumBuys }} $</div></div>
+          <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ info.SumBuys }} $</div></div>
         </div>
         <div style="position: absolute">
 
@@ -48,12 +48,22 @@
         color="red"
         title-class="title-class"
         :pagination="packetPagination"
+        @update:pagination="newPagination('packets' , $event)"
         :rows-per-page-options="perPageOptions"
       >
         <template v-slot:top-right @click="getAllPaginate(packetsHistory.length , 'packet')">
           <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(packetsHistory.length , 'packet')">
             All Records: {{packetsHistory.length}}
           </div>
+        </template>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>
+            <q-td key="StartDate" :props="props">{{ props.row.StartDate }}</q-td>
+            <q-td key="Price" :props="props">{{ props.row.Price }}</q-td>
+            <q-td key="BuyMethod" :props="props">{{ props.row.BuyMethod === 1 ? 'Gutsheine' : 'Paypal' }}</q-td>
+            <q-td key="BuyDate" :props="props">{{ props.row.BuyDate }}</q-td>
+          </q-tr>
         </template>
       </q-table>
     </div>
@@ -68,6 +78,7 @@
           color="red"
           title-class="title-class"
           :pagination="orderPagination"
+          @update:pagination="newPagination('orders' , $event)"
           :rows-per-page-options="perPageOptions"
         >
           <template v-slot:top-right>
@@ -90,6 +101,7 @@
           title-class="title-class"
           table-header-class="table-header"
           :pagination="cashBackPagination"
+          @update:pagination="newPagination('cashBacks' , $event)"
           :rows-per-page-options="perPageOptions"
         >
           <template v-slot:top-right>
@@ -114,7 +126,7 @@ export default {
         { name: 'PacketName', align: 'center', label: 'Packet', field: 'PacketName', sortable: true },
         { name: 'StartDate', align: 'center', label: 'StartDate', field: 'StartDate', sortable: true },
         { name: 'Price', align: 'center', label: 'Price', field: 'Price', sortable: true },
-        { name: 'BuyMethod', align: 'center', label: 'BuyMethod', field: 'BuyMethod', sortable: true },
+        { name: 'BuyMethod', align: 'center', label: 'BuyMethod', field: 'BuyMethod' , sortable: true },
         { name: 'BuyDate', align: 'center', label: 'BuyDate', field: 'BuyDate', sortable: true },
       ],
       orderColumns: [
@@ -142,7 +154,12 @@ export default {
       buyHistory: [],
       cashBacks: [],
       packetsHistory: [],
-      packetPagination: {rowsPerPage:10},
+      packetPagination: {
+        sortBy: 'name',
+        descending: false,
+        page: 1,
+        rowsPerPage: 3,
+      },
       orderPagination: {rowsPerPage:10},
       cashBackPagination: {rowsPerPage:10},
     }
@@ -156,6 +173,19 @@ export default {
         return i === 1;
       }else {
         return (i - 2) % 3 === 0;
+      }
+    },
+    newPagination(table , newPagination){
+      switch (table){
+        case 'packets':
+          this.packetPagination = newPagination;
+          break;
+        case 'orders':
+          this.orderPagination = newPagination;
+          break;
+        case 'cashBacks':
+          this.cashBackPagination = newPagination;
+          break;
       }
     },
     userInfo(){
@@ -198,28 +228,17 @@ export default {
         })
     },
     getAllPaginate(count , type){
-      let finalCount = 10;
-      if (count > 10 && count < 20){
-        finalCount = 20;
-      }
-      if (count > 20 && count < 50){
-        finalCount = 50;
-      }
-      if (count > 50 && count < 100){
-        finalCount = 100;
-      }
       switch (type){
         case 'order':
-          this.orderPagination.rowsPerPage = finalCount;
+          this.orderPagination.rowsPerPage = 0;
           break;
         case 'packet':
           this.packetPagination.rowsPerPage = 0;
           break;
         case 'cashBack':
-          this.cashBackPagination.rowsPerPage = finalCount;
+          this.cashBackPagination.rowsPerPage = 0;
           break;
       }
-      console.log(this.packetPagination)
     }
   },
   mounted() {

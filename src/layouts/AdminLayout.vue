@@ -60,7 +60,7 @@
           <div class="col-3" style="background-color: #D25A73; height: 10px"></div>
           <div class="col-3" style="background-color: #1D607F; height: 10px"></div>
         </div>
-        <div class="row q-pa-none q-ma-none">            
+        <div class="row q-pa-none q-ma-none">
           <div class="col-xs-5 col-sm-2"  v-if='drawer' style="background-color: #D25A73; min-height: calc(100vh - 30px)">
             <menuAdmin />
           </div>
@@ -79,6 +79,7 @@
 import menuTop from 'components/menus/menuTopAdmin';
 import menuMobile from 'components/menus/menuMobile';
 import menuAdmin from 'components/menus/menuAdmin';
+import { useI18n } from 'vue-i18n'
 
 import { defineComponent, ref } from "vue";
 
@@ -93,7 +94,7 @@ export default defineComponent({
 
   data() {
     return {
-      locale: 'en-US',
+      locale: useI18n({ useScope: 'global' }).locale,
       localeOptions: [
         { value: 'en-US', label: 'English' },
         { value: 'de', label: 'German' }

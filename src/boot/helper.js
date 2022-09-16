@@ -60,11 +60,11 @@ const helper = {
       return 'unknown'
     },
     initLang (dest) {
-      if (!dest.$i18n) {
+      if (!dest.$t) {
         return
       }
-      dest.$q.lang.table.allRows = dest.$i18n.t('allRows')
-      dest.$q.lang.table.recordsPerPage = dest.$i18n.t('recordsPerPage')
+      dest.$q.lang.table.allRows = dest.$t('allRows')
+      dest.$q.lang.table.recordsPerPage = dest.$t('recordsPerPage')
       return
       dest.$q.lang.table.pagination = function (start, end, total) {
         return start + '-' + end + ' ' + dest.$i18n.t('of') + ' ' + total
