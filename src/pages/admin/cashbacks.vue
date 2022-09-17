@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <q-table
-      title="Cash Backs"
+      :title="$t('cashback.Cashbacks')"
       :rows="data"
       :columns="columns"
       row-key="ID"
@@ -31,52 +31,15 @@
             <q-btn flat icon="more_horiz">
               <q-menu auto-close>
                 <q-list dense separator style="min-width: 170px">
-                  <q-item clickable  @click="editRow(props.row)">
-                    <q-item-section avatar>
-                      <q-icon class="icon" name="edit" />
-                    </q-item-section>
-                    <q-item-section>Edit</q-item-section>
-                  </q-item>
                   <q-item clickable @click="props.row.deletePopup = true">
                     <q-item-section avatar>
                       <q-icon class="icon" name="delete" />
                     </q-item-section>
-                    <q-item-section>Delete</q-item-section>
+                    <q-item-section>{{ $t('cashback.Delete') }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
-            <q-dialog v-model="props.row.editPopup" persistent>
-              <q-card class="detail-dialog">
-                <q-card-section class="detail-title">
-                  Packet
-                </q-card-section>
-                <q-card-section>
-                  <div>
-                      <q-input outlined autofocus v-model="edit.Title" label="Title" :error="v$.edit.Title.$error"></q-input>
-                  </div>
-                  <div>
-                      <q-input outlined autofocus v-model="edit.Price" label="Price" :error="v$.edit.Price.$error"></q-input>
-                  </div>
-                  <div>
-                      <q-input outlined autofocus v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
-                  </div>
-                  <div>
-                      <q-input outlined autofocus v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
-                  </div>
-                  <div>
-                      <q-select outlined v-model="edit.Status" :options="statusOptions" label="Status" emit-value map-options></q-select>
-                  </div>
-                  <div>
-                      <q-input outlined autofocus type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
-                  </div>
-                </q-card-section>
-                <q-card-section  align="center">
-                    <q-btn flat class="save-btn q-mr-md" :label="$t('save')" @click="updateRow(props.row);" />
-                    <q-btn flat class="cancel-btn cancel-btn-alt" :label="$t('cancel')" @click="props.row.editPopup = false" />
-                </q-card-section>
-              </q-card>
-            </q-dialog>
             <q-dialog v-model="props.row.deletePopup" persistent>
               <q-card class="delete-dialog">
                 <q-card-section class="delete-title">
@@ -96,16 +59,10 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-
 export default {
   name: 'Cash Backs',
   meta: {
-    title: 'Login – MCI 0.1'
-  },
-  setup () {
-    return { v$: useVuelidate() }
+    title: 'Cashbacks – MCI 0.1'
   },
   data () {
     return {
@@ -119,41 +76,22 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Username', label: 'Buyer', field: 'Username', align: 'left' },
-        { name: 'PacketName', label: 'Packet', field: 'PacketName', align: 'left' },
-        { name: 'PacketCashback', label: 'Cashback Amount', field: 'PacketCashback', align: 'left' },
-        { name: 'PaybackDate', label: 'Date', field: 'PaybackDate', align: 'left' },
+        { name: 'Username', label: this.$t('cashback.Buyer'), field: 'Username', align: 'left' },
+        { name: 'PacketName', label: this.$t('cashback.Packet'), field: 'PacketName', align: 'left' },
+        { name: 'PacketCashback', label: this.$t('cashback.Amount'), field: 'PacketCashback', align: 'left' },
+        { name: 'PaybackDate', label: this.$t('cashback.Date'), field: 'PaybackDate', align: 'left' },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
-      data: [],
-      edit: {
-          ID: '',
-          Title: '',
-          Price: '',
-          Duration: '',
-          Cashback: '',
-          Status: 1,
-          Comments: ''
-      },
-      newPopup: false
+      data: []
     }
   },
-  validations() {
-      return {
-        edit: {
-            Title: { required },
-            Price: { required },
-            Duration: { required },
-            Cashback: { required }
-        }
-      }
-  },
   mounted () {
-      this.loadData({
-        pagination: this.pagination,
-        filter: undefined
-      })
+    this.$helper.initLang(this)
+    this.loadData({
+      pagination: this.pagination,
+      filter: undefined
+    })
   },
   methods: {
     loadData (props) {
@@ -174,20 +112,10 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
-    },
-    editRow (row) {
-        this.edit.ID = row.ID
-        this.edit.Title = row.Title
-        this.edit.Price = row.Price
-        this.edit.Duration = row.Duration
-        this.edit.Cashback = row.Cashback
-        this.edit.Status = row.Status
-        this.edit.Comments = row.Comments
-        row.editPopup = true
     },
     deleteRow (id) {
         let _this = this
@@ -200,47 +128,10 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
-    },
-    async updateRow (row) {
-        let _this = this
-        const isFormCorrect = await this.v$.$validate()
-        if (isFormCorrect) {
-            this.$api.post('packet/update.php', this.edit).then(function (response) {
-                _this.loadData({pagination: _this.pagination, filter: _this.filter})
-            }).catch(function (error) {
-                _this.$helper.logError(error)
-                _this.$q.notify({
-                    type: 'negative',
-                    timeout: 3000,
-                    message: 'Update not possible',
-                    position: 'bottom-right'
-                })
-            })
-        }
-    },
-    displayStatus (status) {
-      if (!status) {
-        return 'X'
-      }
-      if (status == '1')
-        return 'Active'
-      if (status == '2')
-        return 'Finished'
-      return status
-    },
-    displayBuyMethod (status) {
-      if (!status) {
-        return 'X'
-      }
-      if (status == '1')
-        return 'Gutschein'
-      if (status == '2')
-        return 'Paypal'
-      return status
     }
   }
 }

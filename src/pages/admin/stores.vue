@@ -200,7 +200,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
@@ -233,7 +233,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
@@ -249,7 +249,7 @@ export default {
                 _this.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'Update not possible',
+                    message: _this.$t('updateFailed'),
                     position: 'bottom-right'
                 })
             })
@@ -268,7 +268,7 @@ export default {
               _this.$q.notify({
                   type: 'negative',
                   timeout: 3000,
-                  message: 'Update not possible',
+                  message: _this.$t('insertFailed'),
                   position: 'bottom-right'
               })
             })

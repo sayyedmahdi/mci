@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <q-table
-      title="User Packets"
+      :title="$t('userpacket.Userpackets')"
       :rows="data"
       :columns="columns"
       row-key="ID"
@@ -27,6 +27,7 @@
           <q-td key="Username" :props="props">{{ props.row.Username }}</q-td>
           <q-td key="BuyDate" :props="props">{{ props.row.BuyDate }}</q-td>
           <q-td key="BuyMethod" :props="props">{{ displayBuyMethod(props.row.BuyMethod) }}</q-td>
+          <q-td key="PacketPrice" :props="props">{{ props.row.PacketPrice }}</q-td>
           <q-td key="GutscheinCode" :props="props">{{ props.row.GutscheinName }}</q-td>
           <q-td key="StartDate" :props="props">{{ props.row.StartDate }}</q-td>
           <q-td key="Status" :props="props">{{ displayStatus(props.row.Status) }}</q-td>
@@ -38,13 +39,13 @@
                     <q-item-section avatar>
                       <q-icon class="icon" name="edit" />
                     </q-item-section>
-                    <q-item-section>Edit</q-item-section>
+                    <q-item-section>{{ $t('userpacket.Edit') }}</q-item-section>
                   </q-item>
                   <q-item clickable @click="props.row.deletePopup = true">
                     <q-item-section avatar>
                       <q-icon class="icon" name="delete" />
                     </q-item-section>
-                    <q-item-section>Delete</q-item-section>
+                    <q-item-section>{{ $t('userpacket.Delete') }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -52,26 +53,20 @@
             <q-dialog v-model="props.row.editPopup" persistent>
               <q-card class="detail-dialog">
                 <q-card-section class="detail-title">
-                  Packet
+                  {{ $t('userpacket.Userpacket') }}
                 </q-card-section>
                 <q-card-section>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Title" label="Title" :error="v$.edit.Title.$error"></q-input>
+                      <q-input outlined v-model="props.row.PacketName" readonly :label="$t('userpacket.Packet')"></q-input>
                   </div>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Price" label="Price" :error="v$.edit.Price.$error"></q-input>
+                      <q-input outlined v-model="props.row.Username" :label="$t('userpacket.User')" readonly></q-input>
                   </div>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
+                      <q-input outlined v-model="props.row.BuyDate" :label="$t('userpacket.Date')" readonly></q-input>
                   </div>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
-                  </div>
-                  <div>
-                      <q-select outlined v-model="edit.Status" :options="statusOptions" label="Status" emit-value map-options></q-select>
-                  </div>
-                  <div>
-                      <q-input outlined autofocus type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
+                      <q-select autofocus outlined v-model="edit.Status" :options="statusOptions" :label="$t('userpacket.Status')" emit-value map-options></q-select>
                   </div>
                 </q-card-section>
                 <q-card-section  align="center">
@@ -99,16 +94,10 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
-
 export default {
-  name: 'Packets',
+  name: 'UserPackets',
   meta: {
-    title: 'Login – MCI 0.1'
-  },
-  setup () {
-    return { v$: useVuelidate() }
+    title: 'MCI 0.1 - User Packets'
   },
   data () {
     return {
@@ -122,44 +111,31 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'PacketName', label: 'Packet', field: 'PacketName', align: 'left' },
-        { name: 'Username', label: 'Buyer', field: 'Username', align: 'left' },
-        { name: 'BuyDate', label: 'Buy Date', field: 'BuyDate', align: 'left' },
-        { name: 'BuyMethod', label: 'Buy Method', field: 'BuyMethod', align: 'left' },
-        { name: 'GutscheinCode', label: 'Paypal/Gutschein Code', field: 'GutscheinName', align: 'left' },
-        { name: 'StartDate', label: 'Start Date', field: 'StartDate', align: 'left' },
-        { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
+        { name: 'PacketName', label: this.$t('userpacket.Packet'), field: 'PacketName', align: 'left' },
+        { name: 'Username', label: this.$t('userpacket.Buyer'), field: 'Username', align: 'left' },
+        { name: 'BuyDate', label: this.$t('userpacket.BuyDate'), field: 'BuyDate', align: 'left' },
+        { name: 'BuyMethod', label: this.$t('userpacket.BuyMethod'), field: 'BuyMethod', align: 'left' },
+        { name: 'PacketPrice', label: this.$t('userpacket.Price'), field: 'PacketPrice', align: 'left' },
+        { name: 'GutscheinCode', label: this.$t('userpacket.Code'), field: 'GutscheinName', align: 'left' },
+        { name: 'StartDate', label: this.$t('userpacket.StartDate'), field: 'StartDate', align: 'left' },
+        { name: 'Status', label: this.$t('userpacket.Status'), field: 'Status', align: 'left' },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
-      statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
+      statusOptions: [{'label': this.$t('userpacket.StatusActive'), 'value': '1'}, {'label': this.$t('userpacket.StatusFinished'), 'value': '2'}],
       data: [],
       edit: {
           ID: '',
-          Title: '',
-          Price: '',
-          Duration: '',
-          Cashback: '',
-          Status: 1,
-          Comments: ''
+          Status: 1
       },
       newPopup: false
     }
   },
-  validations() {
-      return {
-        edit: {
-            Title: { required },
-            Price: { required },
-            Duration: { required },
-            Cashback: { required }
-        }
-      }
-  },
   mounted () {
-      this.loadData({
-        pagination: this.pagination,
-        filter: undefined
-      })
+    this.$helper.initLang(this)
+    this.loadData({
+      pagination: this.pagination,
+      filter: undefined
+    })
   },
   methods: {
     loadData (props) {
@@ -180,19 +156,14 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
     },
     editRow (row) {
         this.edit.ID = row.ID
-        this.edit.Title = row.Title
-        this.edit.Price = row.Price
-        this.edit.Duration = row.Duration
-        this.edit.Cashback = row.Cashback
         this.edit.Status = row.Status
-        this.edit.Comments = row.Comments
         row.editPopup = true
     },
     deleteRow (id) {
@@ -206,47 +177,44 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
     },
     async updateRow (row) {
         let _this = this
-        const isFormCorrect = await this.v$.$validate()
-        if (isFormCorrect) {
-            this.$api.post('packet/update.php', this.edit).then(function (response) {
-                _this.loadData({pagination: _this.pagination, filter: _this.filter})
-            }).catch(function (error) {
-                _this.$helper.logError(error)
-                _this.$q.notify({
-                    type: 'negative',
-                    timeout: 3000,
-                    message: 'Update not possible',
-                    position: 'bottom-right'
-                })
+        this.$api.post('userpacket/update.php', this.edit).then(function (response) {
+            _this.loadData({pagination: _this.pagination, filter: _this.filter})
+        }).catch(function (error) {
+            _this.$helper.logError(error)
+            _this.$q.notify({
+                type: 'negative',
+                timeout: 3000,
+                message: _this.$t('updateFailed'),
+                position: 'bottom-right'
             })
-        }
+        })
     },
     displayStatus (status) {
       if (!status) {
         return 'X'
       }
       if (status == '1')
-        return 'Active'
+        return this.$t('userpacket.StatusActive')
       if (status == '2')
-        return 'Finished'
+        return this.$t('userpacket.StatusFinished')
       return status
     },
-    displayBuyMethod (status) {
-      if (!status) {
+    displayBuyMethod (method) {
+      if (!method) {
         return 'X'
       }
-      if (status == '1')
-        return 'Gutschein'
-      if (status == '2')
-        return 'Paypal'
-      return status
+      if (method == '1')
+        return this.$t('userpacket.BuyMethodGutschein')
+      if (method == '2')
+        return this.$t('userpacket.BuyMethodPaypal')
+      return method
     }
   }
 }

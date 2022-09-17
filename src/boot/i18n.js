@@ -3,6 +3,7 @@ import { createI18n } from "vue-i18n";
 import messages from "src/i18n";
 import {Quasar} from "quasar";
 
+
 export default boot(({ app }) => {
   let locale = Quasar.lang.isoName;
   const i18n = createI18n({

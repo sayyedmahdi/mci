@@ -79,7 +79,7 @@
               <q-dialog v-model="props.row.editPopup" persistent>
                 <q-card class="detail-dialog">
                   <q-card-section class="detail-title">
-                    User
+                    {{$t('user.User')}}
                   </q-card-section>
                   <q-card-section>
                       <div>
@@ -102,11 +102,18 @@
                       </div>
                       <div>
                           <q-select
-                              outlined
+                              outlined emit-value map-options
                               v-model="edit.Status"
                               :options="StatusOptions"
                               :label="$t('user.Status')">
                           </q-select>
+                      </div>
+                      <div>
+                        <q-select outlined emit-value map-options
+                            v-model="edit.Type"
+                            :options="TypeOptions"
+                            :label="$t('user.Type')">
+                        </q-select>
                       </div>
                   </q-card-section>
                   <q-card-section  align="center">
@@ -146,34 +153,34 @@
                   </q-input>
               </div>
               <div>
-                  <q-input
-                      outlined
-                      v-model="edit.Password"
-                      :label="$t('user.Password')"
-                      :error="v$.edit.Password.$error">
-                  </q-input>
+                <q-input
+                    outlined
+                    v-model="edit.Password"
+                    :label="$t('user.Password')"
+                    :error="v$.edit.Password.$error">
+                </q-input>
               </div>
               <div>
-                  <q-input
-                      outlined
-                      v-model="edit.Email"
-                      :error="v$.edit.Email.$error"
-                      :label="$t('user.Email')">
-                  </q-input>
+                <q-input
+                    outlined
+                    v-model="edit.Email"
+                    :error="v$.edit.Email.$error"
+                    :label="$t('user.Email')">
+                </q-input>
               </div>
               <div class="q-mb-md">
-                  <q-select outlined
-                      v-model="edit.Status"
-                      :options="StatusOptions"
-                      :label="$t('user.Status')">
-                  </q-select>
+                <q-select outlined emit-value map-options
+                    v-model="edit.Status"
+                    :options="StatusOptions"
+                    :label="$t('user.Status')">
+                </q-select>
               </div>
               <div>
-                  <q-select outlined
-                      v-model="edit.Type"
-                      :options="TypeOptions"
-                      :label="$t('user.Type')">
-                  </q-select>
+                <q-select outlined emit-value map-options
+                    v-model="edit.Type"
+                    :options="TypeOptions"
+                    :label="$t('user.Type')">
+                </q-select>
               </div>
           </q-card-section>
           <q-card-section align='center'>
@@ -202,15 +209,17 @@ export default {
     return {
       filter: '',
       searchParams: {
-        Status: {'label': 'All', 'value': '0'},
-        Type: {'label': 'All', 'value': '0'}
+        Status: {'label': this.$t('allRows'), 'value': '0'},
+        Type: {'label': this.$t('allRows'), 'value': '0'}
       },
       searchOptions: {
-        Status: [{'label': 'All', 'value': '0'}, {'label': 'New', 'value': '1'}, {'label': 'Enabled', 'value': '2'}, {'label': 'Disabled', 'value': '3'}, {'label': 'Deleted', 'value': '4'}],
-        Type: [{'label': 'All', 'value': '0'}, {'label': 'Admin', 'value': '1'}, {'label': 'Enduser', 'value': '2'}]
+        Status: [{'label': this.$t('user.AllRows'), 'value': '0'}, {'label': this.$t('user.StatusNew'), 'value': '1'}, {'label': this.$t('user.StatusEnabled'), 'value': '2'}
+          , {'label': this.$t('user.StatusDisabled'), 'value': '3'}, {'label': this.$t('user.StatusDeleted'), 'value': '4'}],
+        Type: [{'label': this.$t('allRows'), 'value': '0'}, {'label': this.$t('user.TypeAdmin'), 'value': '1'}, {'label': this.$t('user.TypeEnduser'), 'value': '2'}]
       },
-      StatusOptions: [{'label': 'New', 'value': '1'}, {'label': 'Enabled', 'value': '2'}, {'label': 'Disabled', 'value': '3'}, {'label': 'Deleted', 'value': '4'}],
-      TypeOptions: [{'label': 'Admin', 'value': '1'}],
+      StatusOptions: [{'label': this.$t('user.StatusNew'), 'value': '1'}, {'label': this.$t('user.StatusEnabled'), 'value': '2'}
+          , {'label': this.$t('user.StatusDisabled'), 'value': '3'}, {'label': this.$t('user.StatusDeleted'), 'value': '4'}],
+      TypeOptions: [{'label':this.$t('user.TypeAdmin'), 'value': '1'}, {'label':this.$t('user.TypeEnduser'), 'value': '2'}],
       loading: false,
       pagination: {
         sortBy: 'Username',
@@ -220,10 +229,10 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Username', required: true, label: 'Username', align: 'left', sortable: true },
-        { name: 'Email', label: 'Email', field: 'Email', align: 'left' },
-        { name: 'Type', label: 'Type', field: 'Type', align: 'left', sortable: true },
-        { name: 'Status', label: 'Status', field: 'Status', align: 'left', sortable: true },
+        { name: 'Username', required: true, label: this.$t('user.Username'), align: 'left', sortable: true },
+        { name: 'Email', label: this.$t('user.Email'), field: 'Email', align: 'left' },
+        { name: 'Type', label: this.$t('user.Type'), field: 'Type', align: 'left', sortable: true },
+        { name: 'Status', label: this.$t('user.Status'), field: 'Status', align: 'left', sortable: true },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
       data: [],
@@ -247,10 +256,11 @@ export default {
       }
   },
   mounted () {
-      this.loadData({
-        pagination: this.pagination,
-        filter: undefined
-      })
+    this.$helper.initLang(this)
+    this.loadData({
+      pagination: this.pagination,
+      filter: undefined
+    })
   },
   methods: {
     onSelect () {
@@ -278,7 +288,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
@@ -287,20 +297,16 @@ export default {
         this.edit.Username = ''
         this.edit.Email = ''
         this.edit.Password = ''
-        this.edit.Status = {'label': 'Enabled', 'value': '2'}
-        this.edit.Type = {'label': 'Admin', 'value': '1'}
+        this.edit.Status = '2'
+        this.edit.Type = '1'
         this.newPopup = true
     },
     editRow (row) {
         this.edit.Username = row.Username
         this.edit.Email = row.Email
-        this.edit.Status = {'label': 'New', 'value': row.Status}
-        if (row.Status == 2)
-            this.edit.Status = {'label': 'Enabled', 'value': row.Status}
-        if (row.Status == 3)
-          this.edit.Status = {'label': 'Disabled', 'value': row.Status}
-        if (row.Status == 4)
-          this.edit.Status = {'label': 'Deleted', 'value': row.Status}
+        this.edit.Status = row.Status
+        this.edit.Type = row.Type
+        this.edit.Password = "XXXXX"
         row.editPopup = true
     },
     deleteRow (id) {
@@ -314,7 +320,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
@@ -327,7 +333,7 @@ export default {
                 ID: row.ID,
                 Username: this.edit.Username,
                 Email: this.edit.Email,
-                Status: this.edit.Status.value,
+                Status: this.edit.Status,
             }).then(function (response) {
                 _this.loadData({pagination: _this.pagination, filter: _this.filter})
                 _this.newPopup = false
@@ -336,7 +342,7 @@ export default {
                 _this.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'Update not possible',
+                    message: _this.$t('updateFailed'),
                     position: 'bottom-right'
                 })
             })
@@ -350,8 +356,8 @@ export default {
                 Username: this.edit.Username,
                 Email: this.edit.Email,
                 Password: this.edit.Password,
-                Status: this.edit.Status.value,
-                Type: this.edit.Type.value,
+                Status: this.edit.Status,
+                Type: this.edit.Type,
             }).then(function (response) {
                 _this.loadData({pagination: _this.pagination, filter: _this.filter})
                 _this.newPopup = false
@@ -360,7 +366,7 @@ export default {
                 _this.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'Update not possible',
+                    message: _this.$t('insertFailed'),
                     position: 'bottom-right'
                 })
             })
@@ -371,13 +377,13 @@ export default {
         return 'X'
       }
       if (Status == '1')
-        return 'New'
+        return this.$t('user.StatusNew')
       if (Status == '2')
-        return 'Enabled'
+        return this.$t('user.StatusEnabled')
       if (Status == '3')
-        return 'Disabled'
+        return this.$t('user.StatusDisabled')
       if (Status == '4')
-        return 'Deleted'
+        return this.$t('user.StatusDeleted')
       return Status
     },
     displayType (type) {
@@ -385,9 +391,9 @@ export default {
         return ''
       }
       if (type == 1)
-        return 'Admin'
+        return this.$t('user.TypeAdmin')
       if (type == 2)
-        return 'Enduser'
+        return this.$t('user.TypeEnduser')
       return type
     }
   }

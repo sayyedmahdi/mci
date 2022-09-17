@@ -1,11 +1,11 @@
 <template>
   <div class="menu-top text-center">
     <ul>
-      <li><q-btn flat @click="$router.push('/')">Home</q-btn></li>
-      <li><q-btn flat @click="$router.push('/stores')">Stores</q-btn></li>
-      <li><q-btn flat @click="$router.push('/packets')">Packets</q-btn></li>
-      <li><q-btn flat @click="$router.push('/contact')">Contact</q-btn></li>
-      <li><q-btn flat @click="$router.push('/support')">Support</q-btn></li>
+      <li><q-btn flat @click="$router.push('/')">{{$t('header.home')}}</q-btn></li>
+      <li><q-btn flat @click="$router.push('/stores')">{{$t('header.stores')}}</q-btn></li>
+      <li><q-btn flat @click="$router.push('/packets')">{{$t('header.packets')}}</q-btn></li>
+      <li><q-btn flat @click="$router.push('/contact')">{{$t('header.contact')}}</q-btn></li>
+      <li><q-btn flat @click="$router.push('/support')">{{$t('header.support')}}</q-btn></li>
     </ul>
 </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <q-table
-      title="Gutscheine"
+      :title="this.$t('gutschein.Gutscheine')"
       :rows="data"
       :columns="columns"
       row-key="ID"
@@ -20,7 +20,7 @@
             </template>
           </q-input>
           <q-btn class="float-right on-right new-button" @click="newRow()">
-              <q-icon name="add_circle_outline" /> New
+              <q-icon name="add_circle_outline" /> {{ $t('gutschein.New') }}
           </q-btn>
         </div>
       </template>
@@ -38,13 +38,13 @@
                     <q-item-section avatar>
                       <q-icon class="icon" name="edit" />
                     </q-item-section>
-                    <q-item-section>Edit</q-item-section>
+                    <q-item-section>{{ $t('gutschein.Edit') }}</q-item-section>
                   </q-item>
                   <q-item clickable @click="props.row.deletePopup = true">
                     <q-item-section avatar>
                       <q-icon class="icon" name="delete" />
                     </q-item-section>
-                    <q-item-section>Delete</q-item-section>
+                    <q-item-section>{{ $t('gutschein.Delete') }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -52,21 +52,17 @@
             <q-dialog v-model="props.row.editPopup" persistent>
               <q-card class="detail-dialog">
                 <q-card-section class="detail-title">
-                  Gutschein
+                  {{ $t('gutschein.Gutschein') }}
                 </q-card-section>
                 <q-card-section>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Code" label="Code" :error="v$.edit.Code.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Code" :label="$t('gutschein.Code')" :error="v$.edit.Code.$error"></q-input>
                   </div>
                   <div>
                     <q-select
-                        outlined input-class="inputs" label-color='grey-5'
-                        dense
-                        v-model="edit.PacketID"
-                        :options="packets"
-                        emit-value
-                        map-options
-                        label="Packet">
+                        outlined input-class="inputs" label-color='grey-5' dense
+                        v-model="edit.PacketID" :options="packets" emit-value map-options
+                        :label="$t('gutschein.Packet')">
                     </q-select>
                   </div>
                 </q-card-section>
@@ -94,11 +90,11 @@
     <q-dialog v-model="newPopup" persistent>
       <q-card class="detail-dialog">
         <q-card-section class="detail-title">
-          New Gutschein
+          {{ $t('gutschein.NewGutschein') }}
         </q-card-section>
         <q-card-section>
           <div>
-            <q-input outlined autofocus v-model="edit.Code" label="Code" :error="v$.edit.Code.$error"></q-input>
+            <q-input outlined autofocus v-model="edit.Code" :label="$t('gutschein.Code')" :error="v$.edit.Code.$error"></q-input>
           </div>
           <div>
              <q-select
@@ -108,7 +104,7 @@
                 :options="packets"
                 emit-value
                 map-options
-                label="Packet">
+                :label="$t('gutschein.Packet')">
             </q-select>
           </div>
         </q-card-section>
@@ -145,10 +141,10 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Code', label: 'Code', field: 'Code', align: 'left' },
-        { name: 'Packet', label: 'Packet', field: 'PacketName', align: 'left' },
-        { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
-        { name: 'User', label: 'User', field: 'Username', align: 'left' },
+        { name: 'Code', label: this.$t('gutschein.Code'), field: 'Code', align: 'left' },
+        { name: 'Packet', label: this.$t('gutschein.Packet'), field: 'PacketName', align: 'left' },
+        { name: 'Status', label: this.$t('gutschein.Status'), field: 'Status', align: 'left' },
+        { name: 'User', label: this.$t('gutschein.User'), field: 'Username', align: 'left' },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
@@ -225,7 +221,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
@@ -254,7 +250,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
@@ -270,7 +266,7 @@ export default {
                 _this.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'Update not possible',
+                    message: _this.$t('updateFailed'),
                     position: 'bottom-right'
                 })
             })
@@ -289,7 +285,7 @@ export default {
               _this.$q.notify({
                   type: 'negative',
                   timeout: 3000,
-                  message: 'Update not possible',
+                  message: _this.$t('insertFailed'),
                   position: 'bottom-right'
               })
             })
@@ -300,9 +296,9 @@ export default {
         return 'X'
       }
       if (status == '1')
-        return 'Free'
+        return this.$t('gutschein.StatusFree')
       if (status == '2')
-        return 'Used'
+        return this.$t('gutschein.StatusUsed')
       return status
     }
   }

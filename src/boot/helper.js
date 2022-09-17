@@ -42,7 +42,7 @@ const helper = {
         dest.$q.notify({
             type: 'positive',
             timeout: 2000,
-            message: 'List reloaded',
+            message: dest.$t('listReloaded'),
             position: 'bottom-right'
         })
     },
@@ -60,14 +60,14 @@ const helper = {
       return 'unknown'
     },
     initLang (dest) {
-      if (!dest.$t) {
+      if (!dest.$i18n) {
         return
       }
       dest.$q.lang.table.allRows = dest.$t('allRows')
       dest.$q.lang.table.recordsPerPage = dest.$t('recordsPerPage')
       return
       dest.$q.lang.table.pagination = function (start, end, total) {
-        return start + '-' + end + ' ' + dest.$i18n.t('of') + ' ' + total
+        return start + '-' + end + ' ' + dest.$t('of') + ' ' + total
       }
     }
 };

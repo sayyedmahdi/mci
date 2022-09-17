@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <q-table
-      title="Buy History"
+      :title="$t('buy.Buys')"
       :rows="data"
       :columns="columns"
       row-key="ID"
@@ -33,11 +33,17 @@
             <q-btn flat icon="more_horiz">
               <q-menu auto-close>
                 <q-list dense separator style="min-width: 170px">
-                  <q-item clickable  @click="editRow(props.row)">
+                  <q-item clickable  @click="editRow(props.row)" v-if="props.row.Status == 1">
                     <q-item-section avatar>
                       <q-icon class="icon" name="edit" />
                     </q-item-section>
-                    <q-item-section>{{$t('buy.Edit')}}</q-item-section>
+                    <q-item-section>{{$t('buy.Commit')}}</q-item-section>
+                  </q-item>
+                  <q-item clickable  @click="editRow(props.row)" v-if="props.row.Status == 1">
+                    <q-item-section avatar>
+                      <q-icon class="icon" name="edit" />
+                    </q-item-section>
+                    <q-item-section>{{$t('buy.Cancel')}}</q-item-section>
                   </q-item>
                   <q-item clickable @click="props.row.deletePopup = true">
                     <q-item-section avatar>
@@ -129,18 +135,7 @@ export default {
         { name: 'Status', label: this.$t('buy.Status'), field: 'Status', align: 'left' },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
-      statusOptions: [{'label': 'Active', 'value': '1'}, {'label': 'Finished', 'value': '2'}],
-      data: [],
-      edit: {
-          ID: '',
-          Title: '',
-          Price: '',
-          Duration: '',
-          Cashback: '',
-          Status: 1,
-          Comments: ''
-      },
-      newPopup: false
+      data: []
     }
   },
   validations() {
@@ -179,20 +174,10 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: _this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
-    },
-    editRow (row) {
-        this.edit.ID = row.ID
-        this.edit.Title = row.Title
-        this.edit.Price = row.Price
-        this.edit.Duration = row.Duration
-        this.edit.Cashback = row.Cashback
-        this.edit.Status = row.Status
-        this.edit.Comments = row.Comments
-        row.editPopup = true
     },
     deleteRow (id) {
         let _this = this
@@ -205,7 +190,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
@@ -214,14 +199,14 @@ export default {
         let _this = this
         const isFormCorrect = await this.v$.$validate()
         if (isFormCorrect) {
-            this.$api.post('packet/update.php', this.edit).then(function (response) {
+            this.$api.post('buy/update.php', this.edit).then(function (response) {
                 _this.loadData({pagination: _this.pagination, filter: _this.filter})
             }).catch(function (error) {
                 _this.$helper.logError(error)
                 _this.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'Update not possible',
+                    message: _this.$t('updateFailed'),
                     position: 'bottom-right'
                 })
             })
@@ -232,11 +217,11 @@ export default {
         return 'X'
       }
       if (status == '1')
-        return 'Reserved'
+        return this.$t('buy.StatusReserved')
       if (status == '2')
-        return 'Committed'
+        return this.$t('buy.StatusCommitted')
       if (status == '3')
-        return 'Canceled'
+        return this.$t('buy.StatusCanceled')
       return status
     }
   }

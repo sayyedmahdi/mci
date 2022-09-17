@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <q-table
-      title="Packets"
+      :title="$t('packet.Packets')"
       :rows="data"
       :columns="columns"
       row-key="ID"
@@ -20,7 +20,7 @@
             </template>
           </q-input>
           <q-btn class="float-right on-right new-button" @click="newRow()">
-              <q-icon name="add_circle_outline" /> New
+              <q-icon name="add_circle_outline" /> {{ $t('packet.New') }}
           </q-btn>
         </div>
       </template>
@@ -39,13 +39,13 @@
                     <q-item-section avatar>
                       <q-icon class="icon" name="edit" />
                     </q-item-section>
-                    <q-item-section>Edit</q-item-section>
+                    <q-item-section>{{ $t('packet.Edit') }}</q-item-section>
                   </q-item>
                   <q-item clickable @click="props.row.deletePopup = true">
                     <q-item-section avatar>
                       <q-icon class="icon" name="delete" />
                     </q-item-section>
-                    <q-item-section>Delete</q-item-section>
+                    <q-item-section>{{ $t('packet.Delete') }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -53,26 +53,26 @@
             <q-dialog v-model="props.row.editPopup" persistent>
               <q-card class="detail-dialog">
                 <q-card-section class="detail-title">
-                  Packet
+                  {{ $t('packet.Packet') }}
                 </q-card-section>
                 <q-card-section>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Title" label="Title" :error="v$.edit.Title.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Title" :label="$t('packet.Title')" :error="v$.edit.Title.$error"></q-input>
                   </div>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Price" label="Price" :error="v$.edit.Price.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Price" :label="$t('packet.Price')" :error="v$.edit.Price.$error"></q-input>
                   </div>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Duration" :label="$t('packet.Duration')" :error="v$.edit.Duration.$error"></q-input>
                   </div>
                   <div>
-                      <q-input outlined autofocus v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
+                      <q-input outlined autofocus v-model="edit.Cashback" :label="$t('packet.Cashback')" :error="v$.edit.Cashback.$error"></q-input>
                   </div>
                   <div>
-                      <q-select outlined v-model="edit.Status" :options="statusOptions" label="Status" emit-value map-options></q-select>
+                      <q-select outlined v-model="edit.Status" :options="statusOptions" :label="$t('packet.Status')" emit-value map-options></q-select>
                   </div>
                   <div>
-                      <q-input outlined autofocus type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
+                      <q-input outlined autofocus type="textarea" v-model="edit.Comments" :label="$t('packet.Comments')"> </q-input>
                   </div>
                 </q-card-section>
                 <q-card-section  align="center">
@@ -103,19 +103,19 @@
         </q-card-section>
         <q-card-section>
           <div>
-            <q-input outlined autofocus v-model="edit.Title" label="Title" :error="v$.edit.Title.$error"></q-input>
+            <q-input outlined autofocus v-model="edit.Title" :label="$t('packet.Title')" :error="v$.edit.Title.$error"></q-input>
           </div>
           <div>
-             <q-input outlined v-model="edit.Price" type="number" label="Price" :error="v$.edit.Price.$error"></q-input>
+             <q-input outlined v-model="edit.Price" type="number" :label="$t('packet.Price')" :error="v$.edit.Price.$error"></q-input>
           </div>
           <div>
-            <q-input outlined v-model="edit.Duration" label="Duration" :error="v$.edit.Duration.$error"></q-input>
+            <q-input outlined v-model="edit.Duration" :label="$t('packet.Duration')" :error="v$.edit.Duration.$error"></q-input>
           </div>
           <div>
-            <q-input outlined v-model="edit.Cashback" label="Cashback" :error="v$.edit.Cashback.$error"></q-input>
+            <q-input outlined v-model="edit.Cashback" :label="$t('packet.Cashback')" :error="v$.edit.Cashback.$error"></q-input>
           </div>
           <div>
-            <q-select outlined v-model="edit.Status" :options="statusOptions" label="Status" emit-value map-options></q-select>
+            <q-select outlined v-model="edit.Status" :options="statusOptions" :label="$t('packet.Status')" emit-value map-options></q-select>
           </div>
           <div>
             <q-input outlined type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
@@ -154,14 +154,14 @@ export default {
         rowsNumber: 100
       },
       columns: [
-        { name: 'Title', label: 'Title', field: 'Title', align: 'left' },
-        { name: 'Price', label: 'Price', field: 'Price', align: 'left' },
-        { name: 'Duration', label: 'Duration', field: 'Duration', align: 'left' },
-        { name: 'Cashback', label: 'Cashback', field: 'Cashback', align: 'left' },
-        { name: 'Status', label: 'Status', field: 'Status', align: 'left' },
+        { name: 'Title', label: this.$t('packet.Title'), field: 'Title', align: 'left' },
+        { name: 'Price', label: this.$t('packet.Price'), field: 'Price', align: 'left' },
+        { name: 'Duration', label: this.$t('packet.Duration'), field: 'Duration', align: 'left' },
+        { name: 'Cashback', label: this.$t('packet.Cashback'), field: 'Cashback', align: 'left' },
+        { name: 'Status', label: this.$t('packet.Status'), field: 'Status', align: 'left' },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
-      statusOptions: [{'label': 'Enabled', 'value': '1'}, {'label': 'Disabled', 'value': '2'}],
+      statusOptions: [{'label': this.$t('packet.StatusEnabled'), 'value': '1'}, {'label': this.$t('packet.StatusDisabled'), 'value': '2'}],
       data: [],
       edit: {
           ID: '',
@@ -186,10 +186,11 @@ export default {
       }
   },
   mounted () {
-      this.loadData({
-        pagination: this.pagination,
-        filter: undefined
-      })
+    this.$helper.initLang(this)
+    this.loadData({
+      pagination: this.pagination,
+      filter: undefined
+    })
   },
   methods: {
     loadData (props) {
@@ -210,7 +211,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Error loading list',
+                message: this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
@@ -245,7 +246,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: 'Delete not possible',
+                message: _this.$t('deleteFailed'),
                 position: 'bottom-right'
             })
         })
@@ -261,7 +262,7 @@ export default {
                 _this.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'Update not possible',
+                    message: _this.$t('updateFailed'),
                     position: 'bottom-right'
                 })
             })
@@ -280,7 +281,7 @@ export default {
               _this.$q.notify({
                   type: 'negative',
                   timeout: 3000,
-                  message: 'Update not possible',
+                  message: _this.$t('insertFailed'),
                   position: 'bottom-right'
               })
             })
@@ -291,9 +292,9 @@ export default {
         return 'X'
       }
       if (status == '1')
-        return 'Enabled'
+        return this.$t('packet.StatusEnabled')
       if (status == '2')
-        return 'Disabled'
+        return this.$t('packet.StatusDisabled')
       return status
     }
   }
