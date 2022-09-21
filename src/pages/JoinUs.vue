@@ -2,21 +2,20 @@
   <form v-on:submit.prevent="() => {}">
     <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-items-center md:tw-justify-between tw-items-center tw-justify-center tw-w-full tw-h-full tw-p-14 ">
       <div class="bg__dark_blue tw-w-[400px] tw-text-white tw-flex tw-flex-col tw-justify-start tw-text-center tw-p-8 md:tw-h-[570px]  md:tw-w-[650px]">
-        <div class="tw-text-4xl tw-pb-[5%]">Create Account</div>
-        <input v-model="fullName" :class="['tw-text-sm', 'tw-border-b',  'tw-my-6' ,'tw-text-white' ,'tw-color-white' ,'bg__dark_blue' ,'focus:tw-outline-none' ,  errorExists('fullName') ? 'tw-border-red-700' : '']" placeholder="Full Name"/>
-        <ul class="" id="parsley-id-11" v-if="errorExists('fullName')"><li class="parsley-required">full name is required</li></ul>
-        <input v-model="email" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('email') ? 'tw-border-red-700' : '']" placeholder="Email"/>
-        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('email')"><li class="parsley-required">email is required</li></ul>
-        <input v-model="address" class="tw-text-sm tw-border-b tw-my-6 tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" placeholder="Address"/>
-        <input v-model="password" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('password') ? 'tw-border-red-700' : '']" type="password" placeholder="Password" />
-        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('password')"><li class="parsley-required">password is required</li></ul>
-        <button class="bg__dark_pink tw-mt-8 tw-object-fit tw-p-2 " @click="register" >Create Account</button>
+        <div class="tw-text-4xl tw-pb-[5%]">{{ $t('register.CreateAccount') }}</div>
+        <input v-model="fullName" :class="['tw-text-sm', 'tw-border-b',  'tw-my-6' ,'tw-text-white' ,'tw-color-white' ,'bg__dark_blue' ,'focus:tw-outline-none' ,  errorExists('fullName') ? 'tw-border-red-700' : '']" :placeholder="$t('register.FullName')"/>
+        <ul class="" id="parsley-id-11" v-if="errorExists('fullName')"><li class="parsley-required">{{$t('register.FullNameRequired')}}</li></ul>
+        <input v-model="email" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('email') ? 'tw-border-red-700' : '']" :placeholder="$t('user.Email')"/>
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('email')"><li class="parsley-required">{{$t('register.EmailRequired')}}</li></ul>
+        <input v-model="password" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('password') ? 'tw-border-red-700' : '']" type="password" :placeholder="$t('user.Password')" />
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('password')"><li class="parsley-required">{{$t('register.PasswordRequired')}}</li></ul>
+        <button class="bg__dark_pink tw-mt-8 tw-object-fit tw-p-2 " @click="register" >{{ $t('register.CreateAccount') }}</button>
         <div class="tw-flex tw-flex-row tw-space-x-4 tw-p-2 tw-mt-[4%]">
           <input v-model="termsOfUse" class="form-check-input h-4 w-4 bg-white tw-transition tw-duration-200 cursor-pointer" type="checkbox" >
           <label class="form-check-label text-white" for="flexCheckDefault">
-            I agree with
+            {{ $t('register.IAgree') }}
           </label>
-          <div class="text_dark_pink tw-text-left tw-cursor-pointer" @click="showTermsOfUse()">Terms of use</div>
+          <div class="text_dark_pink tw-text-left tw-cursor-pointer" @click="showTermsOfUse()">{{$t('termsOfUse')}}</div>
         </div>
 
 
@@ -30,7 +29,7 @@
   </form>
   <q-dialog v-model="show">
     <div class="bg-white tw-p-16">
-      <h3>Terms of use</h3>
+      <h3>{{$t('termsOfUse')}}</h3>
       <p>
         It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
       </p>
@@ -60,7 +59,7 @@ export default {
         this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: 'please accept terms of use',
+          message: this.$t('register.acceptTermsOfUse'),
           position: 'bottom-right'
         })
 
@@ -86,7 +85,7 @@ export default {
         _this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: 'Update not possible',
+          message: this.$t('updateNotPossible'),
           position: 'bottom-right'
         })
       })
@@ -111,7 +110,7 @@ export default {
             _q.notify({
               type: 'negative',
               timeout: 3000,
-              message: 'Login not possible',
+              message: this.$t('loginNotPossible'),
               position: 'bottom-right'
             })
             return
@@ -131,7 +130,7 @@ export default {
           _q.notify({
             type: 'negative',
             timeout: 3000,
-            message: 'Login not possible',
+            message: this.$t('loginNotPossible'),
             position: 'bottom-right'
           })
         })

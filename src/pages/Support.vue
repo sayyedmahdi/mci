@@ -145,7 +145,7 @@
 
 <script>
 export default {
-  name: "Contact",
+  name: "Support",
   data(){
     return {
       name: '',
@@ -163,9 +163,8 @@ export default {
         Phone: this.phone
       }
 
-      this.$api.post('/contact/create.php' , data)
+      this.$api.post('/support/create.php' , data)
         .then((res) => {
-          console.log(res)
           this.$q.notify({
             type: 'positive',
             timeout: 3000,
@@ -187,31 +186,5 @@ export default {
 </script>
 
 <style scoped>
-.box_shadow {
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
-}
 
-input {
-  background-color: #1D607F;
-}
-
-@media screen and (max-width: 480px) {
-  .info {
-    display: none;
-  }
-
-  .info__small{
-    display: flex;
-  }
-}
-
-@media screen and (min-width: 480px) {
-  .info {
-    display: flex;
-  }
-
-  .info__small {
-    display: none;
-  }
-}
 </style>

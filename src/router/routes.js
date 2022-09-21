@@ -10,6 +10,7 @@ const routes = [
       { path: "/packets", component: () => import("pages/PacketList.vue") },
       { path: "/stores", component: () => import("pages/StoreList.vue") },
       { path: "/contact", component: () => import("pages/Contact.vue") },
+      { path: "/support", component: () => import("pages/Support.vue") },
       {
         path: "user", component: () => import("pages/user/index"),
         children: [

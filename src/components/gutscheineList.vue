@@ -1,20 +1,20 @@
 <template>
   <div class="tw-my-32">
     <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px]  tw-mb-12">
-      <span class="text_dark_blue ">{{ $t('list') }} der <span class="text_dark_pink tw-ml-3">Geschäfte</span></span>
+      <span class="text_dark_blue ">{{ $t('list') }} der <span class="text_dark_pink tw-ml-3">{{ $t('store.Stores') }}</span></span>
     </div>
 
-    <div class="tw-flex flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
+    <div class="tw-flex tw-flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:tw-space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
       <!-- Col 1 -->
       <template v-for="(store , i) in stores1" :key="i">
 
-        <div v-if="i % 2 === 0 " class="box_shadow tw-flex-wrap tw-flex-col-reverse  xxs:tw-flex-row text_dark_blue tw-pl-8 xxs:tw-pl-2 tw-pb-2 tw md:tw-pl-4 xxs:tw-pb-8 tw-pr-0 tw-flex tw-text-left tw-max-h-[360px] tw-justify-between">
+        <div v-if="i % 2 === 0 " class="box_shadow tw-flex-wrap tw-flex-col-reverse  xxs:tw-flex-row text_dark_blue tw-pl-8 xxs:tw-pl-2 tw-pb-2 md:tw-pl-4 xxs:tw-pb-8 tw-pr-0 tw-flex tw-text-left tw-max-h-[360px] tw-justify-between">
           <div class="tw-max-w-[50%] md:tw-max-w-[50%] xxs:tw-max-w-[50%] xl:tw-max-w-[50%] xl:tw-pr-8 xl:tw-w-[230px] xl:tw-ml-4">
             <img class="xxs:tw-mb-12 xxs:tw-mt-8" src="~assets/rectangle1398.png">
             <div class="tw-text-3xl md:tw-text-2xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 md:tw-py-1 md:tw-pd-x-3 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md  tw-mt-4 bg__dark_pink tw-text-white tw-text-xs">
-              <span>Buy Now</span>
+              <span>{{$t('store.BuyNow')}}</span>
             </button>
           </div>
           <div class="xxs:tw-my-6 tw-pt-4 md:tw-w-[40%] 2xl:tw-mr-[-35px] xl:tw-mr-[-23px] tw-max-h-[30%]">
@@ -30,7 +30,7 @@
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md tw-mt-4 bg__dark_pink tw-text-white tw-text-xs" >
-              <span>Buy Now</span>
+              <span>{{$t('store.BuyNow')}}</span>
             </button>
           </div>
           <div class="tw-justify-end tw-min-w-[50%]">
@@ -44,17 +44,17 @@
     </div>
 
 
-    <div v-if="stores2.length > 0" class="tw-flex tw-mt-10 flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
+    <div v-if="stores2.length > 0" class="tw-flex tw-mt-10 flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:tw-space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
       <!-- Col 1 -->
       <template v-for="(store , i) in stores2" :key="i">
 
-        <div v-if="!i % 2 === 0 " class="box_shadow tw-flex-wrap tw-flex-col-reverse  xxs:tw-flex-row text_dark_blue tw-pl-8 xxs:tw-pl-2 tw-pb-2 tw md:tw-pl-4 xxs:tw-pb-8 tw-pr-0 tw-flex tw-text-left tw-max-h-[360px] tw-justify-between">
+        <div v-if="!i % 2 === 0 " class="box_shadow tw-flex-wrap tw-flex-col-reverse  xxs:tw-flex-row text_dark_blue tw-pl-8 xxs:tw-pl-2 tw-pb-2  md:tw-pl-4 xxs:tw-pb-8 tw-pr-0 tw-flex tw-text-left tw-max-h-[360px] tw-justify-between">
           <div class="tw-max-w-[50%] md:tw-max-w-[50%] xxs:tw-max-w-[50%] xl:tw-max-w-[50%] xl:tw-pr-8 xl:tw-w-[230px] xl:tw-ml-4">
             <img class="xxs:tw-mb-12 xxs:tw-mt-8" src="~assets/rectangle1398.png">
             <div class="tw-text-3xl md:tw-text-2xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 md:tw-py-1 md:tw-pd-x-3 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md  tw-mt-4 bg__dark_pink tw-text-white tw-text-xs">
-              <span>Buy Now</span>
+              <span>{{$t('store.BuyNow')}}</span>
             </button>
           </div>
           <div class="xxs:tw-my-6 tw-pt-4 md:tw-w-[40%] 2xl:tw-mr-[-35px] xl:tw-mr-[-23px] tw-max-h-[30%]">
@@ -70,7 +70,7 @@
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl">{{store.Title}}</div>
             <div class="tw-text-sm">{{ store.Comments }}</div>
             <button @click="openPage(store.Url)" class="tw-flex tw-py-2 tw-px-2 xl:tw-px-3 xl:tw-py-2 lg:text_md tw-mt-4 bg__dark_pink tw-text-white tw-text-xs" >
-              <span>Buy Now</span>
+              <span>{{$t('store.BuyNow')}}</span>
             </button>
           </div>
           <div class="tw-justify-end tw-min-w-[50%]">

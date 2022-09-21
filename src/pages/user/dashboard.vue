@@ -9,9 +9,9 @@
 
     <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
       <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
-        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">Your Balance: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">Cashbacks: {{ info.SumCashbacks }} $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>Used: {{ info.SumBuys }} $</div></div>
+        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">{{ $t('userDashboard.Balance') }}: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
+        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">{{ $t('userDashboard.Cashbacks') }}: {{ info.SumCashbacks }} $</div>
+        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_pink xl:tw-flex "  ><div>{{ $t('userDashboard.Used') }}: {{ info.SumBuys }} $</div></div>
       </div>
       <div style="position: absolute">
 
@@ -42,7 +42,7 @@
     <div class=" tw-flex tw-flex-col text_dark_blue ">
       <q-table
         class="mobile__data q-mx-lg"
-        title="Packets Buying History"
+        :title="$t('userDashboard.packetHistory')"
         :rows="packetsHistory"
         :columns="packetColumns"
         row-key="ID"
@@ -54,7 +54,7 @@
       >
         <template v-slot:top-right @click="getAllPaginate(packetsHistory.length , 'packet')">
           <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(packetsHistory.length , 'packet')">
-            All Records: {{packetsHistory.length}}
+            {{ $t('allRecords') }}: {{packetsHistory.length}}
           </div>
         </template>
         <template v-slot:header>
@@ -65,38 +65,32 @@
           <div class="my-card text-white ">
             <q-card-section :class="['border__bottom__head' , stripedRow(props.rowIndex) ? 'striped_table_row' : '']" >
               <q-card-section class="">
-                <p class="title-class ">Packet {{props.row.PacketName}}</p>
+                <p class="title-class ">{{ $t('packet.Packet') }} {{props.row.PacketName}}</p>
               </q-card-section>
               <q-card-section >
-                <span class="mobile__data__row">Packet Name: {{props.row.PacketName}}</span>
+                <span class="mobile__data__row">{{ $t('userpacket.Packet') }}: {{props.row.PacketName}}</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Start Date: {{props.row.StartDate}}</span>
+                <span class="mobile__data__row">{{ $t('userpacket.StartDate') }}: {{props.row.StartDate}}</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Price: {{props.row.PacketPrice}}</span>
+                <span class="mobile__data__row">{{ $t('userpacket.Price') }}: {{props.row.PacketPrice}}</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Buy Method: {{props.row.BuyMethod === 1 ? 'Gutsheine' : 'Paypal'}}</span>
+                <span class="mobile__data__row">{{ $t('userpacket.BuyMethod') }}: {{props.row.BuyMethod === 1 ? $t('userpacket.BuyMethodGutschein') : $t('userpacket.BuyMethodPaypal')}}</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Buy Date: {{props.row.BuyDate}}</span>
+                <span class="mobile__data__row">{{ $t('userpacket.BuyDate') }}: {{props.row.BuyDate}}</span>
               </q-card-section>
             </q-card-section>
           </div>
-          <!--          <q-tr :props="props">-->
-          <!--            <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>-->
-          <!--            <q-td key="StartDate" :props="props">{{ props.row.StartDate }}</q-td>-->
-          <!--            <q-td key="Price" :props="props">{{ props.row.Price }}</q-td>-->
-          <!--            <q-td key="BuyMethod" :props="props">{{ props.row.BuyMethod === 1 ? 'Gutsheine' : 'Paypal' }}</q-td>-->
-          <!--            <q-td key="BuyDate" :props="props">{{ props.row.BuyDate }}</q-td>-->
-          <!--          </q-tr>-->
+
         </template>
       </q-table>
 
       <q-table
         class="desktop__data"
-        title="Packets Buying History"
+        :title="$t('userDashboard.packetHistory')"
         :rows="packetsHistory"
         :columns="packetColumns"
         row-key="ID"
@@ -108,7 +102,7 @@
       >
         <template v-slot:top-right @click="getAllPaginate(packetsHistory.length , 'packet')">
           <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(packetsHistory.length , 'packet')">
-            All Records: {{packetsHistory.length}}
+            {{ $t('allRecords') }}: {{packetsHistory.length}}
           </div>
         </template>
         <template v-slot:body="props">
@@ -116,7 +110,7 @@
             <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>
             <q-td key="StartDate" :props="props">{{ props.row.StartDate }}</q-td>
             <q-td key="Price" :props="props">{{ props.row.PacketPrice }}</q-td>
-            <q-td key="BuyMethod" :props="props">{{ props.row.BuyMethod === 1 ? 'Gutsheine' : 'Paypal' }}</q-td>
+            <q-td key="BuyMethod" :props="props">{{ props.row.BuyMethod === 1 ? $t('userpacket.BuyMethodGutschein') : $t('userpacket.BuyMethodPaypal') }}</q-td>
             <q-td key="BuyDate" :props="props">{{ props.row.BuyDate }}</q-td>
           </q-tr>
         </template>
@@ -127,7 +121,7 @@
     <div class=" tw-flex tw-flex-col text_dark_blue ">
       <q-table
         class="mobile__data q-mx-lg"
-        title="Order Buying History"
+        :title="$t('userDashboard.orderHistory')"
         :rows="buyHistory"
         :columns="orderColumns"
         row-key="ID"
@@ -139,7 +133,7 @@
       >
         <template v-slot:top-right @click="getAllPaginate(buyHistory.length , 'order')">
           <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(buyHistory.length , 'order')">
-            All Records: {{buyHistory.length}}
+            {{ $t('allRecords') }}: {{buyHistory.length}}
           </div>
         </template>
         <template v-slot:header>
@@ -153,19 +147,19 @@
                 <p class="title-class ">{{props.row.StoreName}}</p>
               </q-card-section>
               <q-card-section >
-                <span class="mobile__data__row">Store: {{props.row.StoreName}}</span>
+                <span class="mobile__data__row">{{ $t('store.Store') }}: {{props.row.StoreName}}</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Requested Price: {{props.row.RequestedPrice}} $</span>
+                <span class="mobile__data__row">{{ $t('buy.RequestedPrice') }}: {{props.row.RequestedPrice}} $</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Final Price: {{props.row.FinalPrice }} $</span>
+                <span class="mobile__data__row">{{ $t('buy.FinalPrice') }}: {{props.row.FinalPrice }} $</span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Status: {{displayStatus(props.row.Status)}} </span>
+                <span class="mobile__data__row">{{ $t('buy.Status') }}: {{displayStatus(props.row.Status)}} </span>
               </q-card-section>
               <q-card-section>
-                <span class="mobile__data__row">Date: {{props.row.StartDate}}</span>
+                <span class="mobile__data__row">{{ $t('buy.StartDate') }}: {{props.row.StartDate}}</span>
               </q-card-section>
             </q-card-section>
           </div>
@@ -173,7 +167,7 @@
       </q-table>
       <q-table
         class="desktop__data"
-        title="Order Buying History"
+        :title="$t('userDashboard.orderHistory')"
         :rows="buyHistory"
         :columns="orderColumns"
         row-key="ID"
@@ -185,7 +179,7 @@
       >
         <template v-slot:top-right>
           <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore  @click="getAllPaginate(buyHistory.length , 'order')">
-            All Records: {{buyHistory.length}}
+            {{ $t('allRecords') }}: {{buyHistory.length}}
           </div>
         </template>
         <template v-slot:body="props">
@@ -205,7 +199,7 @@
       <div class=" tw-flex tw-flex-col text_dark_blue ">
         <q-table
           class="mobile__data q-mx-lg"
-          title="Cash backs History"
+          :title="$t('userDashboard.CashbacksHistory')"
           :rows="cashBacks"
           :columns="cashBackColumns"
           row-key="ID"
@@ -217,7 +211,7 @@
         >
           <template v-slot:top-right @click="getAllPaginate(cashBacks.length , 'cashBack')">
             <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(cashBacks.length , 'cashBack')">
-              All Records: {{cashBacks.length}}
+              {{ $t('allRecords') }}: {{cashBacks.length}}
             </div>
           </template>
           <template v-slot:header>
@@ -228,16 +222,16 @@
             <div class="my-card text-white ">
               <q-card-section :class="['border__bottom__head' , stripedRow(props.rowIndex) ? 'striped_table_row' : '']" >
                 <q-card-section class="">
-                  <p class="title-class ">Packet {{props.row.PacketName}}</p>
+                  <p class="title-class ">{{ $t('packet.Packet') }} {{props.row.PacketName}}</p>
                 </q-card-section>
                 <q-card-section >
-                  <span class="mobile__data__row">Packet Name: {{props.row.PacketName}}</span>
+                  <span class="mobile__data__row">{{ $t('cashback.Packet') }}: {{props.row.PacketName}}</span>
                 </q-card-section>
                 <q-card-section >
-                  <span class="mobile__data__row">Packet Cashback: {{props.row.PacketCashback}}</span>
+                  <span class="mobile__data__row">{{ $t('cashback.Amount') }}: {{props.row.PacketCashback}}</span>
                 </q-card-section>
                 <q-card-section>
-                  <span class="mobile__data__row">Payback Date: {{props.row.PaybackDate}}</span>
+                  <span class="mobile__data__row">{{ $t('cashback.Date') }}: {{props.row.PaybackDate}}</span>
                 </q-card-section>
               </q-card-section>
             </div>
@@ -245,7 +239,7 @@
         </q-table>
         <q-table
           class="desktop__data"
-          title="Cash backs History"
+          :title="$t('userDashboard.CashbacksHistory')"
           :rows="cashBacks"
           :columns="cashBackColumns"
           row-key="ID"
@@ -258,7 +252,7 @@
         >
           <template v-slot:top-right>
             <div class="row box_shadow tw-px-2 tw-py-2 hover:tw-cursor-pointer" data-html2canvas-ignore @click="getAllPaginate(cashBacks.length , 'cashBacks')">
-              All Records: {{cashBacks.length}}
+              {{ $t('allRecords') }}: {{cashBacks.length}}
             </div>
           </template>
         </q-table>
@@ -275,23 +269,23 @@ export default {
   data(){
     return {
       packetColumns: [
-        { name: 'PacketName', align: 'center', label: 'Packet', field: 'PacketName', sortable: true },
-        { name: 'StartDate', align: 'center', label: 'Start Date', field: 'StartDate', sortable: true },
-        { name: 'Price', align: 'center', label: 'Price', field: 'PacketPrice', sortable: true },
-        { name: 'BuyMethod', align: 'center', label: 'Buy Method', field: 'BuyMethod' , sortable: true },
-        { name: 'BuyDate', align: 'center', label: 'Buy Date', field: 'BuyDate', sortable: true },
+        { name: 'PacketName', align: 'center', label: this.$t('userpacket.Packet'), field: 'PacketName', sortable: true },
+        { name: 'StartDate', align: 'center', label: this.$t('userpacket.StartDate'), field: 'StartDate', sortable: true },
+        { name: 'Price', align: 'center', label: this.$t('userpacket.Price'), field: 'PacketPrice', sortable: true },
+        { name: 'BuyMethod', align: 'center', label: this.$t('userpacket.BuyMethod'), field: 'BuyMethod' , sortable: true },
+        { name: 'BuyDate', align: 'center', label: this.$t('userpacket.BuyDate'), field: 'BuyDate', sortable: true },
       ],
       orderColumns: [
-        { name: 'StoreName', align: 'center', label: 'Store', field: 'StoreName', sortable: true },
-        { name: 'RequestedPrice', align: 'center', label: 'Requested Price', field: 'RequestedPrice', sortable: true },
-        { name: 'FinalPrice', align: 'center', label: 'Final Price', field: 'FinalPrice', sortable: true },
-        { name: 'Status', align: 'center', label: 'Status', field: 'Status', sortable: true },
-        { name: 'StartDate', align: 'center', label: 'Date', field: 'StartDate', sortable: true },
+        { name: 'StoreName', align: 'center', label: this.$t('store.Store'), field: 'StoreName', sortable: true },
+        { name: 'RequestedPrice', align: 'center', label: this.$t('buy.RequestedPrice'), field: 'RequestedPrice', sortable: true },
+        { name: 'FinalPrice', align: 'center', label: this.$t('buy.FinalPrice'), field: 'FinalPrice', sortable: true },
+        { name: 'Status', align: 'center', label: this.$t('buy.Status'), field: 'Status', sortable: true },
+        { name: 'StartDate', align: 'center', label: this.$t('buy.StartDate'), field: 'StartDate', sortable: true },
       ],
       cashBackColumns: [
-        { name: 'PacketName', align: 'center', label: 'Packet Name', field: 'PacketName', sortable: true },
-        { name: 'PacketCashback', align: 'center', label: 'Packet Cashback', field: 'PacketCashback', sortable: true },
-        { name: 'PaybackDate', align: 'center', label: 'Payback Date', field: 'PaybackDate', sortable: true },
+        { name: 'PacketName', align: 'center', label: this.$t('cashback.Packet'), field: 'PacketName', sortable: true },
+        { name: 'PacketCashback', align: 'center', label: this.$t('cashback.Amount'), field: 'PacketCashback', sortable: true },
+        { name: 'PaybackDate', align: 'center', label: this.$t('cashback.Date'), field: 'PaybackDate', sortable: true },
       ],
       info: {},
       stripedIndex: 2,

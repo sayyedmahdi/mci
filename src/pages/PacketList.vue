@@ -8,11 +8,11 @@
         <div class="tw-text-2xl text_dark_pink">{{ packet.Price }} $</div>
         <div class="tw-text-base tw-px-16 md:tw-pr-[17%] md:tw-px-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In turpis odio pretium feugiat adipiscing imperdiet ipsum urna.</div>
         <div class="tw-mt-[2%]">
-          <span class="tw-mr-12">Duration: <span class="tw-font-bold">{{ packet.Duration }} month</span ></span >
-          <span>Per Month Payment: <span class="tw-font-bold">{{ parseInt(packet.Price / packet.Duration ) }} $</span ></span>
+          <span class="tw-mr-12">{{ $t('packet.Duration') }}: <span class="tw-font-bold">{{ packet.Duration }} {{ $t('packet.Month') }}</span ></span >
+          <span>{{$t('packet.PaymentPerMonth')}}: <span class="tw-font-bold">{{ parseInt(packet.Price / packet.Duration ) }} $</span ></span>
         </div>
         <button class="flex items-center tw-mx-auto md:tw-mx-0 tw-py-2 tw-px-9 text_md bg__dark_pink tw-text-white justify-center " @click="buy(packet)">
-          <span>Buy Now</span>
+          <span>{{ $t('packet.BuyNow') }}</span>
         </button>
       </div>
       <div class="md:tw-w-1/2">
@@ -25,13 +25,13 @@
     v-model="show"
   >
     <div class="tw-flex tw-flex-col tw-space-y-4 tw-justify-center tw-items-center text_dark_blue tw-py-4 tw-bg-white tw-px-8 tw-text-xl tw-font-bold">
-      Buy Packet
+      {{ $t('packet.BuyPacket') }}
       <div class="bg__dark_blue tw-mt-2 tw-text-white tw-px-16 tw-text-center tw-py-4 tw-space-y-2 tw-font-medium" v-if="typeof selectedPacket !== 'undefined'">
         <div>{{selectedPacket.Title}}</div>
         <div>{{selectedPacket.Price}}$</div>
         <div class="tw-flex tw-text-sm tw-justify-between tw-space-x-10 ">
-          <div>Duration: <span class="tw-font-bold">{{selectedPacket.Duration}} month</span></div>
-            <div>Per Month Payment: <span class="tw-font-bold">{{ parseInt(selectedPacket.Price / selectedPacket.Duration ) }}$</span></div>
+          <div>{{ $t('packet.Duration') }}: <span class="tw-font-bold">{{selectedPacket.Duration}} {{ $t('packet.Month') }}</span></div>
+            <div>{{ $t('packet.PaymentPerMonth') }}: <span class="tw-font-bold">{{ parseInt(selectedPacket.Price / selectedPacket.Duration ) }}$</span></div>
         </div>
       </div>
       <div class="tw-mr-auto tw-flex tw-justify-between tw-space-x-2 tw-mr-0 tw-w-full">
@@ -40,7 +40,7 @@
 <!--          <img src="~assets/paypal.png" class="tw-cursor-pointer" @click="sendBuy('2')">-->
         </div>
         <div class="tw-mt-auto">
-          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.6rem] tw-pb-[0.4rem] tw-px-2 tw-text-base tw-font-medium" @click="sendBuy('1')">Gutsheine</label>
+          <label class="tw-cursor-pointer bg__dark_pink tw-text-white tw-pt-[0.6rem] tw-pb-[0.4rem] tw-px-2 tw-text-base tw-font-medium" @click="sendBuy('1')">{{ $t('gutschein.Gutscheine') }}</label>
           <input class="tw-border tw-border-red-700 tw-h-10 tw-w-[150px]" v-model="code">
         </div>
       </div>
@@ -98,7 +98,7 @@ export default {
                   window.vue.$q.notify({
                     type: 'negative',
                     timeout: 3000,
-                    message: 'please login first',
+                    message: this.$t('loginError'),
                     position: 'bottom-right'
                   });
 
@@ -155,7 +155,7 @@ export default {
         _this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: 'Error loading list',
+          message: this.$t('loadListFailed'),
           position: 'bottom-right'
         })
       })
@@ -165,7 +165,7 @@ export default {
         this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: 'please login first',
+          message: this.$t('loginError'),
           position: 'bottom-right'
         });
 
@@ -185,7 +185,7 @@ export default {
           this.$q.notify({
             type: 'negative',
             timeout: 3000,
-            message: 'please insert your Gutschein Code first',
+            message: this.$t('gutscheinCodeError'),
             position: 'bottom-right'
           });
 
@@ -199,7 +199,7 @@ export default {
           this.$q.notify({
             type: 'positive',
             timeout: 3000,
-            message: 'purchase was made successfully',
+            message: this.$t('successBuy'),
             position: 'bottom-right'
           });
           this.show = false;
@@ -221,7 +221,7 @@ export default {
         this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: 'please login first',
+          message: this.$t('loginError'),
           position: 'bottom-right'
         });
 

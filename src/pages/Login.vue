@@ -2,11 +2,11 @@
   <form v-on:submit.prevent="() => {}">
   <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-items-center md:tw-justify-between tw-items-center tw-justify-center tw-w-full tw-h-full tw-p-14 ">
     <div class="bg__dark_blue tw-w-[400px] tw-text-white tw-flex tw-flex-col tw-justify-start tw-text-center tw-p-8 md:tw-h-[570px]  md:tw-w-[650px]">
-      <div class="tw-text-4xl tw-pb-[30%]">Log In</div>
-      <input v-model="email" class="tw-text-sm tw-border-b tw-my-6 tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" placeholder="Email"/>
-      <input v-model="password" class="tw-text-sm tw-border-b tw-my-6  tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" type="password" placeholder="Password" />
+      <div class="tw-text-4xl tw-pb-[30%]">{{ $t('login') }}</div>
+      <input v-model="email" class="tw-text-sm tw-border-b tw-my-6 tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" :placeholder="$t('user.Email')"/>
+      <input v-model="password" class="tw-text-sm tw-border-b tw-my-6  tw-text-white tw-color-white bg__dark_blue focus:tw-outline-none" type="password" :placeholder="$t('user.Password')" />
       <button class="bg__dark_pink tw-mt-24 tw-object-fit tw-p-2 tw-lowercase" @click="login" @keyup.enter="login"><span class="tw-uppercase">L</span>og in</button>
-      <div class="text_dark_pink tw-text-left tw-mt-6">Terms of use</div>
+      <div class="text_dark_pink tw-text-left tw-mt-6">{{ $t('termsOfUse') }}</div>
     </div>
 
     <div class="tw-h-full tw-mt-[10%] lg:tw-ml-[5%] lg:tw-mr-[5%]">
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import header from "components/header";
 export default {
   name: "Login",
   components: {},
@@ -49,7 +48,7 @@ export default {
             _q.notify({
               type: 'negative',
               timeout: 3000,
-              message: 'Login not possible',
+              message: this.$t('loginNotPossible'),
               position: 'bottom-right'
             })
             return
@@ -69,7 +68,7 @@ export default {
           _q.notify({
             type: 'negative',
             timeout: 3000,
-            message: 'Login not possible',
+            message: this.$t('loginNotPossible'),
             position: 'bottom-right'
           })
         })

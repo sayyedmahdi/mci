@@ -1,7 +1,7 @@
 <template>
   <div class=" tw-my-32 ">
     <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px]  tw-mb-12 ">
-      <span class="text_dark_blue ">Nutzer<span class="text_dark_pink tw-ml-3 tw-text-4xl xs:tw-text-5xl">  kommentieren</span></span>
+      <span class="text_dark_blue ">{{ $t('user.User') }}<span class="text_dark_pink tw-ml-3 tw-text-4xl xs:tw-text-5xl">  {{ $t('user.Comments') }}</span></span>
     </div>
 
     <div class="tw-flex tw-flex-col tw-justify-center tw-items-center sm:tw-px-40 tw-px-16 tw-my-6 tw-space-y-8 md:tw-space-y-0  md:tw-space-x-8 md:tw-px-20  md:tw-flex-row   lg:tw-justify-between ">

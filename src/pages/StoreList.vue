@@ -11,7 +11,7 @@
         <div class="tw-text-base tw-px-16 md:tw-pr-[17%] md:tw-px-0">{{ store.Comments }}</div>
 
         <button class="flex items-center tw-mx-auto tw-mt-4 md:tw-mx-0 tw-py-2 tw-px-9 text_md bg__dark_pink tw-text-white justify-center " @click="gotoShop(store)">
-          <span>Buy Now</span>
+          <span>{{ $t('packet.BuyNow') }}</span>
         </button>
       </div>
       <div class="md:tw-w-1/2">
