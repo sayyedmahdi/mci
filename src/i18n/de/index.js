@@ -7,6 +7,18 @@ export default {
     contact: "Kontakt",
     support: "Unterstützung"
   },
+  onlineSparen: "Online Sparen - Jetzt",
+  nochEinfacher: "Noch Einfacher",
+  mehrAlsTreueMitglieder: "Mehr als  7,000,000 treue Mitglieder",
+  mitUnsFindest: "Mit uns findest du die besten Rabatte, Aktionen und Kundenboni bei angebundenen",
+  onlineHandlern: "Online Händlern. Du bestimmst wieviel Geld du sparst. Schon ab 3$ tgl.",
+  losGehts: "Los gehts!",
+  deineEinfachste: "Deine einfachste Art Geld online zu sparen!",
+  jetzt: "Jetzt",
+  einfach: "Einfach",
+  onlineZahlung: "Online Zahlung",
+  profitabel: "profitabel",
+  biaZu: "Bia zu 50% beim Einkaufen sparen.",
   failed: "Aktion war nicht Erfolgreich",
   success: "Aktion war nicht Erfolgreich",
   allRecords: "Alle Aufzeichnungen",
@@ -35,6 +47,8 @@ export default {
   gutscheinCodeError: "Bitte geben Sie zuerst Ihren Gutschein code ein",
   updateNotPossible: "Update nicht möglich",
   store: {
+    Stores1: "Liste der",
+    Stores2: "Geschäfte",
     Store: "Geschäfte",
     Stores: "Geschäfte",
     BuyNow: "Kaufe jetzt",
@@ -82,9 +96,13 @@ export default {
     New: "Neu",
     Edit: "Bearbeiten",
     Delete: "Löschen",
-    Comments: "Kommentare"
+    Comments: "Kommentare",
+    Comments1: "User",
+    Comments2: "Kommentare"
   },
   packet: {
+    Packets1: "Liste der",
+    Packets2: "Pakete",
     Packets: "Pakete",
     Packet: "Paket",
     Title: "Titel",

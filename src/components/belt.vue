@@ -1,22 +1,22 @@
 <template>
   <div class="tw-flex tw-flex-col md:tw-flex-row belt tw-w-full tw-text-center tw-text-white tw-mt-4">
     <div class="bg__dark_pink tw-flex-1 tw-py-4">
-      <div class="title_text tw-mb-1">Jetzt</div>
+      <div class="title_text tw-mb-1">{{ $t('jetzt') }}</div>
       <img class="tw-mx-auto" src="~assets/rectangle1390.png">
       <div class="tw-text-sm">Lorem ipsum dolor sit amet</div>
     </div>
     <div class="bg__dark_blue tw-flex-1 tw-py-4">
-      <div class="title_text tw-mb-1">Einfach</div>
+      <div class="title_text tw-mb-1">{{ $t('einfach') }}</div>
       <img class="tw-mx-auto" src="~assets/rectangle1391.png">
       <div class="tw-text-sm">Lorem ipsum dolor sit amet</div>
     </div>
     <div class="bg__dark_pink tw-flex-1 tw-py-4 ">
-      <div class="title_text tw-mb-1">Onlinebezahlung</div>
+      <div class="title_text tw-mb-1">{{ $t('onlineZahlung') }}</div>
       <img class="tw-mx-auto" src="~assets/rectangle1392.png">
       <div class="tw-text-sm">Lorem ipsum dolor sit amet</div>
     </div>
     <div class="bg__dark_blue tw-flex-1 tw-py-4">
-      <div class="title_text tw-mb-1">profitabel</div>
+      <div class="title_text tw-mb-1">{{ $t('profitabel') }}</div>
       <img class="tw-mx-auto" src="~assets/rectangle1393.png">
       <div class="tw-text-sm">Lorem ipsum dolor sit amet</div>
     </div>

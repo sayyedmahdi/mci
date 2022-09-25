@@ -1,7 +1,7 @@
 <template>
   <div class="tw-my-32">
     <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px] tw-mb-12">
-      <span class="text_dark_blue ">{{ $t('packet.Packets') }}<span class="text_dark_pink tw-ml-3">{{ $t('list') }}</span></span>
+      <span class="text_dark_blue ">{{ $t('packet.Packets1') }}<span class="text_dark_pink tw-ml-3">{{ $t('packet.Packets2') }}</span></span>
     </div>
 
     <div class="tw-flex tw-flex-col tw-space-y-6 md:tw-space-y-0 md:space-x-8 xl:tw-space-x-16 md:tw-flex-row md:tw-px-20 tw-px-10 md:tw-px-16 xl:tw-px-60 tw-justify-between">

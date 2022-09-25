@@ -18,17 +18,17 @@
       </div>
       <div class="tw-mt-16 tw-text-center md:tw-text-left">
         <div class="mb-4">
-          <span class="pr-12"><img class="tw-inline-block tw-pr-2" src="~assets/phone.png">+49 711 5044 7999</span>
-          <span><img class="tw-inline-block tw-pr-2" src="~assets/envelop.png">Kontakt@HouseofGlam.Beauty</span>
+          <span class="pr-12"><img class="tw-inline-block tw-pr-2" src="~assets/phone.png">+49 (0)345 21 38 90 500</span>
+          <span><img class="tw-inline-block tw-pr-2" src="~assets/envelop.png">mci@hal-media.com</span>
         </div>
         <div>
-          <span class="pr-12"><img class="tw-inline-block tw-pr-2" src="~assets/mobile.png">+49 172 43 79 528</span>
-          <span><img class="tw-inline-block tw-pr-2" src="~assets/location.png">Eberhardstr. 73 , 70173 Stuttgart</span>
+          <span class="pr-12"><img class="tw-inline-block tw-pr-2" src="~assets/mobile.png">+49 (0) 345 51 60 62 7</span>
+          <span><img class="tw-inline-block tw-pr-2" src="~assets/location.png">HAL Media GmbH , Delitzscher Str. 73 , 06116 Halle (Saale)</span>
         </div>
       </div>
   </div>
     <div class="tw-flex tw-text-sm tw-justify-between bg__dark_blue md:tw-px-24 tw-px-16 tw-pb-4">
-      <div class=" tw-mt-10 "><span>Copyright @house of glam 2021</span></div>
+      <div class=" tw-mt-10 "><span>Copyright @Hal Media 2021</span></div>
       <div class=" tw-mt-10"><span class="tw-cursor-pointer" @click="dataProtectiondialog()"> Datenschutzerklärung</span><span class="ml-4 tw-cursor-pointer" @click="impressumdialog()">Impressum</span></div>
     </div>
 

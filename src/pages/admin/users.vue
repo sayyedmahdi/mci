@@ -67,6 +67,12 @@
                       </q-item-section>
                       <q-item-section>{{$t('user.Edit')}}</q-item-section>
                     </q-item>
+                    <q-item clickable  @click="$router.push('/admin/user/' + props.row.ID)">
+                      <q-item-section avatar>
+                        <q-icon class="icon" name="report" />
+                      </q-item-section>
+                      <q-item-section>{{$t('user.Dashboard')}}</q-item-section>
+                    </q-item>
                     <q-item clickable @click="props.row.deletePopup = true">
                       <q-item-section avatar>
                         <q-icon class="icon" name="delete" />

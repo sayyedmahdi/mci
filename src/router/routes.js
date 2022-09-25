@@ -32,7 +32,10 @@ const routes = [
       { path: "/admin/userpackets", component: () => import("pages/admin/userpackets.vue") },
       { path: "/admin/cashbacks", component: () => import("pages/admin/cashbacks.vue") },
       { path: "/admin/buys", component: () => import("pages/admin/buys.vue") },
-      { path: "/admin/users", component: () => import("pages/admin/users.vue") }
+      { path: "/admin/support", component: () => import("pages/admin/support.vue") },
+      { path: "/admin/contact", component: () => import("pages/admin/contact.vue") },
+      { path: "/admin/users", component: () => import("pages/admin/users.vue") },
+      { path: "/admin/user/:id", component: () => import("pages/admin/user.vue") }
     ],
   },
 

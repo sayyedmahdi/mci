@@ -1,40 +1,50 @@
 <template>
   <div class="q-pa-none" style="height: 100%">
     <div class="menu-admin">
-      <q-list class="q-pa-md">
+      <q-list class="q-pa-xs">
         <q-item clickable v-ripple class="grey-10" to="/admin/users">
           <q-item-section><span class="material-icons" style="font-size:30px">account_circle</span></q-item-section>
-          <q-item-section>Users</q-item-section>
+          <q-item-section>{{$t("user.Users")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" to="/admin/stores">
           <q-item-section><span class="material-icons" style="font-size:30px">list</span></q-item-section>
-          <q-item-section>Stores</q-item-section>
+          <q-item-section>{{$t("store.Stores")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" to="/admin/packets">
           <q-item-section><span class="material-icons" style="font-size:30px">list</span></q-item-section>
-          <q-item-section>Packets</q-item-section>
+          <q-item-section>{{$t("packet.Packets")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" to="/admin/gutscheine">
           <q-item-section><span class="material-icons" style="font-size:30px">list</span></q-item-section>
-          <q-item-section>Gutscheine</q-item-section>
+          <q-item-section>{{$t("gutschein.Gutscheine")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" to="/admin/userpackets">
           <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
-          <q-item-section>User Packets</q-item-section>
+          <q-item-section>{{$t("userpacket.Userpackets")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" to="/admin/cashbacks">
           <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
-          <q-item-section>Cash Backs</q-item-section>
+          <q-item-section>{{$t("cashback.Cashbacks")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" to="/admin/buys">
           <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
-          <q-item-section>Buy History</q-item-section>
+          <q-item-section>{{$t("buy.Buys")}}</q-item-section>
+          <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
+        </q-item>
+        <q-item clickable v-ripple class="grey-10" to="/admin/support">
+          <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
+          <q-item-section>{{$t("support.Supports")}}</q-item-section>
+          <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
+        </q-item>
+        <q-item clickable v-ripple class="grey-10" to="/admin/contact">
+          <q-item-section><span class="material-icons" style="font-size:30px">summarize</span></q-item-section>
+          <q-item-section>{{$t("contact.Contacts")}}</q-item-section>
           <q-item-section><span class="material-icons" style="font-size:30px">chevron_right</span></q-item-section>
         </q-item>
         <q-item clickable v-ripple class="grey-10" @click="logout">

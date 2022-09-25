@@ -1,7 +1,7 @@
 <template>
   <div class="tw-my-32">
     <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px]  tw-mb-12">
-      <span class="text_dark_blue ">{{ $t('list') }} der <span class="text_dark_pink tw-ml-3">{{ $t('store.Stores') }}</span></span>
+      <span class="text_dark_blue ">{{ $t('store.Stores1') }}<span class="text_dark_pink tw-ml-3">{{ $t('store.Stores2') }}</span></span>
     </div>
 
     <div class="tw-flex tw-flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:tw-space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
@@ -44,7 +44,7 @@
     </div>
 
 
-    <div v-if="stores2.length > 0" class="tw-flex tw-mt-10 flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:tw-space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
+    <div v-if="stores2.length > 0" class="tw-flex tw-mt-10 tw-flex-col xl:tw-justify-around md:tw-space-y-0 md:tw-space-x-14 tw-space-y-8 md:tw-space-y-0 md:tw-flex-row md:tw-px-36 xs:tw-px-6 xxxs:tw-px-2 xl:tw-px-56 tw-justify-between text_dark_blue">
       <!-- Col 1 -->
       <template v-for="(store , i) in stores2" :key="i">
 
