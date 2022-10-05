@@ -92,6 +92,7 @@ export default {
   store: {
     Stores1: "List of",
     Stores2: "Stores",
+    OrderNumber: "Order Number",
     Store: "Store",
     Stores: "Stores",
     BuyNow: "Buy Now",
@@ -203,7 +204,7 @@ export default {
     Cashback: "Cash Back",
     Buyer: "Buyer",
     Packet: "Packet",
-    Amount: "Cashback Amount",
+    Amount: "Cashback-Betrag",
     Date: "Date",
     Code: "Paypal/Gutschein Code",
     StartDate: "Start Date",
@@ -242,6 +243,9 @@ export default {
     Used: "Used",
     packetHistory: "Packets Buying History",
     orderHistory: "Order Buying History",
-    CashbacksHistory: "Cash backs History"
+    CashbacksHistory: "Cash backs History",
+    Orders: "Orders",
+    ActivePackets: "Active Packets",
+    AllPackets: "All Packets"
   }
 };

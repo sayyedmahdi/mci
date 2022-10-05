@@ -23,12 +23,12 @@
           <div class="box_shadow text_dark_blue tw-text-center tw-p-6 " v-for="(p , j) in packet" :key="j">
 
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{p.PacketName}}</div>
-            <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('Month') }}</div>
+            <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('packet.Month') }}</div>
             <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ p.BuyDate }}  </div>
-            <div class="tw-relative " @mouseover="showCashbacks = false" @mouseleave="showCashbacks = true">
-              <img src="~assets/circle-full.png">
-              <div class="balance__value_2 text_dark_blue " v-if="showCashbacks" >{{p.SumCashbacks}} $</div>
-              <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks" >{{p.SumPrice}} $</div>
+            <div class="tw-relative " @mouseover="showCashbacks[j] = false" @mouseleave="showCashbacks[j] = true">
+              <img src="~assets/circle-full.png" class="tw-ml-[10%]">
+              <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[j]" >{{p.SumCashbacks}} $ </div>
+              <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[j]" >{{p.SumPrice}} $ </div>
             </div>
           </div>
 
@@ -56,9 +56,9 @@
       <img src="~assets/user-avatar.png" class="tw-mt-[-80px]">
       <div class="text_dark_pink xs:tw-text-2xl">{{StateUser.Username}}</div>
       <div class="md:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6">
-        <div>Orders</div>
-        <div>Active Packets</div>
-        <div>All Packets</div>
+        <div>{{ $t('userDashboard.Orders') }}</div>
+        <div>{{$t('userDashboard.ActivePackets')}}</div>
+        <div>{{ $t('userDashboard.AllPackets') }}</div>
       </div>
       <div class="xs:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6 tw-font-bold">
         <div class="tw-pl-6">{{ info.NumBuys }}</div>
@@ -135,6 +135,25 @@
             {{ $t('allRecords') }}: {{packetsHistory.length}}
           </div>
         </template>
+        <template v-slot:header>
+          <tr>
+            <th class="text-center sortable">
+              {{$t('userpacket.Packet')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('userpacket.StartDate')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('userpacket.Price')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('userpacket.BuyMethod')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('userpacket.BuyDate')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+          </tr>
+        </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>
@@ -179,6 +198,9 @@
               <q-card-section >
                 <span class="mobile__data__row">{{ $t('store.Store') }}: {{props.row.StoreName}}</span>
               </q-card-section>
+              <q-card-section >
+                <span class="mobile__data__row">{{ $t('store.OrderNumber') }}: {{props.row.OrderNumber}}</span>
+              </q-card-section>
               <q-card-section>
                 <span class="mobile__data__row">{{ $t('buy.RequestedPrice') }}: {{props.row.RequestedPrice}} $</span>
               </q-card-section>
@@ -212,15 +234,39 @@
             {{ $t('allRecords') }}: {{buyHistory.length}}
           </div>
         </template>
+        <template v-slot:header>
+          <tr>
+            <th class="text-center sortable">
+              {{$t('store.Store')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('store.OrderNumber')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('buy.RequestedPrice')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('buy.FinalPrice')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('buy.Status')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+            <th class="text-center sortable">
+              {{$t('buy.StartDate')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+            </th>
+          </tr>
+        </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="StoreName" :props="props">{{ props.row.StoreName }}</q-td>
+            <q-td key="StoreName" :props="props">{{ props.row.OrderNumber }}</q-td>
             <q-td key="RequestedPrice" :props="props">{{ props.row.RequestedPrice }} $</q-td>
             <q-td key="FinalPrice" :props="props">{{ props.row.FinalPrice }} $</q-td>
             <q-td key="Status" :props="props">{{ displayStatus(props.row.Status) }}</q-td>
             <q-td key="StartDate" :props="props">{{ props.row.StartDate }}</q-td>
           </q-tr>
         </template>
+
       </q-table>
     </div>
   </div>
@@ -285,6 +331,19 @@
               {{ $t('allRecords') }}: {{cashBacks.length}}
             </div>
           </template>
+          <template v-slot:header>
+            <tr>
+              <th class="text-center sortable">
+                {{$t('cashback.Packet')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+              </th>
+              <th class="text-center sortable">
+                {{$t('cashback.Amount')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+              </th>
+              <th class="text-center sortable">
+                {{$t('cashback.Date')}}<i class="q-icon notranslate material-icons q-table__sort-icon q-table__sort-icon--center" aria-hidden="true" role="presentation">arrow_upward</i>
+              </th>
+            </tr>
+          </template>
         </q-table>
       </div>
     </div>
@@ -301,7 +360,7 @@ export default {
     return {
       slide: ref(1),
       packets: [],
-      showCashbacks: true,
+      showCashbacks: [],
       packetColumns: [
         { name: 'PacketName', align: 'center', label: this.$t('userpacket.Packet'), field: 'PacketName', sortable: true },
         { name: 'StartDate', align: 'center', label: this.$t('userpacket.StartDate'), field: 'StartDate', sortable: true },
@@ -311,6 +370,7 @@ export default {
       ],
       orderColumns: [
         { name: 'StoreName', align: 'center', label: this.$t('store.Store'), field: 'StoreName', sortable: true },
+        { name: 'OrderNumber', align: 'center', label: this.$t('store.OrderNumber'), field: 'OrderNumber', sortable: true },
         { name: 'RequestedPrice', align: 'center', label: this.$t('buy.RequestedPrice'), field: 'RequestedPrice', sortable: true },
         { name: 'FinalPrice', align: 'center', label: this.$t('buy.FinalPrice'), field: 'FinalPrice', sortable: true },
         { name: 'Status', align: 'center', label: this.$t('buy.Status'), field: 'Status', sortable: true },
@@ -354,13 +414,13 @@ export default {
         p.SumCashbacks = p.Cashbacks.length * p.PacketPrice;
         p.SumPrice = p.PacketDuration * p.PacketPrice;
         this.packets[j].push(p);
+        this.showCashbacks.push(false)
         if (i % 3 === 0){
           j++;
         }
       })
 
-      console.log(this.packets)
-    }
+    },
   },
   methods: {
     stripedRow(i){
@@ -513,6 +573,7 @@ export default {
   top: 0;
   left: 0;
 }
+
 @media screen and (min-width: 1900px) {
   .balance__value{
     left: 16%;

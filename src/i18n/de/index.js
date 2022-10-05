@@ -49,6 +49,7 @@ export default {
   store: {
     Stores1: "Liste der",
     Stores2: "Geschäfte",
+    OrderNumber: "Bestellnummer",
     Store: "Geschäfte",
     Stores: "Geschäfte",
     BuyNow: "Kaufe jetzt",
@@ -159,7 +160,7 @@ export default {
     Cashbacks: "Cash Backs1",
     Cashback: "Cash Back1",
     Buyer: "Kaufer",
-    Packet: "Packet1",
+    Packet: "Paket",
     Amount: "Cashback Amount1",
     Date: "Datum",
     Code: "Paypal/Gutschein Code1",
@@ -201,7 +202,10 @@ export default {
     Used: "Gebraucht",
     packetHistory: "Geschichte des Paketkaufs",
     orderHistory: "Kaufhistorie bestellen",
-    CashbacksHistory: "Geschichte der Cashbacks"
+    CashbacksHistory: "Geschichte der Cashbacks",
+    Orders: "Aufträge",
+    ActivePackets: "Aktive Pakete",
+    AllPackets: "Alle Pakete"
   },
   profile: {
     Profile: "Profil",

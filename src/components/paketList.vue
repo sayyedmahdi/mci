@@ -12,7 +12,7 @@
 
         <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl">{{packet.Title}}</div>
         <div class="text_dark_pink tw-text-sm md:tw-text-3xl">{{ packet.Price }} $</div>
-        <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.Duration }} {{ $t('Month') }}</div>
+        <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.Duration }} {{ $t('packet.Month') }}</div>
         <div class="tw-text-sm md:tw-text-lg">{{ $t('packet.PaymentPerMonth') }}: {{ parseInt(packet.Price /packet.Duration ) }} $</div>
         <button class="tw-flex tw-items-center tw-mx-auto tw-py-3 tw-px-2 md:tw-px-9 md:text_md tw-text-xs tw-mt-4 bg__dark_pink tw-text-white tw-justify-center " @click="buy(packet)">
           <span>{{$t('packet.BuyNow')}}</span>
@@ -32,7 +32,7 @@
           <div>{{selectedPacket.Title}}</div>
           <div>{{selectedPacket.Price}}$</div>
           <div class="tw-flex tw-text-sm tw-justify-between tw-space-x-10 ">
-            <div>{{$t('packet.Duration')}}: <span class="tw-font-bold">{{selectedPacket.Duration}} {{ $t('Month') }}</span></div>
+            <div>{{$t('packet.Duration')}}: <span class="tw-font-bold">{{selectedPacket.Duration}} {{ $t('packet.Month') }}</span></div>
             <div>{{ $t('packet.PaymentPerMonth') }}: <span class="tw-font-bold">{{ parseInt(selectedPacket.Price / selectedPacket.Duration ) }}$</span></div>
           </div>
         </div>

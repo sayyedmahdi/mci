@@ -174,9 +174,6 @@ export default {
       if (this.password === '' || this.password === null){
         this.errors.push('password')
       }
-      if (this.address === '' || this.address === null){
-        this.errors.push('address')
-      }
       if (this.patrnerNumber === '' || this.patrnerNumber === null){
         this.errors.push('patrnerNumber')
       }else if (!this.patrnerNumberReg.test(this.patrnerNumber)){
