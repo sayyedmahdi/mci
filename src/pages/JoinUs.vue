@@ -1,14 +1,26 @@
 <template>
-  <form v-on:submit.prevent="() => {}">
+  <form v-on:submit.prevent="() => {}" autocomplete="off">
     <div class="tw-flex tw-flex-col md:tw-flex-row-reverse md:tw-items-center md:tw-justify-between tw-items-center tw-justify-center tw-w-full tw-h-full tw-p-14 ">
-      <div class="bg__dark_blue tw-w-[400px] tw-text-white tw-flex tw-flex-col tw-justify-start tw-text-center tw-p-8 md:tw-h-[570px]  md:tw-w-[650px]">
+      <div class="bg__dark_blue tw-w-[400px] tw-text-white tw-flex tw-flex-col tw-justify-start tw-text-center tw-p-8   md:tw-w-[650px]">
         <div class="tw-text-4xl tw-pb-[5%]">{{ $t('register.CreateAccount') }}</div>
+
+
         <input v-model="fullName" :class="['tw-text-sm', 'tw-border-b',  'tw-my-6' ,'tw-text-white' ,'tw-color-white' ,'bg__dark_blue' ,'focus:tw-outline-none' ,  errorExists('fullName') ? 'tw-border-red-700' : '']" :placeholder="$t('register.FullName')"/>
         <ul class="" id="parsley-id-11" v-if="errorExists('fullName')"><li class="parsley-required">{{$t('register.FullNameRequired')}}</li></ul>
+
         <input v-model="email" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('email') ? 'tw-border-red-700' : '']" :placeholder="$t('user.Email')"/>
         <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('email')"><li class="parsley-required">{{$t('register.EmailRequired')}}</li></ul>
+
+        <input v-model="storeEmail" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('storeEmail') ? 'tw-border-red-700' : '']" :placeholder="$t('profile.StoreEmail')"/>
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('storeEmail')"><li class="parsley-required">{{$t('register.StoreEmailRequired')}}</li></ul>
+
+        <input v-model="patrnerNumber" maxlength="8" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('patrnerNumber') ? 'tw-border-red-700' : '']" :placeholder="$t('profile.PatrnerNumber')"/>
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('patrnerNumber')"><li class="parsley-required">{{$t('register.PatrnerNumberRequired')}}</li></ul>
+        <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('patrnerNumberReg')"><li class="parsley-required">{{$t('register.PatrnerNumberReg')}}</li></ul>
+
         <input v-model="password" :class="['tw-text-sm', 'tw-border-b', 'tw-my-6', 'tw-text-white', 'tw-color-white', 'bg__dark_blue', 'focus:tw-outline-none' ,  errorExists('password') ? 'tw-border-red-700' : '']" type="password" :placeholder="$t('user.Password')" />
         <ul class="parsley-errors-list filled" id="parsley-id-11" v-if="errorExists('password')"><li class="parsley-required">{{$t('register.PasswordRequired')}}</li></ul>
+
         <button class="bg__dark_pink tw-mt-8 tw-object-fit tw-p-2 " @click="register" >{{ $t('register.CreateAccount') }}</button>
         <div class="tw-flex tw-flex-row tw-space-x-4 tw-p-2 tw-mt-[4%]">
           <input v-model="termsOfUse" class="form-check-input h-4 w-4 bg-white tw-transition tw-duration-200 cursor-pointer" type="checkbox" >
@@ -48,9 +60,13 @@ export default {
       email: '',
       address: '',
       password: '',
+      storeEmail: '',
+      patrnerNumber: '',
       termsOfUse: 0,
       errors: [],
-      show: false
+      show: false,
+      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+      patrnerNumberReg: /[a-zA-Z]{2}[0-9]{6}/
     }
   },
   methods: {
@@ -75,6 +91,8 @@ export default {
       this.$api.post('user/create.php', {
         Username: this.email,
         Email: this.email,
+        StoreEmail: this.storeEmail,
+        PatrnerNumber: this.patrnerNumber,
         Password: this.password,
         Status: '2',
         Type: '2',
@@ -149,12 +167,26 @@ export default {
       }
       if (this.email === '' || this.email === null){
         this.errors.push('email')
+      }else if(!this.reg.test(this.email))
+      {
+        this.errors.push('email');
       }
       if (this.password === '' || this.password === null){
         this.errors.push('password')
       }
       if (this.address === '' || this.address === null){
         this.errors.push('address')
+      }
+      if (this.patrnerNumber === '' || this.patrnerNumber === null){
+        this.errors.push('patrnerNumber')
+      }else if (!this.patrnerNumberReg.test(this.patrnerNumber)){
+        this.errors.push('patrnerNumberReg')
+      }
+      if (this.storeEmail === '' || this.storeEmail === null){
+        this.errors.push('storeEmail')
+      }else if(!this.reg.test(this.storeEmail))
+      {
+        this.errors.push('storeEmail');
       }
     },
     showTermsOfUse(){

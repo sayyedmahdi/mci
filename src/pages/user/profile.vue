@@ -26,6 +26,23 @@
           <input v-model="email" :class="['appearance-none', 'bg__dark_blue' , 'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('email') ? 'tw-border-red-700' : '' ]" id="email" type="text" :placeholder="$t('profile.Email')">
           <p v-if="errorExists('email')" class="text-red-500 text-xs italic">{{$t('profile.Error')}}</p>
         </div>
+
+        <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
+          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="email">
+            {{ $t('profile.StoreEmail') }}
+          </label>
+          <input v-model="storeEmail" :class="['appearance-none', 'bg__dark_blue' , 'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('email') ? 'tw-border-red-700' : '' ]" id="email" type="text" :placeholder="$t('profile.StoreEmail')">
+          <p v-if="errorExists('StoreEmail')" class="text-red-500 text-xs italic">{{$t('profile.Error')}}</p>
+        </div>
+
+        <div class="w-full tw-px-3 tw-mb-6 md:tw-mb-0">
+          <label class="tw-block tracking-wide tw-text-base tw-font-bold mb-2" for="email">
+            {{ $t('profile.PatrnerNumber') }}
+          </label>
+          <input v-model="patrnerNumber" maxlength="8" :class="['appearance-none', 'bg__dark_blue' , 'tw-block', 'tw-w-full', 'tw-py-3', 'tw-px-4', 'tw-mb-3', 'focus:tw-border-white' , errorExists('patrnerNumber') ? 'tw-border-red-700' : '' ]" id="email" type="text" :placeholder="$t('profile.PatrnerNumber')">
+          <p v-if="errorExists('patrnerNumber')" class="text-red-500 text-xs italic">{{$t('profile.Error')}}</p>
+          <p v-if="errorExists('patrnerNumberReg')" class="text-red-500 text-xs italic">{{$t('register.PatrnerNumberReg')}}</p>
+        </div>
         <q-btn @click="update()" class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">{{$t('profile.SaveChanges')}}</q-btn>
         <q-btn @click="showChangePassword()" class="bg__dark_pink tw-mt-6 tw-mx-auto tw-p-2 tw-lowercase tw-text-white tw-max-h-10 tw-px-20 tw-text-base">
           {{ $t('profile.ChangePassword') }}</q-btn>
@@ -72,11 +89,15 @@ export default {
       password: '',
       newPassword: '',
       address: '',
+      storeEmail: '',
+      patrnerNumber: '',
       country: '',
       city: '',
       postalCode: '',
       errors: [],
-      show: false
+      show: false,
+      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+      patrnerNumberReg: /[a-zA-Z]{2}[0-9]{6}/
     }
   },
   computed: {
@@ -87,6 +108,8 @@ export default {
       let data = {
         ID: this.StateUser.ID,
         Email: this.email,
+        PatrnerNumber: this.patrnerNumber,
+        StoreEmail: this.storeEmail,
         Username: this.name
       }
       this.errors = [];
@@ -193,13 +216,28 @@ export default {
       }
       if (this.email === '' || this.email === null){
         this.errors.push('email')
+      }else if(!this.reg.test(this.email))
+      {
+        this.errors.push('email');
+      }
+      if (this.patrnerNumber === '' || this.patrnerNumber === null){
+        this.errors.push('patrnerNumber')
+      }else if (!this.patrnerNumberReg.test(this.patrnerNumber)){
+        this.errors.push('patrnerNumberReg')
+      }
+      if (this.storeEmail === '' || this.storeEmail === null){
+        this.errors.push('storeEmail')
+      }else if(!this.reg.test(this.storeEmail))
+      {
+        this.errors.push('storeEmail');
       }
     }
   },
   mounted() {
-    this.name = this.StateUser.Username
-    this.email = this.StateUser.Email
-
+    this.name = this.StateUser.Username;
+    this.email = this.StateUser.Email;
+    this.storeEmail = this.StateUser.StoreEmail;
+    this.patrnerNumber = this.StateUser.PatrnerNumber;
   }
 }
 </script>
