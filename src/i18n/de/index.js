@@ -68,6 +68,7 @@ export default {
     Buys: "Kauf History",
     Buyer: "Kaufer",
     Store: "Geschäft",
+    OrderNumber: "Bestellnummer",
     RequestedPrice: "Bestellpreis",
     FinalPrice: "Bezahlt Preis",
     StartDate: "Datum",
@@ -136,6 +137,8 @@ export default {
     New: "Neu",
     Edit: "Bearbeiten",
     Delete: "Löschen",
+    Import: "Importieren",
+    ImportFromExcel: "Importieren Gutscheincodes aus Excel",
   },
   userpacket: {
     Userpackets: "Pakete der Benutzern",
@@ -227,5 +230,15 @@ export default {
     InvalidOldPassword: "ungültiges altes Passwort",
     InvalidNewPassword: "ungültiges neues Passwort",
     SomeError: "ein unbekannter Fehler ist aufgetreten"
+  },
+  support: {
+    Supports: "Unterstützt",
+    Support: "Die Unterstützung",
+    Name: "Name",
+    Email: "Email",
+    Phone: "Telefon",
+    Date: "Datum",
+    Edit: "Bearbeiten",
+    Delete: "Löschen",
   },
 }

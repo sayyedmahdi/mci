@@ -111,6 +111,7 @@ export default {
     Buys: "Buy History",
     Buyer: "Buyer",
     Store: "Store",
+    OrderNumber: "Order Number",
     RequestedPrice: "Order Price",
     FinalPrice: "Paid Price",
     StartDate: "Date",
@@ -179,6 +180,8 @@ export default {
     New: "New",
     Edit: "Edit",
     Delete: "Delete",
+    Import: "Import",
+    ImportFromExcel: "Import Gutschein Codes from Excel",
   },
   userpacket: {
     Userpackets: "User Packets",

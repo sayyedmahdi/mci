@@ -19,6 +19,9 @@
               <q-icon name="search" />
             </template>
           </q-input>
+          <q-btn class="float-right on-right new-button" @click="importPopup = true">
+              <i class="fa fa-file-excel"></i> {{ $t('gutschein.Import') }}
+          </q-btn>
           <q-btn class="float-right on-right new-button" @click="newRow()">
               <q-icon name="add_circle_outline" /> {{ $t('gutschein.New') }}
           </q-btn>
@@ -114,6 +117,29 @@
         </q-card-section>
         </q-card>
     </q-dialog>
+    <q-dialog v-model="importPopup" persistent>
+      <q-card class="delete-dialog">
+        <q-card-section class="delete-title">
+          {{ $t('gutschein.ImportFromExcel') }} 
+        </q-card-section>
+        <q-card-section>
+          <div class="row">
+            <div class="col-xs-12 col-sm-8">
+              <q-uploader
+                :url="setUploadUrl" :headers="headers" :multiple="false" :no-thumbnails="true"
+                name="real" label="Upload File" accept=".xlsx, xlsx/*" flat bordered
+                color="white" text-color="grey-9"
+                @uploaded="uploaded"
+              >
+              </q-uploader>
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-section  align="center">
+          <q-btn flat class="cancel-btn" label="Cancel" @click="importPopup = false" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -133,6 +159,8 @@ export default {
     return {
       filter: '',
       loading: false,
+      importPopup: false,
+      headers: [],
       pagination: {
         sortBy: 'Title',
         descending: false,
@@ -167,6 +195,9 @@ export default {
       }
   },
   mounted () {
+    this.headers = [{
+      name: 'Token', value: this.$q.cookies.get('mcisitetoken')
+    }]
     this.loadPackets()
     this.loadData({
       pagination: this.pagination,
@@ -174,6 +205,27 @@ export default {
     })
   },
   methods: {
+    setUploadUrl (files) {
+      let url = process.env.API_URL + 'gutschein/import.php'
+      console.log(url)
+      return url
+    },
+    uploaded (info) {
+      console.log(info)
+      let res = JSON.parse(info.xhr.responseText)
+      this.$q.notify({
+          type: 'positive',
+          timeout: 10000,
+          message: `Inserted: ${res.Inserted}, Invalid Packet: ${res.InvalidPacket}, Duplicate Code: ${res.DuplicateCode}`,
+          position: 'bottom-right'
+      })
+      console.log(res)
+      this.importPopup = false
+      this.loadData({
+        pagination: this.pagination,
+        filter: this.filter
+      })
+    },
     loadPackets () {
         let _this = this
         // get list
