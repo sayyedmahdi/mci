@@ -5,7 +5,7 @@
     <div class="bg__dark_pink tw-flex-1"></div>
     <div class="bg__dark_blue tw-flex-1"></div>
   </div>
-  <div class="q-pa-md tw-hidden md:tw-block">
+  <div class="q-pa-md tw-hidden md:tw-block tw-text-right" v-if="packets.length > 1 && !showAllPackets">
     <q-carousel
       v-model="slide"
       transition-prev="slide-right"
@@ -17,10 +17,67 @@
       arrows
       class=""
     >
-      <q-carousel-slide :name="i" class="column no-wrap" v-for="(packet , i) in packets" :key="i">
-        <div :class="['row', 'fit', packet.length >= 3 ? 'justify-between' :  'justify-center', 'items-center', 'q-gutter-xs', 'q-col-gutter', 'no-wrap']">
-          <div class="box_shadow text_dark_blue tw-text-center tw-p-6 " v-for="(p , j) in packet" :key="j">
+        <q-carousel-slide :name="i"  class="column no-wrap" v-for="(packet , i) in packets" :key="`asasas` + i">
+          <div :class="['row', 'fit', packet.length >= 3 ? 'justify-between' : packet.length === 2 ? 'justify-evenly' : 'justify-center', 'items-center', 'q-gutter-xs', 'q-col-gutter', 'no-wrap']">
+            <div class="box_shadow text_dark_blue tw-text-center tw-p-6 " v-for="(p , j) in packet" :key="j">
+              <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{p.PacketName}}</div>
+              <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('packet.Month') }}</div>
+              <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ p.BuyDate }}  </div>
+              <div class="tw-relative " @mouseover="showCashbacks[j] = false" @mouseleave="showCashbacks[j] = true">
+                <img src="~assets/circle-full.png" class="tw-ml-[10%]">
+                <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[j]" >{{p.SumCashbacks}} $ </div>
+                <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[j]" >{{p.SumPrice}} $ </div>
+              </div>
+            </div>
 
+          </div>
+        </q-carousel-slide>
+
+    </q-carousel>
+    <q-btn @click="showAllPackets = !showAllPackets" class="tw-mr-[8%]">see all packets</q-btn>
+  </div>
+  <div v-if="showAllPackets && packets.length > 1" class="tw-text-center md:tw-text-right">
+    <div class="tw-flex tw-flex-wrap tw-px-10 tw-gap-4  tw-hidden md:tw-flex">
+      <div class="box_shadow text_dark_blue tw-text-center tw-p-6 md:tw-p-12 tw-basis-[31%]" v-for="(packet , i) in packetsHistory" :key="i">
+        <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{packet.PacketName}}</div>
+        <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.PacketDuration }} {{ $t('packet.Month') }}</div>
+        <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ packet.BuyDate }}  </div>
+        <div class="tw-relative " @mouseover="showCashbacks[i] = false" @mouseleave="showCashbacks[i] = true">
+          <img src="~assets/circle-full.png" class="fix__circle">
+          <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[i]" >{{packet.SumCashbacks}} $ </div>
+          <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[i]" >{{packet.SumPrice}} $ </div>
+        </div>
+      </div>
+    </div>
+    <div class="tw-flex tw-flex-col tw-px-10 tw-gap-4 tw-text-right  md:tw-hidden">
+      <div class="box_shadow text_dark_blue tw-text-center tw-p-6 md:tw-p-12" v-for="(packet , i) in packetsHistory" :key="i">
+        <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{packet.PacketName}}</div>
+        <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.PacketDuration }} {{ $t('packet.Month') }}</div>
+        <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ packet.BuyDate }}  </div>
+        <div class="tw-relative " @mouseover="showCashbacks[i] = false" @mouseleave="showCashbacks[i] = true">
+          <img src="~assets/circle-full.png" class="fix__circle">
+          <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[i]" >{{packet.SumCashbacks}} $ </div>
+          <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[i]" >{{packet.SumPrice}} $ </div>
+        </div>
+      </div>
+    </div>
+    <q-btn @click="showAllPackets = !showAllPackets" class="md:tw-mr-[8%]">see slider packets</q-btn>
+  </div>
+  <div v-else-if="packets.length === 1" class="q-pa-md tw-hidden md:tw-block ">
+    <q-carousel
+      v-model="slide"
+      transition-prev="slide-right"
+      transition-next="slide-left"
+      swipeable
+      animated
+      control-color="primary"
+      padding
+      arrows
+      class=""
+    >
+      <q-carousel-slide :name="1"  class="column no-wrap" v-for="(packet , i) in packets" :key="`asasas` + i">
+        <div :class="['row', 'fit', packet.length >= 3 ? 'justify-between' : packet.length === 2 ? 'justify-evenly' : 'justify-center', 'items-center', 'q-gutter-xs', 'q-col-gutter', 'no-wrap']">
+          <div class="box_shadow text_dark_blue tw-text-center tw-p-6 " v-for="(p , j) in packet" :key="j">
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{p.PacketName}}</div>
             <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('packet.Month') }}</div>
             <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ p.BuyDate }}  </div>
@@ -33,9 +90,10 @@
 
         </div>
       </q-carousel-slide>
+
     </q-carousel>
   </div>
-  <div class="q-pa-md  md:tw-hidden">
+  <div class="q-pa-md  md:tw-hidden tw-text-center" v-if="!showAllPackets">
     <q-carousel
       v-model="slide"
       transition-prev="slide-right"
@@ -64,6 +122,7 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
+    <q-btn @click="showAllPackets = !showAllPackets" >see all packets</q-btn>
   </div>
   <div class="tw-flex tw-flex-col-reverse md:tw-flex-row md:tw-space-x-10 md:tw-justify-between tw-p-6 lg:tw-px-40 tw-mt-24">
     <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
@@ -388,6 +447,7 @@ export default {
   data(){
     return {
       slide: ref(1),
+      showAllPackets: false,
       packets: [],
       showCashbacks: [],
       packetColumns: [
@@ -433,25 +493,7 @@ export default {
     ...mapGetters(['StateUser'])
   },
   watch: {
-    packetsHistory(){
-      let packetsSlides = Math.ceil(this.packetsHistory.length / 3);
-      for(let i = 0; i < packetsSlides; i++){
-        this.packets.push([]);
-      }
-      let j = 0;
-      this.packetsHistory.map((p , i) => {
-        p.SumCashbacks = p.Cashbacks.length * p.PacketPrice;
-        p.SumPrice = p.PacketDuration * p.PacketPrice;
-        this.packets[j].push(p);
-        this.packetsHistory[i].SumCashbacks = p.SumCashbacks;
-        this.packetsHistory[i].SumPrice = p.SumPrice;
-        this.showCashbacks.push(false)
-        if (i % 3 === 0){
-          j++;
-        }
-      })
 
-    },
   },
   methods: {
     stripedRow(i){
@@ -490,7 +532,335 @@ export default {
         OrderDir: 'desc',
       })
         .then((res) => {
-          this.packetsHistory = res.data.Data
+          //this.packetsHistory = res.data.Data;
+          this.packetsHistory = [
+            {
+              "ID": "16",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-19T07:35:03",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-19T07:35:03",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "15",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-19T07:32:33",
+              "BuyMethod": "1",
+              "StartDate": "2022-10-19T07:32:33",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": "G2222A",
+              "Cashbacks": []
+            },
+            {
+              "ID": "14",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-16T09:47:22",
+              "BuyMethod": "1",
+              "StartDate": "2022-10-16T09:47:22",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": "CCC",
+              "Cashbacks": []
+            },
+            {
+              "ID": "13",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-13T17:47:46",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-13T17:47:46",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "12",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-13T17:36:34",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-13T17:36:34",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "11",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-13T17:34:36",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-13T17:34:36",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "10",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-13T17:32:38",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-13T17:32:38",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "9",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-13T16:59:40",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-13T16:59:40",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "8",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-13T16:54:07",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-13T16:54:07",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "7",
+              "UserID": "2",
+              "PacketID": "1",
+              "BuyDate": "2022-09-12T07:20:08",
+              "BuyMethod": "1",
+              "StartDate": "2022-10-12T07:20:08",
+              "Status": "1",
+              "Username": "rosa",
+              "Email": "rosa@kurdistan.com",
+              "PatrnerNumber": "RS140001",
+              "PacketName": "Club-Paket Gold",
+              "PacketDuration": "10",
+              "PacketPrice": "10000",
+              "PacketCashback": "10000",
+              "GutscheinName": "G1374A",
+              "Cashbacks": []
+            },
+            {
+              "ID": "6",
+              "UserID": "1",
+              "PacketID": "1",
+              "BuyDate": "2022-09-08T17:02:55",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-08T17:02:55",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Gold",
+              "PacketDuration": "10",
+              "PacketPrice": "10000",
+              "PacketCashback": "10000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "5",
+              "UserID": "1",
+              "PacketID": "1",
+              "BuyDate": "2022-09-08T17:01:48",
+              "BuyMethod": "2",
+              "StartDate": "2022-10-08T17:01:48",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Gold",
+              "PacketDuration": "10",
+              "PacketPrice": "10000",
+              "PacketCashback": "10000",
+              "GutscheinName": null,
+              "Cashbacks": []
+            },
+            {
+              "ID": "4",
+              "UserID": "1",
+              "PacketID": "1",
+              "BuyDate": "2022-09-08T17:01:35",
+              "BuyMethod": "1",
+              "StartDate": "2022-10-08T17:01:35",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Gold",
+              "PacketDuration": "10",
+              "PacketPrice": "10000",
+              "PacketCashback": "10000",
+              "GutscheinName": "qq12",
+              "Cashbacks": []
+            },
+            {
+              "ID": "3",
+              "UserID": "1",
+              "PacketID": "13",
+              "BuyDate": "2022-09-07T14:30:29",
+              "BuyMethod": "1",
+              "StartDate": "2022-10-07T14:30:29",
+              "Status": "1",
+              "Username": "admin",
+              "Email": "admin@mci.de",
+              "PatrnerNumber": null,
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": "AAAAAAA",
+              "Cashbacks": []
+            },
+            {
+              "ID": "2",
+              "UserID": "2",
+              "PacketID": "84",
+              "BuyDate": "2022-07-27T08:34:11",
+              "BuyMethod": "1",
+              "StartDate": "2022-08-27T08:34:11",
+              "Status": "1",
+              "Username": "rosa",
+              "Email": "rosa@kurdistan.com",
+              "PatrnerNumber": "RS140001",
+              "PacketName": "Club-Paket Silver",
+              "PacketDuration": "10",
+              "PacketPrice": "5000",
+              "PacketCashback": "5000",
+              "GutscheinName": "G1374B",
+              "Cashbacks": [
+                {
+                  "ID": "3",
+                  "UserPacketID": "2",
+                  "PaybackDate": "2022-08-29T08:43:27"
+                },
+                {
+                  "ID": "4",
+                  "UserPacketID": "2",
+                  "PaybackDate": "2022-09-29T00:00:00"
+                }
+              ]
+            },
+            {
+              "ID": "1",
+              "UserID": "2",
+              "PacketID": "13",
+              "BuyDate": "2022-07-29T08:34:11",
+              "BuyMethod": "2",
+              "StartDate": "2022-08-29T08:34:11",
+              "Status": "1",
+              "Username": "rosa",
+              "Email": "rosa@kurdistan.com",
+              "PatrnerNumber": "RS140001",
+              "PacketName": "Club-Paket Bronze",
+              "PacketDuration": "10",
+              "PacketPrice": "2000",
+              "PacketCashback": "2000",
+              "GutscheinName": null,
+              "Cashbacks": [
+                {
+                  "ID": "1",
+                  "UserPacketID": "1",
+                  "PaybackDate": "2022-08-29T08:42:55"
+                },
+                {
+                  "ID": "2",
+                  "UserPacketID": "1",
+                  "PaybackDate": "2022-09-29T08:42:55"
+                }
+              ]
+            }
+          ];
+          let packetsSlides = Math.ceil(this.packetsHistory.length / 3);
+          for(let i = 0; i < packetsSlides; i++){
+            this.packets.push([]);
+          }
+          let j = 0;
+          this.packetsHistory.map((p , i) => {
+            p.SumCashbacks = p.Cashbacks.length * p.PacketCashback;
+            p.SumPrice = p.PacketDuration * p.PacketCashback;
+            if (this.packets[j].length === 3){
+              j++;
+            }
+            this.packets[j].push(p);
+            this.packetsHistory[i].SumCashbacks = p.SumCashbacks;
+            this.packetsHistory[i].SumPrice = p.SumPrice;
+            this.showCashbacks.push(true)
+          })
         })
     },
     getUserBuys(){
@@ -544,6 +914,334 @@ export default {
     this.getUserBuys();
     this.getCashBacks();
     this.userInfo();
+    this.packetsHistory = [
+      {
+        "ID": "16",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-19T07:35:03",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-19T07:35:03",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "15",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-19T07:32:33",
+        "BuyMethod": "1",
+        "StartDate": "2022-10-19T07:32:33",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": "G2222A",
+        "Cashbacks": []
+      },
+      {
+        "ID": "14",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-16T09:47:22",
+        "BuyMethod": "1",
+        "StartDate": "2022-10-16T09:47:22",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": "CCC",
+        "Cashbacks": []
+      },
+      {
+        "ID": "13",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-13T17:47:46",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-13T17:47:46",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "12",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-13T17:36:34",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-13T17:36:34",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "11",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-13T17:34:36",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-13T17:34:36",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "10",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-13T17:32:38",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-13T17:32:38",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "9",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-13T16:59:40",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-13T16:59:40",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "8",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-13T16:54:07",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-13T16:54:07",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "7",
+        "UserID": "2",
+        "PacketID": "1",
+        "BuyDate": "2022-09-12T07:20:08",
+        "BuyMethod": "1",
+        "StartDate": "2022-10-12T07:20:08",
+        "Status": "1",
+        "Username": "rosa",
+        "Email": "rosa@kurdistan.com",
+        "PatrnerNumber": "RS140001",
+        "PacketName": "Club-Paket Gold",
+        "PacketDuration": "10",
+        "PacketPrice": "10000",
+        "PacketCashback": "10000",
+        "GutscheinName": "G1374A",
+        "Cashbacks": []
+      },
+      {
+        "ID": "6",
+        "UserID": "1",
+        "PacketID": "1",
+        "BuyDate": "2022-09-08T17:02:55",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-08T17:02:55",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Gold",
+        "PacketDuration": "10",
+        "PacketPrice": "10000",
+        "PacketCashback": "10000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "5",
+        "UserID": "1",
+        "PacketID": "1",
+        "BuyDate": "2022-09-08T17:01:48",
+        "BuyMethod": "2",
+        "StartDate": "2022-10-08T17:01:48",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Gold",
+        "PacketDuration": "10",
+        "PacketPrice": "10000",
+        "PacketCashback": "10000",
+        "GutscheinName": null,
+        "Cashbacks": []
+      },
+      {
+        "ID": "4",
+        "UserID": "1",
+        "PacketID": "1",
+        "BuyDate": "2022-09-08T17:01:35",
+        "BuyMethod": "1",
+        "StartDate": "2022-10-08T17:01:35",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Gold",
+        "PacketDuration": "10",
+        "PacketPrice": "10000",
+        "PacketCashback": "10000",
+        "GutscheinName": "qq12",
+        "Cashbacks": []
+      },
+      {
+        "ID": "3",
+        "UserID": "1",
+        "PacketID": "13",
+        "BuyDate": "2022-09-07T14:30:29",
+        "BuyMethod": "1",
+        "StartDate": "2022-10-07T14:30:29",
+        "Status": "1",
+        "Username": "admin",
+        "Email": "admin@mci.de",
+        "PatrnerNumber": null,
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": "AAAAAAA",
+        "Cashbacks": []
+      },
+      {
+        "ID": "2",
+        "UserID": "2",
+        "PacketID": "84",
+        "BuyDate": "2022-07-27T08:34:11",
+        "BuyMethod": "1",
+        "StartDate": "2022-08-27T08:34:11",
+        "Status": "1",
+        "Username": "rosa",
+        "Email": "rosa@kurdistan.com",
+        "PatrnerNumber": "RS140001",
+        "PacketName": "Club-Paket Silver",
+        "PacketDuration": "10",
+        "PacketPrice": "5000",
+        "PacketCashback": "5000",
+        "GutscheinName": "G1374B",
+        "Cashbacks": [
+          {
+            "ID": "3",
+            "UserPacketID": "2",
+            "PaybackDate": "2022-08-29T08:43:27"
+          },
+          {
+            "ID": "4",
+            "UserPacketID": "2",
+            "PaybackDate": "2022-09-29T00:00:00"
+          }
+        ]
+      },
+      {
+        "ID": "1",
+        "UserID": "2",
+        "PacketID": "13",
+        "BuyDate": "2022-07-29T08:34:11",
+        "BuyMethod": "2",
+        "StartDate": "2022-08-29T08:34:11",
+        "Status": "1",
+        "Username": "rosa",
+        "Email": "rosa@kurdistan.com",
+        "PatrnerNumber": "RS140001",
+        "PacketName": "Club-Paket Bronze",
+        "PacketDuration": "10",
+        "PacketPrice": "2000",
+        "PacketCashback": "2000",
+        "GutscheinName": null,
+        "Cashbacks": [
+          {
+            "ID": "1",
+            "UserPacketID": "1",
+            "PaybackDate": "2022-08-29T08:42:55"
+          },
+          {
+            "ID": "2",
+            "UserPacketID": "1",
+            "PaybackDate": "2022-09-29T08:42:55"
+          }
+        ]
+      }
+    ];
+    let packetsSlides = Math.ceil(this.packetsHistory.length / 3);
+    for(let i = 0; i < packetsSlides; i++){
+      this.packets.push([]);
+    }
+    let j = 0;
+    this.packetsHistory.map((p , i) => {
+      p.SumCashbacks = p.Cashbacks.length * p.PacketCashback;
+      p.SumPrice = p.PacketDuration * p.PacketCashback;
+      if (this.packets[j].length === 3){
+        j++;
+      }
+      this.packets[j].push(p);
+      this.packetsHistory[i].SumCashbacks = p.SumCashbacks;
+      this.packetsHistory[i].SumPrice = p.SumPrice;
+      this.showCashbacks.push(true)
+    })
   }
 }
 </script>
@@ -559,7 +1257,9 @@ export default {
   line-height: 1.75rem;
 }
 
-
+.fix__circle {
+  margin-left: 32%;
+}
 
 .border__bottom__head {
   border-bottom: 1px solid #EEA2AD !important;
@@ -604,6 +1304,36 @@ export default {
   top: 0;
   left: 0;
 }
+
+@media screen and (min-width: 1280px) {
+  .fix__circle {
+    margin-left: 32%;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .fix__circle {
+    margin-left: 18%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .fix__circle {
+    margin-left: 0%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fix__circle {
+    margin-left: 33%;
+  }
+}
+
+/*@media screen and (min-width: 768px) {*/
+/*  .fix__circle {*/
+/*    margin-left: 0%;*/
+/*  }*/
+/*}*/
 
 @media screen and (min-width: 1900px) {
   .balance__value{
