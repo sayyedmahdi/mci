@@ -249,6 +249,8 @@ export default {
     CashbacksHistory: "Cash backs History",
     Orders: "Orders",
     ActivePackets: "Active Packets",
-    AllPackets: "All Packets"
+    AllPackets: "All Packets",
+    SeeAllPackets: "See All Packets",
+    SeeSliderPackets: "See Slider Packets"
   }
 };

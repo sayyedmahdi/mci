@@ -34,7 +34,7 @@
         </q-carousel-slide>
 
     </q-carousel>
-    <q-btn @click="showAllPackets = !showAllPackets" class="tw-mr-[8%]">see all packets</q-btn>
+    <q-btn @click="showAllPackets = !showAllPackets" class="tw-mr-[8%]">{{$t('userDashboard.SeeAllPackets')}}</q-btn>
   </div>
   <div v-if="showAllPackets && packets.length > 1" class="tw-text-center md:tw-text-right">
     <div class="tw-flex tw-flex-wrap tw-px-10 tw-gap-4  tw-hidden md:tw-flex">
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <q-btn @click="showAllPackets = !showAllPackets" class="md:tw-mr-[8%]">see slider packets</q-btn>
+    <q-btn @click="showAllPackets = !showAllPackets" class="md:tw-mr-[8%]">{{$t('userDashboard.SeeSliderPackets')}}</q-btn>
   </div>
   <div v-else-if="packets.length === 1" class="q-pa-md tw-hidden md:tw-block ">
     <q-carousel
@@ -122,7 +122,7 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-    <q-btn @click="showAllPackets = !showAllPackets" >see all packets</q-btn>
+    <q-btn @click="showAllPackets = !showAllPackets" >{{$t('userDashboard.SeeAllPackets')}}</q-btn>
   </div>
   <div class="tw-flex tw-flex-col-reverse md:tw-flex-row md:tw-space-x-10 md:tw-justify-between tw-p-6 lg:tw-px-40 tw-mt-24">
     <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">

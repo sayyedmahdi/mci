@@ -208,7 +208,9 @@ export default {
     CashbacksHistory: "Geschichte der Cashbacks",
     Orders: "Aufträge",
     ActivePackets: "Aktive Pakete",
-    AllPackets: "Alle Pakete"
+    AllPackets: "Alle Pakete",
+    SeeAllPackets: "Siehe Alle Pakete",
+    SeeSliderPackets: "Siehe Slider Pakete"
   },
   profile: {
     Profile: "Profil",
