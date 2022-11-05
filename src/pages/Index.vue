@@ -77,8 +77,19 @@
     </div>
     <belt  text="" image=""></belt>
     <paket-list />
-    <gutscheineList />
-    <testimonial />
+<!--    <gutscheineList />-->
+<!--    <testimonial />-->
+  <div class="tw-my-32" v-if="!isAuthenticated">
+    <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px] tw-mb-12">
+      <span class="text_dark_blue tw-flex tw-items-center">{{$t('payOne')}}
+        <span class="text_dark_pink tw-ml-3">{{ $t('getMore') }}</span>
+        <button class="tw-inline tw-ml-4 tw-mx-auto tw-py-2 tw-mt-1 tw-px-2 md:tw-px-9 md:tw-text-xl tw-text-xs bg__dark_pink tw-text-white tw-justify-center " @click="gotoRegister()">
+        <span>{{ $t('memberShip') }}</span>
+        </button>
+      </span>
+    </div>
+
+  </div>
     <footerPage />
 </template>
 
@@ -89,10 +100,19 @@ import paketList from "components/paketList";
 import testimonial from "components/testimonial";
 import footerPage from "components/footerPage";
 import gutscheineList from "components/gutscheineList";
+import {mapGetters} from "vuex";
 
 export default defineComponent({
   name: "PageIndex",
-  components: {belt , paketList , testimonial , gutscheineList , footerPage}
+  components: {belt , paketList , footerPage},
+  methods: {
+    gotoRegister(){
+      this.$router.push('/join-us')
+    }
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated'])
+  },
 
 });
 </script>

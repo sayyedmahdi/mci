@@ -97,6 +97,12 @@ export default {
         Status: '2',
         Type: '2',
       }).then((res) => {
+        _this.$q.notify({
+          type: 'positive',
+          timeout: 3000,
+          message: this.$t('register.RegisterMessage'),
+          position: 'bottom-right'
+        })
         this.login()
       }).catch(function (error) {
         _this.$helper.logError(error)

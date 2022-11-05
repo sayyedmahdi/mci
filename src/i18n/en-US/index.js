@@ -46,6 +46,9 @@ export default {
   successBuy: "purchase was made successfully",
   gutscheinCodeError: "please insert your Gutschein Code first",
   updateNotPossible: "Update not possible",
+  memberShip: "continue to membership",
+  payOne: "PAY ONE, ",
+  getMore: "GET MORE",
   profile: {
     Profile: "Profile",
     Hello: "Hello",
@@ -87,7 +90,8 @@ export default {
     acceptTermsOfUse: "please accept terms of use",
     StoreEmailRequired: "registered Email by Megamarche is required",
     PatrnerNumberRequired: "patrner number is required",
-    PatrnerNumberReg: "patener number is in valid valid example: as123456",
+    PatrnerNumberReg: "patener number is in valid",
+    RegisterMessage: "Vielen Dank für Ihre Registrierung!"
   },
   store: {
     Stores1: "List of",
@@ -241,7 +245,7 @@ export default {
     Delete: "Delete",
   },
   userDashboard: {
-    Balance: "Your Balance",
+    Balance: "Your available benefit",
     Cashbacks: "Cashbacks",
     Used: "Used",
     packetHistory: "Packets Buying History",
@@ -251,6 +255,7 @@ export default {
     ActivePackets: "Active Packets",
     AllPackets: "All Packets",
     SeeAllPackets: "See All Packets",
-    SeeSliderPackets: "See Slider Packets"
+    SeeSliderPackets: "See Slider Packets",
+    ToalCashbacks: "benefit since membership"
   }
 };

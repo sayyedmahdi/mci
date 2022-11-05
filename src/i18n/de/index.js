@@ -22,7 +22,7 @@ export default {
   failed: "Aktion war nicht Erfolgreich",
   success: "Aktion war nicht Erfolgreich",
   allRecords: "Alle Aufzeichnungen",
-  termsOfUse: "Nutzungsbedingungen",
+  termsOfUse: "Ich bin einverstanden mit den Nutzungsbedingungen",
   action: "Aktion",
   save: "Speichern",
   cancel: "Abbrechen",
@@ -33,7 +33,7 @@ export default {
   allRows: "Alle",
   of: "von",
   login: "Einloggen",
-  joinUs: "Begleiten Sie uns!",
+  joinUs: "zu Mitgliedschaft",
   dashboard: "Armaturenbrett",
   logout: "Ausloggen",
   listReloaded: "Liste wurde erfolgreich neu geladen!",
@@ -46,6 +46,9 @@ export default {
   successBuy: "Kauf erfolgreich abgeschlossen",
   gutscheinCodeError: "Bitte geben Sie zuerst Ihren Gutschein code ein",
   updateNotPossible: "Update nicht möglich",
+  memberShip: "weiter zur Mitgliedschaft",
+  payOne: "einen bezahlen",
+  getMore: "mehr bekommen",
   store: {
     Stores1: "Liste der",
     Stores2: "Geschäfte",
@@ -117,7 +120,7 @@ export default {
     BuyPacket: "Kaufe Pakete",
     Comments: "Kommentar",
     StatusEnabled: "Aktiv",
-    Month: "monat",
+    Month: "Monate",
     StatusDisabled: "Nicht Aktiv",
     NewPacket: "Neues Paket",
     New: "Neu",
@@ -188,7 +191,7 @@ export default {
     FailedSend:  "Nachricht konnte nicht gesendet werden"
   },
   register: {
-    CreateAccount: "Konto anlegen",
+    CreateAccount: "Mitglied werden",
     FullName: "Vollständiger Name",
     IAgree: "Ich bin einverstanden mit",
     FullNameRequired: "vollständiger Name ist erforderlich",
@@ -197,20 +200,22 @@ export default {
     acceptTermsOfUse: "Bitte akzeptieren Sie die Nutzungsbedingungen",
     StoreEmailRequired: "registrierte E-Mailadresse bei Megamarche ist erforderlich",
     PatrnerNumberRequired: "Patrnernummer ist erforderlich",
-    PatrnerNumberReg: "patener number is in valid valid example: as123456",
+    PatrnerNumberReg: "Partnernummer ins nicht valide.",
+    RegisterMessage: "Vielen Dank für Ihre Registrierung!"
   },
   userDashboard: {
-    Balance: "Dein Kontostand",
+    Balance: "Dein verfügbarer Einkaufsvorteil",
     Cashbacks: "Cashbacks",
     Used: "Gebraucht",
-    packetHistory: "Geschichte des Paketkaufs",
+    packetHistory: "Paketkäufe",
     orderHistory: "Kaufhistorie bestellen",
     CashbacksHistory: "Geschichte der Cashbacks",
     Orders: "Aufträge",
     ActivePackets: "Aktive Pakete",
     AllPackets: "Alle Pakete",
     SeeAllPackets: "Siehe Alle Pakete",
-    SeeSliderPackets: "Siehe Slider Pakete"
+    SeeSliderPackets: "Siehe Slider Pakete",
+    ToalCashbacks: "Einkaufsvorteil seit Mitgliedschaft"
   },
   profile: {
     Profile: "Profil",
