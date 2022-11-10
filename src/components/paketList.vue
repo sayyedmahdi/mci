@@ -7,10 +7,17 @@
     <div class="tw-flex tw-flex-col tw-space-y-6 md:tw-space-y-0 md:space-x-8 xl:tw-space-x-16 md:tw-flex-row md:tw-px-20 tw-px-10 md:tw-px-16 xl:tw-px-60 tw-justify-between">
       <!-- Col 1 -->
       <div class="box_shadow text_dark_blue tw-text-center tw-p-6 md:tw-p-12" v-for="(packet , i) in packets" :key="i">
-
-        <img class="tw-mx-auto" src="~assets/rectangle1395.png">
-
-        <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl">{{packet.Title}}</div>
+        <q-img
+          :src="fileUrl + 'packets/' + packet.SmallImage"
+          spinner-color="white" class="tw-max-w-[225px] tw-max-h-[170px]"
+        >
+          <template v-slot:error>
+            <div class="absolute-full flex flex-center bg-negative text-white">
+              <img class="tw-px-4 tw-mx-auto md:tw-px-0" src="~assets/packetList.png">
+            </div>
+          </template>
+        </q-img>
+        <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-max-w-[185px]">{{packet.Title}}</div>
         <div class="text_dark_pink tw-text-sm md:tw-text-3xl">{{ packet.Price }} $</div>
         <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.Duration }} {{ $t('packet.Month') }}</div>
         <div class="tw-text-sm md:tw-text-lg">{{ $t('packet.PaymentPerMonth') }}: {{ parseInt(packet.Price /packet.Duration ) }} $</div>
@@ -60,6 +67,7 @@ export default {
   name: "paketList",
   data() {
     return {
+      fileUrl: '',
       packets: [],
       show: false,
       code: '',
@@ -144,7 +152,7 @@ export default {
       // get list
       this.$api.post('packet/search.php', {
         Title: '',
-        OrderBy: 'id',
+        OrderBy: 'SortIndex',
         OrderDir: 'asc',
         Page: '1',
         RowsPerPage: '3'
@@ -155,7 +163,7 @@ export default {
         _this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: this.$t('loadListFailed'),
+          message: _this.$t('loadListFailed'),
           position: 'bottom-right'
         })
       })
@@ -240,6 +248,7 @@ export default {
     }
   },
   mounted() {
+    this.fileUrl = process.env.Files_URL
     this.loadData();
 
   }

@@ -5,7 +5,34 @@
     <div class="bg__dark_pink tw-flex-1"></div>
     <div class="bg__dark_blue tw-flex-1"></div>
   </div>
-  <div class="q-pa-md tw-hidden md:tw-block tw-text-right" v-if="packets.length > 1 && !showAllPackets">
+  <div class="tw-flex tw-flex-col-reverse md:tw-flex-row md:tw-space-x-10 md:tw-justify-between tw-p-6 lg:tw-px-40  tw-mt-24">
+    <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
+      <div class="text_dark_pink tw-w-full md:tw-space-y-6 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
+        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">{{ $t('userDashboard.Balance') }}</div>
+        <div class="tw-text-base xxs:tw-text-md sm:tw-text-xl text_dark_blue">{{ $t('userDashboard.AvailablePurchasing') }}</div>
+        <div class="tw-mx-auto bg__dark_pink tw-flex tw-justify-center tw-items-center tw-px-8 tw-text-white tw-text-lg md:tw-text-2xl tw-h-[70px]">{{ parseInt(info.SumCashbacks) - parseInt(info.SumBuy) }} $</div>
+        <div class="tw-text-base xxs:tw-text-md sm:tw-text-xl text_dark_blue xl:tw-flex "  ><div>{{ $t('userDashboard.ToalCashbacks') }}: {{ info.SumCashbacks }} $</div></div>
+      </div>
+    </div>
+    <div class="box_shadow tw-flex tw-mb-16 md:tw-mb-0 tw-flex-col tw-space-y-5 tw-justify-center tw-items-center text_dark_blue md:tw-w-[350px]">
+      <img src="~assets/user-avatar.png" class="tw-mt-[-80px]">
+      <div class="text_dark_pink xs:tw-text-2xl">{{StateUser.Username}}</div>
+      <div class="md:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6">
+        <div>{{ $t('userDashboard.Orders') }}</div>
+        <div>{{$t('userDashboard.ActivePackets')}}</div>
+        <div>{{ $t('userDashboard.AllPackets') }}</div>
+      </div>
+      <div class="xs:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6 tw-font-bold">
+        <div class="tw-pl-6">{{ info.NumBuys }}</div>
+        <div>{{ info.NumActivePackets }}</div>
+        <div class="tw-pr-6">{{ info.NumPackets }}</div>
+      </div>
+      <div class="tw-pb-2 tw-px-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+  </div>
+  <div class="q-pa-md tw-hidden md:tw-block tw-text-right box_shadow lg:tw-mx-40 md:tw-mx-10" v-if="packets.length > 1 && !showAllPackets">
+    <div class="text_dark_pink tw-text-lg md:tw-text-2xl tw-text-left">{{ $t('userDashboard.YourPacket') }}</div>
+
     <q-carousel
       v-model="slide"
       transition-prev="slide-right"
@@ -17,21 +44,25 @@
       arrows
       class=""
     >
-        <q-carousel-slide :name="i"  class="column no-wrap" v-for="(packet , i) in packets" :key="`asasas` + i">
-          <div :class="['row', 'fit', packet.length >= 3 ? 'justify-between' : packet.length === 2 ? 'justify-evenly' : 'justify-center', 'items-center', 'q-gutter-xs', 'q-col-gutter', 'no-wrap']">
-            <div class="box_shadow text_dark_blue tw-text-center tw-p-6 " v-for="(p , j) in packet" :key="j">
-              <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{p.PacketName}}</div>
-              <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('packet.Month') }}</div>
-              <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ p.BuyDate }}  </div>
-              <div class="tw-relative " @mouseover="showCashbacks[j] = false" @mouseleave="showCashbacks[j] = true">
-                <img src="~assets/circle-full.png" class="tw-ml-[10%]">
-                <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[j]" >{{p.SumCashbacks}} $ </div>
-                <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[j]" >{{p.SumPrice}} $ </div>
+      <q-carousel-slide :name="i"  class="column no-wrap " v-for="(packet , i) in packets" :key="`asasas` + i">
+        <div :class="['row', 'fit', packet.length >= 3 ? 'justify-between' : packet.length === 2 ? 'justify-evenly' : 'justify-center', 'items-center', 'q-gutter-xs', 'q-col-gutter', 'no-wrap' ]">
+          <div class=" text_dark_blue tw-text-center tw-p-6 packet-box" v-for="(p , j) in packet" :key="j">
+            <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{p.PacketName}}</div>
+            <div class="tw-text-sm text_dark_pink md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('packet.Month') }}</div>
+            <div class="tw-text-sm text_dark_pink ">{{$t('userpacket.StartDate')}}: {{ p.StartDate }}  </div>
+            <div class="tw-relative " @mouseover="showCashbacks[j] = false" @mouseleave="showCashbacks[j] = true">
+              <img src="~assets/circle-full.png" class=" fix__circle2">
+              <div class="balance__value_2 text_dark_blue tw-flex-col" v-if="showCashbacks[j]" ><p :class="[getColor(p)]">{{(p.PacketCashback) * (p.PacketDuration)  }} $ </p><p>von insg. </p>{{(p.Cashbacks.length) * (p.PacketCashback)}} $</div>
+              <div class="balance__value_2 text_dark_pink " v-if="!showCashbacks[j]" >
+                {{ $t('userDashboard.YourPacket') }} <br/>
+                {{(p.PacketCashback) * (p.PacketDuration)}} $ <br/>
+                Exp: {{packetExp(p)}}
               </div>
             </div>
-
           </div>
-        </q-carousel-slide>
+
+        </div>
+      </q-carousel-slide>
 
     </q-carousel>
     <q-btn @click="showAllPackets = !showAllPackets" class="tw-mr-[8%]">{{$t('userDashboard.SeeAllPackets')}}</q-btn>
@@ -41,11 +72,15 @@
       <div class="box_shadow text_dark_blue tw-text-center tw-p-6 md:tw-p-12 tw-basis-[31%]" v-for="(packet , i) in packetsHistory" :key="i">
         <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{packet.PacketName}}</div>
         <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.PacketDuration }} {{ $t('packet.Month') }}</div>
-        <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ packet.BuyDate }}  </div>
+        <div class="tw-text-sm ">{{$t('userpacket.StartDate')}}: {{ packet.StartDate }}  </div>
         <div class="tw-relative " @mouseover="showCashbacks[i] = false" @mouseleave="showCashbacks[i] = true">
           <img src="~assets/circle-full.png" class="fix__circle2">
-          <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[i]" >{{packet.SumCashbacks}} $ </div>
-          <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[i]" >{{packet.SumPrice}} $ </div>
+          <div class="balance__value_2 text_dark_blue tw-flex-col" v-if="showCashbacks[i]" ><p :class="[getColor(packet)]">{{(packet.PacketCashback) * (packet.PacketDuration)  }} $ </p><p>von insg. </p>{{(packet.Cashbacks.length) * (packet.PacketCashback)}} $</div>
+          <div class="balance__value_2 text_dark_pink " v-if="!showCashbacks[i]" >
+            {{ $t('userDashboard.YourPacket') }} <br/>
+            {{(packet.PacketCashback) * (packet.PacketDuration)}} $ <br/>
+            Exp: {{packetExp(packet)}}
+          </div>
         </div>
       </div>
     </div>
@@ -53,11 +88,15 @@
       <div class="box_shadow text_dark_blue tw-text-center tw-p-6 md:tw-p-12" v-for="(packet , i) in packetsHistory" :key="i">
         <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{packet.PacketName}}</div>
         <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.PacketDuration }} {{ $t('packet.Month') }}</div>
-        <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ packet.BuyDate }}  </div>
+        <div class="tw-text-sm ">{{$t('userpacket.StartDate')}}: {{ packet.StartDate }}  </div>
         <div class="tw-relative " @mouseover="showCashbacks[i] = false" @mouseleave="showCashbacks[i] = true">
           <img src="~assets/circle-full.png" class="fix__circle3">
-          <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[i]" >{{packet.SumCashbacks}} $ </div>
-          <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[i]" >{{packet.SumPrice}} $ </div>
+          <div class="balance__value_2 text_dark_blue tw-flex-col" v-if="showCashbacks[i]" ><p :class="[getColor(packet)]">{{(packet.PacketCashback) * (packet.PacketDuration)  }} $ </p><p>von insg. </p>{{(packet.Cashbacks.length) * (packet.PacketCashback)}} $</div>
+          <div class="balance__value_2 text_dark_pink " v-if="!showCashbacks[i]" >
+            {{ $t('userDashboard.YourPacket') }} <br/>
+            {{(packet.PacketCashback) * (packet.PacketDuration)}} $ <br/>
+            Exp: {{packetExp(packet)}}
+          </div>
         </div>
       </div>
     </div>
@@ -80,11 +119,15 @@
           <div class="box_shadow text_dark_blue tw-text-center tw-p-6 " v-for="(p , j) in packet" :key="j">
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{p.PacketName}}</div>
             <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ p.PacketDuration }} {{ $t('packet.Month') }}</div>
-            <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ p.BuyDate }}  </div>
+            <div class="tw-text-sm ">{{$t('userpacket.StartDate')}}: {{ p.StartDate }}  </div>
             <div class="tw-relative " @mouseover="showCashbacks[j] = false" @mouseleave="showCashbacks[j] = true">
-              <img src="~assets/circle-full.png" class="tw-ml-[10%]">
-              <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[j]" >{{p.SumCashbacks}} $ </div>
-              <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[j]" >{{p.SumPrice}} $ </div>
+              <img src="~assets/circle-full.png" class="fix__circle2">
+              <div class="balance__value_2 text_dark_blue tw-flex-col" v-if="showCashbacks[j]" ><p :class="[getColor(p)]">{{(p.PacketCashback) * (p.PacketDuration)  }} $ </p><p>von insg. </p>{{(p.Cashbacks.length) * (p.PacketCashback)}} $</div>
+              <div class="balance__value_2 text_dark_pink " v-if="!showCashbacks[j]" >
+                {{ $t('userDashboard.YourPacket') }} <br/>
+                {{(p.PacketCashback) * (p.PacketDuration)}} $ <br/>
+                Exp: {{packetExp(p)}}
+              </div>
             </div>
           </div>
 
@@ -111,11 +154,15 @@
 
             <div class="tw-text-sm md:tw-text-3xl xl:tw-text-4xl tw-mb-1">{{packet.PacketName}}</div>
             <div class="tw-text-sm md:tw-text-lg">{{$t('packet.Duration')}}: {{ packet.PacketDuration }} {{ $t('packet.Month') }}</div>
-            <div class="tw-text-sm md:tw-text-lg">{{$t('userpacket.BuyDate')}}: {{ packet.BuyDate }}  </div>
+            <div class="tw-text-sm ">{{$t('userpacket.StartDate')}}: {{ packet.StartDate }}  </div>
             <div class="tw-relative " @mouseover="showCashbacks[i] = false" @mouseleave="showCashbacks[i] = true">
-              <img src="~assets/circle-full.png" class="tw-ml-[10%]">
-              <div class="balance__value_2 text_dark_blue " v-if="showCashbacks[i]" >{{packet.SumCashbacks}} $ </div>
-              <div class="balance__value_2 text_dark_blue " v-if="!showCashbacks[i]" >{{packet.SumPrice}} $ </div>
+              <img src="~assets/circle-full.png" class="fix__circle2">
+              <div class="balance__value_2 text_dark_blue tw-flex-col" v-if="showCashbacks[i]" ><p :class="[getColor(packet)]">{{(packet.PacketCashback) * (packet.PacketDuration)  }} $ </p><p>von insg. </p>{{(packet.Cashbacks.length) * (packet.PacketCashback)}} $</div>
+              <div class="balance__value_2 text_dark_pink " v-if="!showCashbacks[i]" >
+                {{ $t('userDashboard.YourPacket') }} <br/>
+                {{(packet.PacketCashback) * (packet.PacketDuration)}} $ <br/>
+                Exp: {{packetExp(packet)}}
+              </div>
             </div>
           </div>
 
@@ -124,39 +171,7 @@
     </q-carousel>
     <q-btn @click="showAllPackets = !showAllPackets" >{{$t('userDashboard.SeeAllPackets')}}</q-btn>
   </div>
-  <div class="tw-flex tw-flex-col-reverse md:tw-flex-row md:tw-space-x-10 md:tw-justify-between tw-p-6 lg:tw-px-40 tw-mt-24">
-    <div class="box_shadow md:tw-w-[60%] md:tw-h-[280px] md:tw-flex-row tw-flex tw-flex-col-reverse tw-justify-center tw-items-center md:tw-items-start md:tw-justify-between">
-      <div class="text_dark_pink md:tw-max-w-[60%] md:tw-space-y-10 tw-p-2 tw-flex tw-flex-col tw-justify-between tw-text-center md:tw-text-left tw-py-4">
-        <div class="tw-text-sm xxs:tw-text-lg sm:tw-text-2xl">{{ $t('userDashboard.Balance') }}: {{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-3xl text_dark_blue">{{ $t('userDashboard.Cashbacks') }}: {{ info.SumCashbacks }} $</div>
-        <div class="tw-text-base xxs:tw-text-xl sm:tw-text-2xl text_dark_pink xl:tw-flex "  ><div>{{ $t('userDashboard.ToalCashbacks') }}: {{ info.SumBuys }} $</div></div>
-      </div>
-      <div style="position: absolute">
-
-      </div>
-      <div class="tw-relative">
-        <img src="~assets/circle-full.png">
-        <div class="balance__value_2 text_dark_blue">{{parseInt(info.SumCashbacks) - parseInt(info.SumBuy)}} $</div>
-      </div>
-
-    </div>
-    <div class="box_shadow tw-flex tw-mb-16 md:tw-mb-0 tw-flex-col tw-space-y-5 tw-justify-center tw-items-center text_dark_blue md:tw-w-[350px]">
-      <img src="~assets/user-avatar.png" class="tw-mt-[-80px]">
-      <div class="text_dark_pink xs:tw-text-2xl">{{StateUser.Username}}</div>
-      <div class="md:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6">
-        <div>{{ $t('userDashboard.Orders') }}</div>
-        <div>{{$t('userDashboard.ActivePackets')}}</div>
-        <div>{{ $t('userDashboard.AllPackets') }}</div>
-      </div>
-      <div class="xs:tw-text-lg tw-flex tw-flex-row tw-justify-between tw-w-full tw-px-2 xs:tw-px-6 tw-font-bold">
-        <div class="tw-pl-6">{{ info.NumBuys }}</div>
-        <div>{{ info.NumActivePackets }}</div>
-        <div class="tw-pr-6">{{ info.NumPackets }}</div>
-      </div>
-      <div class="tw-pb-2 tw-px-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-    </div>
-  </div>
-  <div class="lg:tw-px-40 md:tw-px-10 lg:tw-mt-16">
+  <div class="lg:tw-px-40 md:tw-px-10 tw-mt-8 lg:tw-mt-16">
     <div class=" tw-flex tw-flex-col text_dark_blue ">
       <q-table
         class="mobile__data q-mx-lg"
@@ -440,7 +455,8 @@
 
 <script>
 import {mapGetters} from "vuex";
-import {ref} from 'vue'
+import {ref} from 'vue';
+import moment from 'moment';
 
 export default {
   name: "dashboard",
@@ -595,6 +611,61 @@ export default {
       if (status === '3')
         return 'Canceled'
       return status
+    },
+    packetExp(packet){
+      let expMonth = packet.PacketDuration - packet.Cashbacks.length;
+      return moment().add(expMonth, 'month').format('MMM YYYY');
+    },
+    getColor(packet){
+      if (packet.Cashbacks.length <= 3 )
+      {
+        return 'color-1';
+      }
+
+      if (packet.Cashbacks.length === 4 )
+      {
+        return 'color-4';
+      }
+
+      if (packet.Cashbacks.length === 5 )
+      {
+        return 'color-5';
+      }
+
+      if (packet.Cashbacks.length === 6 )
+      {
+        return 'color-6';
+      }
+
+      if (packet.Cashbacks.length === 7 )
+      {
+        return 'color-7';
+      }
+
+      if (packet.Cashbacks.length === 8 )
+      {
+        return 'color-8';
+      }
+
+      if (packet.Cashbacks.length === 9 )
+      {
+        return 'color-9';
+      }
+
+      if (packet.Cashbacks.length === 10 )
+      {
+        return 'color-10';
+      }
+
+      if (packet.Cashbacks.length === 11 )
+      {
+        return 'color-11';
+      }
+
+      if (packet.Cashbacks.length >= 12 )
+      {
+        return 'color-12';
+      }
     }
   },
   mounted() {
@@ -611,11 +682,47 @@ export default {
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 
+.packet-box {
+  background: #F1F1E6;
+}
+
 .mobile__data__row {
   color: #1D607F;
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
+
+.color-1 {
+  color: #1D607F;
+}
+.color-4{
+  color: #CBBB93;
+}
+.color-5{
+  color: #F8BA00;
+}
+.color-6{
+  color: #FE2500;
+}
+.color-7{
+  color: #D31876;
+}
+.color-8{
+  color: #22AEFF;
+}
+.color-9{
+  color: #73DD4D;
+}
+.color-10{
+  color: #D25A73;
+}
+.color-11{
+  color: #F9C321;
+}
+.color-12{
+  color: #FE4221;
+}
+
 
 .fix__circle {
   margin-left: 32%;
@@ -704,7 +811,7 @@ export default {
 
 @media screen and (min-width: 1700px) {
   .fix__circle2 {
-    margin-left: 33%;
+    margin-left: 20%;
   }
 }
 

@@ -25,6 +25,7 @@
         <q-tr :props="props">
           <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>
           <q-td key="Username" :props="props">{{ props.row.Username }}</q-td>
+          <q-td key="PatrnerNumber" :props="props">{{ props.row.PatrnerNumber }}</q-td>
           <q-td key="BuyDate" :props="props">{{ props.row.BuyDate }}</q-td>
           <q-td key="BuyMethod" :props="props">{{ displayBuyMethod(props.row.BuyMethod) }}</q-td>
           <q-td key="PacketPrice" :props="props">{{ props.row.PacketPrice }}</q-td>
@@ -113,6 +114,7 @@ export default {
       columns: [
         { name: 'PacketName', label: this.$t('userpacket.Packet'), field: 'PacketName', align: 'left' },
         { name: 'Username', label: this.$t('userpacket.Buyer'), field: 'Username', align: 'left' },
+        { name: 'PatrnerNumber', label: this.$t('profile.PatrnerNumber'), field: 'PatrnerNumber', align: 'left' },
         { name: 'BuyDate', label: this.$t('userpacket.BuyDate'), field: 'BuyDate', align: 'left' },
         { name: 'BuyMethod', label: this.$t('userpacket.BuyMethod'), field: 'BuyMethod', align: 'left' },
         { name: 'PacketPrice', label: this.$t('userpacket.Price'), field: 'PacketPrice', align: 'left' },
@@ -156,7 +158,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: this.$t('loadListFailed'),
+                message: _this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })

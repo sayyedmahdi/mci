@@ -79,17 +79,19 @@
     <paket-list />
 <!--    <gutscheineList />-->
 <!--    <testimonial />-->
-  <div class="tw-my-32" v-if="!isAuthenticated">
-    <div class="tw-flex tw-text-5xl sm:tw-ml-[100px] tw-ml-[20px] tw-mb-12">
-      <span class="text_dark_blue tw-flex tw-items-center">{{$t('payOne')}}
-        <span class="text_dark_pink tw-ml-3">{{ $t('getMore') }}</span>
-        <button class="tw-inline tw-ml-4 tw-mx-auto tw-py-2 tw-mt-1 tw-px-2 md:tw-px-9 md:tw-text-xl tw-text-xs bg__dark_pink tw-text-white tw-justify-center " @click="gotoRegister()">
-        <span>{{ $t('memberShip') }}</span>
-        </button>
-      </span>
+  <div class="tw-flex tw-py-4 tw-my-32 tw-flex-col-reverse bg__dark_blue md:tw-space-y-0 tw-px-4 md:tw-px-10 md:tw-flex-row md:tw-mx-20 tw-mx-10 md:tw-mx-16 xl:tw-mx-60 tw-justify-between tw-items-center">
+    <div class="md:tw-my-24 tw-text-center" v-if="!isAuthenticated">
+      <div class="tw-text-white tw-text-sm xs:tw-text-lg md:tw-text-4xl tw-mt-8 md:tw-mt-0">{{ $t('memberShip') }}  <span class="text_dark_pink">{{$t('memberShip2')}}</span></div>
+      <div class="tw-text-white tw-text-sm xs:tw-text-lg md:tw-text-4xl tw-mb-8 md:tw-mb-12">{{ $t('memberShip3') }}  </div>
+      <button class="tw-flex tw-items-center tw-py-3 tw-px-2 md:tw-px-9 md:text_md tw-text-xs tw-mt-4 bg__dark_pink tw-text-white tw-justify-center " @click="gotoRegister()">
+        <span>{{$t('payOne')}} {{ $t('getMore') }}</span>
+      </button>
     </div>
-
+    <div class=" md:tw-max-w-[50%] ">
+      <img src="~assets/rectangle1406.png" >
+    </div>
   </div>
+
     <footerPage />
 </template>
 

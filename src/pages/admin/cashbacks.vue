@@ -24,6 +24,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="Username" :props="props">{{ props.row.Username }}</q-td>
+          <q-td key="PatrnerNumber" :props="props">{{ props.row.PatrnerNumber }}</q-td>
           <q-td key="PacketName" :props="props">{{ props.row.PacketName }}</q-td>
           <q-td key="PacketCashback" :props="props">{{ props.row.PacketCashback }}</q-td>
           <q-td key="PaybackDate" :props="props">{{ props.row.PaybackDate }}</q-td>
@@ -77,6 +78,7 @@ export default {
       },
       columns: [
         { name: 'Username', label: this.$t('cashback.Buyer'), field: 'Username', align: 'left' },
+        { name: 'PatrnerNumber', label: this.$t('profile.PatrnerNumber'), field: 'PatrnerNumber', align: 'left' },
         { name: 'PacketName', label: this.$t('cashback.Packet'), field: 'PacketName', align: 'left' },
         { name: 'PacketCashback', label: this.$t('cashback.Amount'), field: 'PacketCashback', align: 'left' },
         { name: 'PaybackDate', label: this.$t('cashback.Date'), field: 'PaybackDate', align: 'left' },
@@ -112,7 +114,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: this.$t('loadListFailed'),
+                message: _this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })

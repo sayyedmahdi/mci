@@ -31,6 +31,7 @@
           <q-td key="Duration" :props="props">{{ props.row.Duration }}</q-td>
           <q-td key="Cashback" :props="props">{{ props.row.Cashback }}</q-td>
           <q-td key="Status" :props="props">{{ displayStatus(props.row.Status) }}</q-td>
+          <q-td key="SortIndex" :props="props">{{ props.row.SortIndex }}</q-td>
           <q-td key="Action" :props="props" >
             <q-btn flat icon="more_horiz">
               <q-menu auto-close>
@@ -69,10 +70,39 @@
                       <q-input outlined autofocus v-model="edit.Cashback" :label="$t('packet.Cashback')" :error="v$.edit.Cashback.$error"></q-input>
                   </div>
                   <div>
+                      <q-input outlined autofocus v-model="edit.SortIndex" :label="$t('packet.SortIndex')" ></q-input>
+                  </div>
+                  <div>
                       <q-select outlined v-model="edit.Status" :options="statusOptions" :label="$t('packet.Status')" emit-value map-options></q-select>
                   </div>
                   <div>
                       <q-input outlined autofocus type="textarea" v-model="edit.Comments" :label="$t('packet.Comments')"> </q-input>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                      <q-img
+                        :src="fileUrl + 'packets/' + edit.SmallImage"
+                        spinner-color="white" style="max-width:100%"
+                      >
+                        <div class="absolute-bottom text-subtitle1 text-center">
+                          {{edit.SmallImage}}
+                        </div>
+                        <template v-slot:error>
+                          <div class="absolute-full flex flex-center bg-negative text-white">
+                            Please upload thumbnail
+                          </div>
+                        </template>
+                      </q-img>
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                      <q-uploader
+                        :url="setUploadUrl" :headers="headers" :multiple="false" :no-thumbnails="true"
+                        name="real" label="Upload File" accept=".jpg, image/*" flat bordered
+                        color="white" text-color="grey-9"
+                        @uploaded="uploaded"
+                      >
+                      </q-uploader>
+                    </div>
                   </div>
                 </q-card-section>
                 <q-card-section  align="center">
@@ -115,7 +145,36 @@
             <q-input outlined v-model="edit.Cashback" :label="$t('packet.Cashback')" :error="v$.edit.Cashback.$error"></q-input>
           </div>
           <div>
+            <q-input outlined v-model="edit.SortIndex" :label="$t('packet.SortIndex')"></q-input>
+          </div>
+          <div>
             <q-select outlined v-model="edit.Status" :options="statusOptions" :label="$t('packet.Status')" emit-value map-options></q-select>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <q-img
+                :src="fileUrl + 'packets/' + edit.SmallImage"
+                spinner-color="white" style="max-width:100%"
+              >
+                <div class="absolute-bottom text-subtitle1 text-center">
+                  {{edit.SmallImage}}
+                </div>
+                <template v-slot:error>
+                  <div class="absolute-full flex flex-center bg-negative text-white">
+                    Please upload thumbnail
+                  </div>
+                </template>
+              </q-img>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+              <q-uploader
+                :url="setUploadUrl" :headers="headers" :multiple="false" :no-thumbnails="true"
+                name="real" label="Upload File" accept=".jpg, image/*" flat bordered
+                color="white" text-color="grey-9"
+                @uploaded="uploaded"
+              >
+              </q-uploader>
+            </div>
           </div>
           <div>
             <q-input outlined type="textarea" v-model="edit.Comments" label="Comments"> </q-input>
@@ -144,10 +203,12 @@ export default {
   },
   data () {
     return {
+      headers: [],
+      fileUrl: '',
       filter: '',
       loading: false,
       pagination: {
-        sortBy: 'Title',
+        sortBy: 'SortIndex',
         descending: false,
         page: 1,
         rowsPerPage: 10,
@@ -159,6 +220,7 @@ export default {
         { name: 'Duration', label: this.$t('packet.Duration'), field: 'Duration', align: 'left' },
         { name: 'Cashback', label: this.$t('packet.Cashback'), field: 'Cashback', align: 'left' },
         { name: 'Status', label: this.$t('packet.Status'), field: 'Status', align: 'left' },
+        { name: 'SortIndex', label: this.$t('packet.SortIndex'), field: 'SortIndex', align: 'left' },
         { name: 'Action', label: this.$t('action'), field: '' }
       ],
       statusOptions: [{'label': this.$t('packet.StatusEnabled'), 'value': '1'}, {'label': this.$t('packet.StatusDisabled'), 'value': '2'}],
@@ -170,6 +232,8 @@ export default {
           Duration: '',
           Cashback: '',
           Status: 1,
+          SortIndex: 1,
+          SmallImage: null,
           Comments: ''
       },
       newPopup: false
@@ -187,12 +251,26 @@ export default {
   },
   mounted () {
     this.$helper.initLang(this)
+    this.fileUrl = process.env.Files_URL
+    this.headers = [{
+      name: 'Token', value: this.$q.cookies.get('mcisitetoken')
+    }]
     this.loadData({
       pagination: this.pagination,
       filter: undefined
     })
   },
   methods: {
+    setUploadUrl (files) {
+      let url = process.env.API_URL + 'upload.php?type=packets&ext=image'
+      return url
+    },
+    uploaded (info) {
+      console.log(info)
+      let res = JSON.parse(info.xhr.responseText)
+      console.log(res)
+      this.edit.SmallImage = res.FileName // info.files[0].name
+    },
     loadData (props) {
         const { page, rowsPerPage, sortBy, descending } = props.pagination
         const filter = props.filter
@@ -211,7 +289,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: this.$t('loadListFailed'),
+                message: _this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
@@ -223,6 +301,8 @@ export default {
         this.edit.Cashback = ''
         this.edit.Comments = ''
         this.edit.Status = '1'
+        this.edit.SortIndex = '1'
+        this.edit.SmallImage = ''
         this.newPopup = true
     },
     editRow (row) {
@@ -232,7 +312,9 @@ export default {
         this.edit.Duration = row.Duration
         this.edit.Cashback = row.Cashback
         this.edit.Status = row.Status
+        this.edit.SortIndex = row.SortIndex
         this.edit.Comments = row.Comments
+        this.edit.SmallImage = row.SmallImage
         row.editPopup = true
     },
     deleteRow (id) {

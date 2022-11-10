@@ -24,6 +24,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="Username" :props="props">{{ props.row.Username }}</q-td>
+          <q-td key="PatrnerNumber" :props="props">{{ props.row.PatrnerNumber }}</q-td>
           <q-td key="StoreName" :props="props">{{ props.row.StoreName }}</q-td>
           <q-td key="OrderNumber" :props="props">{{ props.row.OrderNumber }}</q-td>
           <q-td key="RequestedPrice" :props="props">{{ props.row.RequestedPrice }}</q-td>
@@ -129,6 +130,7 @@ export default {
       },
       columns: [
         { name: 'Username', label: this.$t('buy.Buyer'), field: 'Username', align: 'left' },
+        { name: 'PatrnerNumber', label: this.$t('profile.PatrnerNumber'), field: 'PatrnerNumber', align: 'left' },
         { name: 'StoreName', label: this.$t('buy.Store'), field: 'StoreName', align: 'left' },
         { name: 'OrderNumber', label: this.$t('buy.OrderNumber'), field: 'OrderNumber', align: 'left' },
         { name: 'RequestedPrice', label: this.$t('buy.RequestedPrice'), field: 'RequestedPrice', align: 'left' },

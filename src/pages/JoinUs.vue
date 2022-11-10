@@ -100,7 +100,7 @@ export default {
         _this.$q.notify({
           type: 'positive',
           timeout: 3000,
-          message: this.$t('register.RegisterMessage'),
+          message: _this.$t('register.RegisterMessage'),
           position: 'bottom-right'
         })
         this.login()
@@ -109,7 +109,7 @@ export default {
         _this.$q.notify({
           type: 'negative',
           timeout: 3000,
-          message: this.$t('updateNotPossible'),
+          message: _this.$t('updateNotPossible'),
           position: 'bottom-right'
         })
       })
@@ -134,7 +134,7 @@ export default {
             _q.notify({
               type: 'negative',
               timeout: 3000,
-              message: this.$t('loginNotPossible'),
+              message: _this.$t('loginNotPossible'),
               position: 'bottom-right'
             })
             return
@@ -154,7 +154,7 @@ export default {
           _q.notify({
             type: 'negative',
             timeout: 3000,
-            message: this.$t('loginNotPossible'),
+            message: _this.$t('loginNotPossible'),
             position: 'bottom-right'
           })
         })

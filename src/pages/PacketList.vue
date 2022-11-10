@@ -1,8 +1,7 @@
 <template>
   <belt />
   <div class="tw-flex tw-flex-col tw-px-6 tw-items-center">
-    <div class="tw-flex tw-flex-col-reverse tw-py-10 tw-justify-start md:tw-flex-row tw-items-center
-      md:tw-justify-between box_shadow tw-max-w-[480px] md:tw-w-full md:tw-h-[360px] tw-my-12 md:tw-max-w-[1200px]" v-for="(packet , i) in packets" :key="i">
+    <div class="tw-flex tw-flex-col-reverse tw-py-10 tw-justify-start md:tw-flex-row tw-items-center md:tw-justify-between box_shadow tw-max-w-[480px] md:tw-w-full md:tw-h-[360px] tw-my-12 md:tw-max-w-[1200px]" v-for="(packet , i) in packets" :key="i">
       <div class="tw-text-center tw-space-y-4 md:tw-text-left text_dark_blue tw-pl-[8%]">
         <div class="tw-text-4xl">{{ packet.Title }}</div>
         <div class="tw-text-2xl text_dark_pink">{{ packet.Price }} $</div>
@@ -15,8 +14,8 @@
           <span>{{ $t('packet.BuyNow') }}</span>
         </button>
       </div>
-      <div class="md:tw-w-1/2">
-        <img class="tw-px-4 tw-mx-auto md:tw-px-0" src="~assets/packetList.png">
+      <div class="md:tw-w-1/2 ">
+        <img class="tw-px-4 tw-mx-auto md:tw-px-0 lg:!tw-w-[80%]" :src="fileUrl + 'packets/' + packet.SmallImage">
       </div>
 
     </div>
@@ -60,6 +59,7 @@ export default {
   components: {belt , footerPage},
   data() {
     return {
+      fileUrl: '',
       packets: [],
       show: false,
       code: '',
@@ -241,6 +241,7 @@ export default {
     }
   },
   mounted() {
+    this.fileUrl = process.env.Files_URL
     this.loadData();
   },
   created() {

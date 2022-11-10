@@ -200,7 +200,7 @@ export default {
             _this.$q.notify({
                 type: 'negative',
                 timeout: 3000,
-                message: this.$t('loadListFailed'),
+                message: _this.$t('loadListFailed'),
                 position: 'bottom-right'
             })
         })
